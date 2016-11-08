@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Getting Started - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Getting Started";
+    var mkdocs_page_input_path = "getting-started.md";
+    var mkdocs_page_url = "/getting-started/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Getting Started</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#prerequisites">Prerequisites</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#installation">Installation</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#install-tools-optional">Install Tools (optional)</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#hello-world">Hello World</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#blog-example">Blog example</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/object-types/">Object Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/interfaces/">Interfaces</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/unions/">Unions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/input-types/">Input Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../executing-queries/">Executing Queries</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../error-handling/">Handling Errors</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Getting Started</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="prerequisites">Prerequisites</h1>
+<p>This documentation assumes your familiarity with GraphQL concepts. If it is not the case - 
+first learn about  GraphQL on <a href="http://graphql.org/learn/">official website</a>.</p>
+<h1 id="installation">Installation</h1>
+<p>Using <a href="https://getcomposer.org/doc/00-intro.md">composer</a>:
+add <code>composer.json</code> file to your project root folder with following contents:</p>
+<pre><code>{
+    &quot;require&quot;: {
+        &quot;webonyx/graphql-php&quot;: &quot;^0.7&quot;
+    }
+}
+</code></pre>
+
+<p>and run <code>composer install</code>. </p>
+<p>If you already have composer.json file - simply run: <code>composer require webonyx/graphql-php</code></p>
+<p>If you are upgrading, see <a href="https://github.com/webonyx/graphql-php/blob/master/UPGRADE.md">upgrade instructions</a></p>
+<h1 id="install-tools-optional">Install Tools (optional)</h1>
+<p>While it is possible to communicate with GraphQL API using regular HTTP tools it is way 
+more convenient for humans to use <a href="https://github.com/graphql/graphiql">GraphiQL</a> - an in-browser 
+ide for exploring GraphQL APIs.</p>
+<p>It provides syntax-highlighting, auto-completion and auto-generated documentation for 
+GraphQL API.</p>
+<p>The easiest way to use it is to install one of the existing Google Chrome extensions:</p>
+<ul>
+<li><a href="https://chrome.google.com/webstore/detail/chromeiql/fkkiamalmpiidkljmicmjfbieiclmeij">ChromeiQL</a></li>
+<li><a href="https://chrome.google.com/webstore/detail/graphiql-feen/mcbfdonlkfpbfdpimkjilhdneikhfklp">GraphiQL Feen</a></li>
+</ul>
+<p>Alternatively you can follow instructions on <a href="https://github.com/graphql/graphiql">GraphiQL</a>
+page and install it locally.</p>
+<h1 id="hello-world">Hello World</h1>
+<p>Let's create type system that will be capable to process following simple query:</p>
+<pre><code>query { 
+  echo(message: &quot;Hello World&quot;)
+}
+</code></pre>
+
+<p>To do so we need an object type with field <code>echo</code>:</p>
+<pre><code class="php">&lt;?php
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\Type;
+
+$queryType = new ObjectType([
+    'name' =&gt; 'Query',
+    'fields' =&gt; [
+        'echo' =&gt; [
+            'type' =&gt; Type::string(),
+            'args' =&gt; [
+                'message' =&gt; Type::nonNull(Type::string()),
+            ],
+            'resolve' =&gt; function ($root, $args) {
+                return $root['prefix'] . $args['message'];
+            }
+        ],
+    ],
+]);
+</code></pre>
+
+<p>(Note: type definition can be expressed in <a href="../type-system/#type-definition-styles">different styles</a>, 
+including <strong>inheritance</strong>, <strong>composition</strong> and <strong>inline</strong>. This example uses <strong>inline</strong> style for simplicity)</p>
+<p>The interesting piece here is <code>resolve</code> option of field definition. It is responsible for retuning 
+value of our field. Values of <strong>scalar</strong> fields will be directly included in response while values of 
+<strong>complex</strong> fields (objects, interfaces, unions) will be passed down to nested field resolvers 
+(not in this example though).</p>
+<p>Now when our type is ready, let's create GraphQL endpoint for it <code>graphql.php</code>:</p>
+<pre><code class="php">&lt;?php
+use GraphQL\GraphQL;
+use GraphQL\Schema;
+
+$schema = new Schema([
+    'query' =&gt; $queryType
+]);
+
+$rawInput = file_get_contents('php://input');
+
+try {
+    $rootValue = ['prefix' =&gt; 'You said: '];
+    $result = GraphQL::execute($schema, $rawInput, $rootValue);
+} catch (\Exception $e) {
+    $result = [
+        'error' =&gt; [
+            'message' =&gt; $e-&gt;getMessage()
+        ]
+    ];
+}
+header('Content-Type: application/json; charset=UTF-8');
+echo json_encode($result);
+</code></pre>
+
+<p>Our example is ready. Try it by running:</p>
+<pre><code class="sh">php -S localhost:8000 graphql.php
+curl http://localhost:8000 -d &quot;query { echo(message: \&quot;Hello World\&quot;) }&quot;
+</code></pre>
+
+<p>Check out the full <a href="https://github.com/webonyx/graphql-php/blob/master/examples/00-hello-world">source code</a> of this example.</p>
+<p>Obviously hello world only scratches the surface of what is possible. 
+So check out next example, which is closer to real-world apps.
+Or keep reading about <a href="../type-system/">schema definition</a>.</p>
+<h1 id="blog-example">Blog example</h1>
+<p>It is often easier to start with full-featured example and then get back to documentation
+for your own work. </p>
+<p>Check out <a href="https://github.com/webonyx/graphql-php/tree/master/examples/01-blog">Blog example of GraphQL API</a>.
+It is quite close to real-world GraphQL hierarchies. Follow instructions and try it yourself in ~10 minutes.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../type-system/" class="btn btn-neutral float-right" title="Introduction">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href=".." class="btn btn-neutral" title="About"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href=".." style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../type-system/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

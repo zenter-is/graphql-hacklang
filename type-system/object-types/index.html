@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Object Types - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Object Types";
+    var mkdocs_page_input_path = "type-system\object-types.md";
+    var mkdocs_page_url = "/type-system/object-types/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Object Types</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#object-type-definition">Object Type Definition</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configuration-options">Configuration options</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#field-configuration-options">Field configuration options</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#field-arguments">Field arguments</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#shorthand-field-definitions">Shorthand field definitions</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#recurring-and-circular-types">Recurring and circular types</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#field-resolution">Field Resolution</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#custom-metadata">Custom Metadata</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../interfaces/">Interfaces</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../unions/">Unions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../input-types/">Input Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../executing-queries/">Executing Queries</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../error-handling/">Handling Errors</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Type System &raquo;</li>
+        
+      
+    
+    <li>Object Types</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="object-type-definition">Object Type Definition</h1>
+<p>Object Type is the most frequently used primitive in typical GraphQL application.</p>
+<p>Conceptually Object Type is a collection of Fields. Each field in turn
+has it's own type which allows to build complex hierarchies.</p>
+<p>In <strong>graphql-php</strong> object type is an instance of <code>GraphQL\Type\Definition\ObjectType</code> 
+(or one of it subclasses) which accepts configuration array in constructor:</p>
+<pre><code class="php">&lt;?php
+namespace MyApp;
+
+use GraphQL\Type\Definition\ObjectType;
+use GraphQL\Type\Definition\Type;
+use GraphQL\Examples\Blog\Data\DataSource;
+use GraphQL\Examples\Blog\Data\Story;
+
+$userType = new ObjectType([
+    'name' =&gt; 'User',
+    'description' =&gt; 'Our blog visitor',
+    'fields' =&gt; [
+        'firstName' =&gt; [
+            'type' =&gt; Type::string(),
+            'description' =&gt; 'User first name'
+        ],
+        'email' =&gt; Type::string()
+    ]
+]);
+
+$blogStory = new ObjectType([
+    'name' =&gt; 'Story',
+    'fields' =&gt; [
+        'body' =&gt; Type::string(),
+        'author' =&gt; [
+            'type' =&gt; $userType,
+            'description' =&gt; 'Story author',
+            'resolve' =&gt; function(Story $blogStory) {
+                return DataSource::findUser($blogStory-&gt;authorId);
+            }
+        ],
+        'likes' =&gt; [
+            'type' =&gt; Type::listOf($userType),
+            'description' =&gt; 'List of users who liked the story',
+            'args' =&gt; [
+                'limit' =&gt; [
+                    'type' =&gt; Type::int(),
+                    'description' =&gt; 'Limit the number of recent likes returned',
+                    'defaultValue' =&gt; 10
+                ]
+            ],
+            'resolve' =&gt; function(Story $blogStory, $args) {
+                return DataSource::findLikes($blogStory-&gt;id, $args['limit']);
+            }
+        ]
+    ]
+]);
+</code></pre>
+
+<p>This example uses <strong>inline</strong> style for Object Type definitions, but there are also 
+<a href="../../type-system/#type-definition-styles">other styles</a> (using inheritance or composition).</p>
+<h1 id="configuration-options">Configuration options</h1>
+<p>Object type constructor expects configuration array. Below is a full list of available options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Unique name of this object type within Schema</td>
+</tr>
+<tr>
+<td>fields</td>
+<td><code>array</code> or <code>callback</code> returning <code>array</code></td>
+<td><strong>Required</strong>. Array describing object fields. See <a href="#field-definitions">Fields</a> section below for expected structure of each array entry. See also section on <a href="#">Circular types</a> for explanation of when to use callback for this option.</td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this type for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+<tr>
+<td>interfaces</td>
+<td><code>array</code> or <code>callback</code> returning <code>array</code></td>
+<td>List of interfaces implemented by this type. See <a href="../../type-system/interface-types">Interface Types</a> for details. See also section on <a href="#">Circular types</a> for explanation of when to use callback for this option.</td>
+</tr>
+<tr>
+<td>isTypeOf</td>
+<td><code>callback</code> returning <code>boolean</code></td>
+<td><strong>function($value, $context, GraphQL\Type\Definition\ResolveInfo $info)</strong> Expected to return <code>true</code> if <code>$value</code> qualifies for this type (see section about <a href="#">Abstract Type Resolution</a> for explanation).</td>
+</tr>
+<tr>
+<td>resolveField</td>
+<td><code>callback</code> returning <code>mixed</code></td>
+<td><strong>function($value, $args, $context, GraphQL\Type\Definition\ResolveInfo $info)</strong> Given the <code>$value</code> of this type it is expected to return value for field defined in <code>$info-&gt;fieldName</code>. Good place to define type-specific strategy for field resolution. See section on <a href="#">Data Fetching</a> for details.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="field-configuration-options">Field configuration options</h1>
+<p>Below is a full list of available field configuration options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Name of the field. When not set - inferred from <strong>fields</strong> array key (read about <a href="#">shorthand field definition</a> below)</td>
+</tr>
+<tr>
+<td>type</td>
+<td><code>Type</code></td>
+<td><strong>Required.</strong> Instance of internal or custom type. Note: type must be represented by single instance within schema (see also <a href="#">Type Registry</a>)</td>
+</tr>
+<tr>
+<td>args</td>
+<td><code>array</code></td>
+<td>Array of possible type arguments. Each entry is expected to be an array with keys: <strong>name</strong>, <strong>type</strong>, <strong>description</strong>, <strong>defaultValue</strong>. See <a href="#field-arguments">Field Arguments</a> section below.</td>
+</tr>
+<tr>
+<td>resolve</td>
+<td><code>callback</code></td>
+<td><strong>function($value, $args, $context, GraphQL\Type\Definition\ResolveInfo $info)</strong> Given the <code>$value</code> of this type it is expected to return value for current field. See section on <a href="#">Data Fetching</a> for details</td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this field for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+<tr>
+<td>deprecationReason</td>
+<td><code>string</code></td>
+<td>Text describing why this field is deprecated. When not empty - field will not be returned by introspection queries (unless forced)</td>
+</tr>
+</tbody>
+</table>
+<h1 id="field-arguments">Field arguments</h1>
+<p>Every field on a GraphQL object type can have zero or more arguments, defined in <strong>args</strong> option of field definition.
+Each argument is an array with following options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Name of the argument. When not set - inferred from <strong>args</strong> array key</td>
+</tr>
+<tr>
+<td>type</td>
+<td><code>Type</code></td>
+<td><strong>Required.</strong> Instance of one of <a href="../input-types/">Input Types</a> (<code>scalar</code>, <code>enum</code>, <code>InputObjectType</code> + any combination of those with <code>nonNull</code> and <code>listOf</code> modifiers)</td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this argument for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+<tr>
+<td>defaultValue</td>
+<td><code>scalar</code></td>
+<td>Default value for this argument</td>
+</tr>
+</tbody>
+</table>
+<h1 id="shorthand-field-definitions">Shorthand field definitions</h1>
+<p>Fields can be also defined in <strong>shorthand</strong> notation (with only <strong>name</strong> and <strong>type</strong> options):</p>
+<pre><code class="php">'fields' =&gt; [
+    'id' =&gt; Type::id(),
+    'fieldName' =&gt; $fieldType
+]
+</code></pre>
+
+<p>which is equivalent of:</p>
+<pre><code class="php">'fields' =&gt; [
+    'id' =&gt; ['type' =&gt; Type::id()],
+    'fieldName' =&gt; ['type' =&gt; $fieldName]
+]
+</code></pre>
+
+<p>which is in turn equivalent of full form:</p>
+<pre><code class="php">'fields' =&gt; [
+    ['name' =&gt; 'id', 'type' =&gt; Type::id()],
+    ['name' =&gt; 'fieldName', 'type' =&gt; $fieldName]
+]
+</code></pre>
+
+<p>Same shorthand notation applies to field arguments as well.</p>
+<h1 id="recurring-and-circular-types">Recurring and circular types</h1>
+<p>Almost all real-world applications contain recurring or circular types. 
+Think user friends or nested comments for example. </p>
+<p><strong>graphql-php</strong> allows such types, but you have to use <code>callback</code> in 
+option <strong>fields</strong> (and/or <strong>interfaces</strong>).</p>
+<p>For example:</p>
+<pre><code class="php">$userType = null;
+
+$userType = new ObjectType([
+    'name' =&gt; 'User',
+    'fields' =&gt; function() use (&amp;$userType) {
+        return [
+            'email' =&gt; [
+                'type' =&gt; Type::string()
+            ],
+            'friends' =&gt; [
+                'type' =&gt; Type::listOf($userType)
+            ]
+        ];
+    }
+]);
+</code></pre>
+
+<p>Same example for <a href="#">inheritance style of type definitions</a> using <a href="#">TypeRegistry</a>:</p>
+<pre><code class="php">&lt;?php
+namespace MyApp;
+
+use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\ObjectType;
+
+class UserType extends ObjectType
+{
+    public function __construct()
+    {
+        $config = [
+            'fields' =&gt; function() {
+                return [
+                    'email' =&gt; MyTypes::string(),
+                    'friends' =&gt; MyTypes::listOf(MyTypes::user())
+                ];
+            }
+        ];
+        parent::__construct($config);
+    }
+}
+
+class MyTypes 
+{
+    private static $user;
+
+    public static function user()
+    {
+        return self::$user ?: (self::$user = new UserType());
+    }
+
+    public static function string()
+    {
+        return Type::string();
+    }
+
+    public static function listOf($type)
+    {
+        return Type::listOf($type);
+    }
+}
+</code></pre>
+
+<h1 id="field-resolution">Field Resolution</h1>
+<p>Field resolution is the primary mechanism in <strong>graphql-php</strong> for returning actual data for your fields.
+It is implemented using <code>resolveField</code> callback in type definition or <code>resolve</code>
+callback in field definition (which has precedence).</p>
+<p>Read section on <a href="">Data Fetching</a> for complete description of this process.</p>
+<h1 id="custom-metadata">Custom Metadata</h1>
+<p>All types in <strong>graphql-php</strong> accept configuration array. In some cases you may be interested in 
+passing your own metadata for type or field definition.</p>
+<p><strong>graphql-php</strong> preserves original configuration array in every type or field instance in 
+public property <code>$config</code>. Use it to implement app-level mappings and definitions.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../scalar-types/" class="btn btn-neutral float-right" title="Scalar Types">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../" class="btn btn-neutral" title="Introduction"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../scalar-types/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

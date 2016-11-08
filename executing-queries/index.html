@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Executing Queries - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Executing Queries";
+    var mkdocs_page_input_path = "executing-queries.md";
+    var mkdocs_page_url = "/executing-queries/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/object-types/">Object Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/interfaces/">Interfaces</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/unions/">Unions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/input-types/">Input Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Executing Queries</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#overview">Overview</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#parsing">Parsing</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#validating">Validating</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#executing">Executing</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../error-handling/">Handling Errors</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Executing Queries</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="overview">Overview</h1>
+<p>Query execution is a complex process involving multiple steps, including query <strong>parsing</strong>, 
+<strong>validating</strong> and finally <strong>executing</strong> against your <a href="../type-system/schema/">schema</a>.</p>
+<p><strong>graphql-php</strong> provides convenient facade for this process in class <code>GraphQL\GraphQL</code>:</p>
+<pre><code class="php">use GraphQL\GraphQL;
+
+$result = GraphQL::execute(
+    $schema, 
+    $queryString, 
+    $rootValue = null, 
+    $contextValue = null, 
+    $variableValues = null, 
+    $operationName = null
+);
+</code></pre>
+
+<p>Method returns <code>array</code> with <strong>data</strong> and <strong>errors</strong> keys, as described by 
+<a href="http://facebook.github.io/graphql/#sec-Response-Format">GraphQL specs</a>.
+This array is suitable for further serialization (e.g. using <code>json_encode</code>). 
+See also section on <a href="../error-handling/">error handling</a>.</p>
+<p>Description of method arguments:</p>
+<table>
+<thead>
+<tr>
+<th>Argument</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>schema</td>
+<td><code>GraphQL\Schema</code></td>
+<td><strong>Required.</strong> Instance of your application <a href="../type-system/schema/">Schema</a></td>
+</tr>
+<tr>
+<td>queryString</td>
+<td><code>string</code> or <code>GraphQL\Language\AST\Document</code></td>
+<td><strong>Required.</strong> Actual GraphQL query string to be parsed, validated and executed. If you parse query elsewhere before executing - pass corresponding ast document here to avoid new parsing.</td>
+</tr>
+<tr>
+<td>rootValue</td>
+<td><code>mixed</code></td>
+<td>Any value that represents a root of your data graph. It is passed as 1st argument to field resolvers of <a href="../type-system/schema/#query-and-mutation-types">Query type</a>. Can be omitted or set to null if actual root values are fetched by Query type itself.</td>
+</tr>
+<tr>
+<td>contextValue</td>
+<td><code>mixed</code></td>
+<td>Any value that holds information shared between all field resolvers. Most often they use it to pass currently logged in user, locale details, etc.<br><br>It will be available as 3rd argument in all field resolvers. (see section on <a href="../type-system/object-types/#field-configuration-options">Field Definitions</a> for reference) <strong>graphql-php</strong> never modifies this value and passes it <em>as is</em> to all underlying resolvers.</td>
+</tr>
+<tr>
+<td>variableValues</td>
+<td><code>array</code></td>
+<td>Map of variable values passed along with query string. See section on <a href="http://graphql.org/learn/queries/#variables">query variables on official GraphQL website</a></td>
+</tr>
+<tr>
+<td>operationName</td>
+<td><code>string</code></td>
+<td>Allows the caller to specify which operation in queryString will be run, in cases where queryString contains multiple top-level operations.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="parsing">Parsing</h1>
+<p>Following reading describes implementation details of query execution process. It may clarify some 
+internals of GraphQL but is not required in order to use it. Feel free to skip to next section 
+on <a href="../error-handling/">Error Handling</a> for essentials.</p>
+<p>TODOC</p>
+<h1 id="validating">Validating</h1>
+<p>TODOC</p>
+<h1 id="executing">Executing</h1>
+<p>TODOC</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../error-handling/" class="btn btn-neutral float-right" title="Handling Errors">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../type-system/schema/" class="btn btn-neutral" title="Schema"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../type-system/schema/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../error-handling/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

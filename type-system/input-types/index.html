@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Input Types - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Input Types";
+    var mkdocs_page_input_path = "type-system\input-types.md";
+    var mkdocs_page_url = "/type-system/input-types/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../object-types/">Object Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../interfaces/">Interfaces</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../unions/">Unions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Input Types</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#about-input-and-output-types">About Input and Output Types</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#input-object-type">Input Object Type</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configuration-options">Configuration options</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#using-input-object-type">Using Input Object Type</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../executing-queries/">Executing Queries</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../error-handling/">Handling Errors</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Type System &raquo;</li>
+        
+      
+    
+    <li>Input Types</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="about-input-and-output-types">About Input and Output Types</h1>
+<p>GraphQL receives data from clients via <a href="../object-types/#field-arguments">Field Arguments</a>.</p>
+<p>Both - fields and arguments require <strong>type</strong> option in definition. But expected value of this option
+is different for fields and arguments, as in GraphQL argument is conceptually input while field is conceptually 
+output.</p>
+<p>Consequentially all types in GraphQL are of two categories: <strong>input</strong> and <strong>output</strong>.</p>
+<ul>
+<li>
+<p><strong>Output</strong> types (or field types) are: <a href="../scalar-types/">Scalar</a>, <a href="../enum-types/">Enum</a>, <a href="../object-types/">Object</a>, 
+<a href="../interfaces/">Interface</a>, <a href="../unions/">Union</a></p>
+</li>
+<li>
+<p><strong>Input</strong> types (or argument types) are: <a href="../scalar-types/">Scalar</a>, <a href="../enum-types/">Enum</a>, InputObject</p>
+</li>
+</ul>
+<p>Obviously <a href="../lists-and-nonnulls/">NonNull and List</a> types belong to both categories depending on their 
+inner type.</p>
+<p>Until now all examples of field <strong>arguments</strong> in this documentation were of <a href="../scalar-types/">Scalar</a> or 
+<a href="../enum-types/">Enum</a> types. But you can also easily pass complex objects. </p>
+<p>This is particularly valuable in the case of mutations, where input data might be rather complex.</p>
+<h1 id="input-object-type">Input Object Type</h1>
+<p>GraphQL specification defines Input Object Type for complex inputs. It is similar to ObjectType
+except that it's fields have no <strong>args</strong> or <strong>resolve</strong> options and their <strong>type</strong> must be input type.</p>
+<p>In <strong>graphql-php</strong> Input Object Type is an instance of <code>GraphQL\Type\Definition\InputObjectType</code> 
+(or one of it subclasses) which accepts configuration array in constructor:</p>
+<pre><code class="php">$filters = new InputObjectType([
+    'name' =&gt; 'StoryFiltersInput',
+    'fields' =&gt; [
+        'author' =&gt; [
+            'type' =&gt; Type::id(),
+            'description' =&gt; 'Only show stories with this author id'
+        ],
+        'popular' =&gt; [
+            'type' =&gt; Type::boolean(),
+            'description' =&gt; 'Only show popular stories (liked by several people)'
+        ],
+        'tags' =&gt; [
+            'type' =&gt; Type::listOf(Type::string()),
+            'description' =&gt; 'Only show stories which contain all of those tags'
+        ]
+    ]
+]);
+</code></pre>
+
+<p>Every field may be of other InputObjectType (thus complex hierarchies of inputs are possible)</p>
+<h1 id="configuration-options">Configuration options</h1>
+<p>Constructor of InputObjectType accepts array with only 3 options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Unique name of this object type within Schema</td>
+</tr>
+<tr>
+<td>fields</td>
+<td><code>array</code> or <code>callback</code> returning <code>array</code></td>
+<td><strong>Required</strong>. Array describing object fields (see below).</td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this type for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+</tbody>
+</table>
+<p>Every field is an array with following entries:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Name of the input field. When not set - inferred from <strong>fields</strong> array key</td>
+</tr>
+<tr>
+<td>type</td>
+<td><code>Type</code></td>
+<td><strong>Required.</strong> Instance of one of <a href="../input-types/">Input Types</a> (<code>Scalar</code>, <code>Enum</code>, <code>InputObjectType</code> + any combination of those with <code>NonNull</code> and <code>List</code> modifiers)</td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this input field for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+<tr>
+<td>defaultValue</td>
+<td><code>scalar</code></td>
+<td>Default value of this input field</td>
+</tr>
+</tbody>
+</table>
+<h1 id="using-input-object-type">Using Input Object Type</h1>
+<p>In the example above we defined our InputObjectType. Now let's use it in one of field arguments:</p>
+<pre><code class="php">$queryType = new ObjectType([
+    'name' =&gt; 'Query',
+    'fields' =&gt; [
+        'stories' =&gt; [
+            'type' =&gt; Type::listOf($storyType),
+            'args' =&gt; [
+                'filters' =&gt; [
+                    'type' =&gt; Type::nonNull($filters),
+                    'defaultValue' =&gt; [
+                        'popular' =&gt; true
+                    ]
+                ]
+            ],
+            'resolve' =&gt; function($rootValue, $args) {
+                return DataSource::filterStories($args['filters']);
+            }
+        ]
+    ]
+]);
+</code></pre>
+
+<p>(note that you can define <strong>defaultValue</strong> for fields with complex inputs as associative array).</p>
+<p>Then GraphQL query could include filters as literal value:</p>
+<pre><code class="graphql">{
+    stories(filters: {author: &quot;1&quot;, popular: false})
+}
+</code></pre>
+
+<p>Or as query variable:</p>
+<pre><code class="graphql">query($filters: StoryFiltersInput!) {
+    stories(filters: $filters)
+}
+</code></pre>
+
+<pre><code class="php">$variables = [
+    'filters' =&gt; [
+        &quot;author&quot; =&gt; &quot;1&quot;,
+        &quot;popular&quot; =&gt; false
+    ]
+];
+</code></pre>
+
+<p><strong>graphql-php</strong> will validate the input against your InputObjectType definition and pass it to your 
+resolver as <code>$args['filters']</code></p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../directives/" class="btn btn-neutral float-right" title="Directives">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../unions/" class="btn btn-neutral" title="Unions"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../unions/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../directives/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

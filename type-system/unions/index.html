@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Unions - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Unions";
+    var mkdocs_page_input_path = "type-system\unions.md";
+    var mkdocs_page_url = "/type-system/unions/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../object-types/">Object Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../interfaces/">Interfaces</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Unions</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#union-type-definition">Union Type Definition</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configuration-options">Configuration options</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../input-types/">Input Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../executing-queries/">Executing Queries</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../error-handling/">Handling Errors</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Type System &raquo;</li>
+        
+      
+    
+    <li>Unions</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="union-type-definition">Union Type Definition</h1>
+<p>A Union is an abstract type that simply enumerates other Object Types. 
+Value of Union Type is actually a value of one of included Object Types.</p>
+<p>In <strong>graphql-php</strong> union type is an instance of <code>GraphQL\Type\Definition\UnionType</code> 
+(or one of it subclasses) which accepts configuration array in constructor:</p>
+<pre><code class="php">$searchResultType = new UnionType([
+    'name' =&gt; 'SearchResult',
+    'types' =&gt; [
+        MyTypes::story(),
+        MyTypes::user()
+    ];
+    'resolveType' =&gt; function($value) {
+        if ($value-&gt;type === 'story') {
+            return MyTypes::story();            
+        } else {
+            return MyTypes::user();
+        }
+    }
+]);
+</code></pre>
+
+<p>This example uses <strong>inline</strong> style for Union definition, but there are also 
+<a href="../../type-system/#type-definition-styles">other styles</a> (using inheritance or composition).</p>
+<h1 id="configuration-options">Configuration options</h1>
+<p>Constructor of UnionType accepts an array. Below is a full list of allowed options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Unique name of this interface type within Schema</td>
+</tr>
+<tr>
+<td>types</td>
+<td><code>array</code></td>
+<td><strong>Required.</strong> List of Object Types included in this Union. Note that you can't create a Union type out of Interfaces or other Unions.</td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this type for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+<tr>
+<td>resolveType</td>
+<td><code>callback</code> returning instance of <code>ObjectType</code></td>
+<td><strong>function($value, $context, GraphQL\Type\Definition\ResolveInfo $info)</strong> Any <code>callable</code> that receives <code>$value</code> from resolver of the parent field and returns Object Type for that <code>$value</code>.</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../input-types/" class="btn btn-neutral float-right" title="Input Types">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../interfaces/" class="btn btn-neutral" title="Interfaces"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../interfaces/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../input-types/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

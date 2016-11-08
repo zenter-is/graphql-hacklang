@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Handling Errors - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Handling Errors";
+    var mkdocs_page_input_path = "error-handling.md";
+    var mkdocs_page_url = "/error-handling/";
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js"></script>
+  <script src="../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../js/highlight.pack.js"></script>
+  <script src="../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/object-types/">Object Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/interfaces/">Interfaces</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/unions/">Unions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/input-types/">Input Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../type-system/schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../executing-queries/">Executing Queries</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Handling Errors</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#errors-in-graphql">Errors in GraphQL</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#debugging-tools">Debugging tools</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#custom-error-formatting">Custom Error Formatting</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#schema-errors">Schema Errors</a></li>
+                
+            
+            </ul>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Handling Errors</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="errors-in-graphql">Errors in GraphQL</h1>
+<p>Query execution process never throws exceptions. Instead all errors that occur during query execution
+are caught, collected and included in response. </p>
+<p>There are 3 types of errors in GraphQL (Syntax, Validation and Execution errors):</p>
+<p><strong>Syntax</strong> errors are returned in response when query has invalid syntax and could not be parsed.
+Example output for invalid query <code>{hello</code> (missing bracket):</p>
+<pre><code class="php">[
+    'errors' =&gt; [
+        [
+            'message' =&gt; &quot;Syntax Error GraphQL request (1:7) Expected Name, found &lt;EOF&gt;\n\n1: {hello\n         ^\n&quot;,
+            'locations' =&gt; [
+                ['line' =&gt; 1, 'column' =&gt; 7]
+            ]
+        ]
+    ]
+]
+</code></pre>
+
+<p><strong>Validation</strong> errors - returned in response when query has semantic errors. 
+Example output for invalid query <code>{unknownField}</code>:</p>
+<pre><code class="php">[
+    'errors' =&gt; [
+        [
+            'message' =&gt; 'Cannot query field &quot;unknownField&quot; on type &quot;Query&quot;.',
+            'locations' =&gt; [
+                ['line' =&gt; 1, 'column' =&gt; 2]
+            ]
+        ]
+    ]
+]
+</code></pre>
+
+<p><strong>Execution</strong> errors - included in response when some field resolver throws 
+(or returns unexpected value). Example output for query with exception thrown in 
+field resolver <code>{fieldWithException}</code>:</p>
+<pre><code class="php">[
+    'data' =&gt; [
+        'fieldWithException' =&gt; null
+    ],
+    'errors' =&gt; [
+        [
+            'message' =&gt; 'Exception message thrown in field resolver',
+            'locations' =&gt; [
+                ['line' =&gt; 1, 'column' =&gt; 2]
+            ],
+            'path': [
+                'fieldWithException'
+            ]
+        ]
+    ]
+]
+</code></pre>
+
+<p>Obviously when <strong>Syntax</strong> or <strong>Validation</strong> error is detected - process is interrupted and query is not 
+executed. In such scenarios response only contains <strong>errors</strong>, but not <strong>data</strong>.</p>
+<p>GraphQL is forgiving to <strong>Execution</strong> errors which occur in resolvers of nullable fields. 
+If such field throws or returns unexpected value the value of the field in response will be simply 
+replaced with <code>null</code> and error entry will be added to response.</p>
+<p>If exception is thrown in non-null field - it will be bubbled up to first nullable field which will
+be replaced with <code>null</code> (and error entry added to response). If all fields up to the root are non-null - 
+<strong>data</strong> entry will be removed from n response and only <strong>errors</strong> key will be presented.</p>
+<h1 id="debugging-tools">Debugging tools</h1>
+<p>Each error entry contains pointer to line and column in original query string which caused 
+the error:</p>
+<pre><code class="php">'locations' =&gt; [
+    ['line' =&gt; 1, 'column' =&gt; 2]
+]
+</code></pre>
+
+<p>GraphQL clients like <strong>Relay</strong> or <strong>GraphiQL</strong> leverage this information to highlight 
+actual piece of query containing error. </p>
+<p>In some cases (like deep fragment fields) locations will include several entries to track down the 
+path to field with error in query.</p>
+<p><strong>Execution</strong> errors also contain <strong>path</strong> from the very root field to actual field value producing 
+an error (including indexes for array types and fieldNames for object types). So in complex situation 
+this path could look like this:</p>
+<pre><code class="php">'path' =&gt; [
+    'lastStoryPosted',
+    'author',
+    'friends',
+    3
+    'fieldWithException'
+]
+</code></pre>
+
+<h1 id="custom-error-formatting">Custom Error Formatting</h1>
+<p>If you want to apply custom formatting to errors - use <strong>GraphQL::executeAndReturnResult()</strong> instead
+of <strong>GraphQL::execute()</strong>.</p>
+<p>It has exactly the same <a href="../executing-queries/">signature</a>, but instead of array it 
+returns <code>GraphQL\Executor\ExecutionResult</code> instance which holds errors in public <strong>$errors</strong> 
+property and data in <strong>$data</strong> property.</p>
+<p>Each entry of <strong>$errors</strong> array contains instance of <code>GraphQL\Error\Error</code> which wraps original 
+exceptions thrown by resolvers. To access original exceptions use <code>$error-&gt;getPrevious()</code> method.
+But note that previous exception is only available for <strong>Execution</strong> errors and will be <code>null</code>
+for <strong>Syntax</strong> or <strong>Validation</strong> errors.</p>
+<h1 id="schema-errors">Schema Errors</h1>
+<p>So far we only covered errors which occur during query execution process. But schema definition can 
+also throw if there is an error in one of type definitions.</p>
+<p>Usually such errors mean that there is some logical error in your schema and it is the only case 
+when it makes sense to return <code>500</code> error code for GraphQL endpoint:</p>
+<pre><code class="php">try {
+    $schema = new Schema([
+        // ...
+    ]);
+
+    $result = GraphQL::execute($schema, $query);
+} catch(\Exception $e) {
+    header('Content-Type: application/json', true, 500);
+    echo json_encode([
+        'message' =&gt; 'Unexpected error'
+    ]);
+    exit;
+}
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../data-fetching/" class="btn btn-neutral float-right" title="Fetching Data">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../executing-queries/" class="btn btn-neutral" title="Executing Queries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../executing-queries/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../data-fetching/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>

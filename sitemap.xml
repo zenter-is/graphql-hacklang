@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    
+    <url>
+     <loc>None/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/getting-started/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+        
+    <url>
+     <loc>None/type-system/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/object-types/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/scalar-types/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/enum-types/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/lists-and-nonnulls/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/interfaces/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/unions/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/input-types/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/directives/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    <url>
+     <loc>None/type-system/schema/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+        
+    
+
+    
+    <url>
+     <loc>None/executing-queries/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/error-handling/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/data-fetching/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/best-practices/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+    
+    <url>
+     <loc>None/complementary-tools/</loc>
+     <lastmod>2016-11-08</lastmod>
+     <changefreq>daily</changefreq>
+    </url>
+    
+
+</urlset>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <title>Interfaces - graphql-php</title>
+  
+
+  <link rel="shortcut icon" href="../../img/favicon.ico">
+
+  
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="../../css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/highlight.css">
+
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Interfaces";
+    var mkdocs_page_input_path = "type-system\interfaces.md";
+    var mkdocs_page_url = "/type-system/interfaces/";
+  </script>
+  
+  <script src="../../js/jquery-2.1.1.min.js"></script>
+  <script src="../../js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="../../js/highlight.pack.js"></script>
+  <script src="../../js/theme.js"></script> 
+
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="../.." class="icon icon-home"> graphql-php</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        <ul class="current">
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../..">About</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../getting-started/">Getting Started</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <ul class="subnav">
+    <li><span>Type System</span></li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../">Introduction</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../object-types/">Object Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../scalar-types/">Scalar Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../enum-types/">Enumeration Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../lists-and-nonnulls/">Lists and Non-Null</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 current">
+        <a class="current" href="./">Interfaces</a>
+        
+            <ul>
+            
+                <li class="toctree-l3"><a href="#interface-type-definition">Interface Type Definition</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#configuration-options">Configuration options</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#implementing-interface">Implementing interface</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#covariant-return-types-for-interface-fields">Covariant return types for interface fields</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#sharing-interface-fields">Sharing Interface fields</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#interface-role-in-data-fetching">Interface role in data fetching</a></li>
+                
+            
+            </ul>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../unions/">Unions</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../input-types/">Input Types</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../directives/">Directives</a>
+        
+    </li>
+
+        
+            
+    <li class="toctree-l1 ">
+        <a class="" href="../schema/">Schema</a>
+        
+    </li>
+
+        
+    </ul>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../executing-queries/">Executing Queries</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../error-handling/">Handling Errors</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../best-practices/">Best Practices</a>
+        
+    </li>
+<li>
+          
+            <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../../complementary-tools/">Complementary Tools</a>
+        
+    </li>
+<li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../..">graphql-php</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Type System &raquo;</li>
+        
+      
+    
+    <li>Interfaces</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="interface-type-definition">Interface Type Definition</h1>
+<p>An Interface is an abstract type that includes a certain set of fields that a 
+type must include to implement the interface.</p>
+<p>In <strong>graphql-php</strong> interface type is an instance of <code>GraphQL\Type\Definition\InterfaceType</code> 
+(or one of it subclasses) which accepts configuration array in constructor:</p>
+<pre><code class="php">use GraphQL\Type\Definition\InterfaceType;
+use GraphQL\Type\Definition\Type;
+
+$character = new InterfaceType([
+    'name' =&gt; 'Character',
+    'description' =&gt; 'A character in the Star Wars Trilogy',
+    'fields' =&gt; [
+        'id' =&gt; [
+            'type' =&gt; Type::nonNull(Type::string()),
+            'description' =&gt; 'The id of the character.',
+        ],
+        'name' =&gt; [
+            'type' =&gt; Type::string(),
+            'description' =&gt; 'The name of the character.'
+        ]
+    ],
+    'resolveType' =&gt; function ($value) {
+        if ($value-&gt;type === 'human') {
+            return MyTypes::human();            
+        } else {
+            return MyTypes::droid();
+        }
+    }
+]);
+</code></pre>
+
+<p>This example uses <strong>inline</strong> style for Interface definition, but there are also 
+<a href="../../type-system/#type-definition-styles">other styles</a> (using inheritance or composition).</p>
+<h1 id="configuration-options">Configuration options</h1>
+<p>Constructor of InterfaceType accepts an array. Below is a full list of allowed options:</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Type</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td><code>string</code></td>
+<td><strong>Required.</strong> Unique name of this interface type within Schema</td>
+</tr>
+<tr>
+<td>fields</td>
+<td><code>array</code></td>
+<td><strong>Required.</strong> List of fields required to be defined by interface implementors. Same as <a href="#">Fields for Object Type</a></td>
+</tr>
+<tr>
+<td>description</td>
+<td><code>string</code></td>
+<td>Plain-text description of this type for clients (e.g. used by <a href="https://github.com/graphql/graphiql">GraphiQL</a> for auto-generated documentation)</td>
+</tr>
+<tr>
+<td>resolveType</td>
+<td><code>callback</code> returning instance of <code>ObjectType</code></td>
+<td><strong>function($value, $context, GraphQL\Type\Definition\ResolveInfo $info)</strong> Any <code>callable</code> that receives <code>$value</code> from resolver of the parent field and returns concrete interface implementor for that <code>$value</code>.</td>
+</tr>
+</tbody>
+</table>
+<h1 id="implementing-interface">Implementing interface</h1>
+<p>To implement the Interface simply add it to <strong>interfaces</strong> array of Object Type definition:</p>
+<pre><code class="php">$humanType = new ObjectType([
+    'name' =&gt; 'Human',
+    'fields' =&gt; [
+        'id' =&gt; [
+            'type' =&gt; Type::nonNull(Type::string()),
+            'description' =&gt; 'The id of the character.',
+        ],
+        'name' =&gt; [
+            'type' =&gt; Type::string(),
+            'description' =&gt; 'The name of the character.'
+        ]
+    ],
+    'interfaces' =&gt; [
+        $character
+    ]
+]);
+</code></pre>
+
+<p>Note that Object Type must include all fields of interface with exact same types 
+(including <strong>nonNull</strong> specification) and arguments.</p>
+<p>The only exception is when object's field type is more specific than the type of this field defined in interface 
+(see <a href="#covariant-return-types-for-interface-fields">Covariant return types for interface fields</a> below)</p>
+<h1 id="covariant-return-types-for-interface-fields">Covariant return types for interface fields</h1>
+<p>Object types implementing interface may change field type to more specific.
+Example:</p>
+<pre><code>interface A {
+  field1: A
+}
+
+type B implements A {
+  field1: B
+}
+</code></pre>
+
+<h1 id="sharing-interface-fields">Sharing Interface fields</h1>
+<p>Since every Object Type implementing an Interface must have the same set of fields - it often makes 
+sense to re-use field definitions of Interface in Object Types:</p>
+<pre><code class="php">$humanType = new ObjectType([
+    'name' =&gt; 'Human',
+    'interfaces' =&gt; [
+        $character
+    ],
+    'fields' =&gt; [
+        'height' =&gt; Type::float(),
+        $character-&gt;getField('id'),
+        $character-&gt;getField('name')
+    ] 
+]);
+</code></pre>
+
+<p>In this case field definitions are created only once (as a part of Interface Type) and then 
+re-used by all interface implementors. It can save several microseconds and kilobytes + ensures that 
+field definitions of Interface and implementors are always in sync.</p>
+<p>Yet it creates a problem with resolution of such fields. There are two ways how shared fields could 
+be resolved:</p>
+<ol>
+<li>
+<p>If field resolution algorithm is the same for all Interface implementors - you can simply add 
+<strong>resolve</strong> option to field definition in Interface itself.</p>
+</li>
+<li>
+<p>If field resolution varies from implementor to implementor - you can specify <strong>resolveField</strong> 
+option in <a href="../../type-system/object-types/#configuration-options">Object Type config</a> and handle field 
+resolutions there 
+(Note: <strong>resolve</strong> option in field definition has precedence over <strong>resolveField</strong> option in object type definition)</p>
+</li>
+</ol>
+<h1 id="interface-role-in-data-fetching">Interface role in data fetching</h1>
+<p>The only responsibility of interface in Data Fetching process is to return concrete Object Type 
+for given <code>$value</code> in <strong>resolveType</strong>. Then resolution of fields is delegated to resolvers of this 
+concrete Object Type.</p>
+<p>If <strong>resolveType</strong> option is omitted, <strong>graphql-php</strong> will loop through all interface implementors and 
+use their <strong>isTypeOf</strong> callback to pick the first suitable one. This is obviously less efficient 
+than single <strong>resolveType</strong> call. So it is recommended to define <strong>resolveType</strong> whenever possible.</p>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../unions/" class="btn btn-neutral float-right" title="Unions">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../lists-and-nonnulls/" class="btn btn-neutral" title="Lists and Non-Null"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+	  
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+<div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../lists-and-nonnulls/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../unions/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+
+</body>
+</html>
