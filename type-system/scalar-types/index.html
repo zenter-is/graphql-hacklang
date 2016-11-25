@@ -172,20 +172,6 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../../data-fetching/">Fetching Data</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../../best-practices/">Best Practices</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
         <a class="" href="../../complementary-tools/">Complementary Tools</a>
         
     </li>
@@ -264,12 +250,12 @@ or hardcoded in source code) to <strong>serialized</strong> representation inclu
 </ol>
 <p>Those cases are covered by methods <code>serialize</code>, <code>parseValue</code> and <code>parseLiteral</code> of abstract <code>ScalarType</code> 
 class respectively.</p>
-<p>Here is an example of simple <code>Email</code> type (using inheritance):</p>
+<p>Here is an example of simple <code>Email</code> type:</p>
 <pre><code class="php">&lt;?php
 namespace MyApp;
 
 use GraphQL\Error\Error;
-use GraphQL\Language\AST\StringValue;
+use GraphQL\Language\AST\StringValueNode;
 use GraphQL\Type\Definition\ScalarType;
 use GraphQL\Utils;
 
@@ -317,44 +303,21 @@ class EmailType extends ScalarType
      *   user(email: &quot;user@example.com&quot;) 
      * }
      *
-     * @param \GraphQL\Language\AST\Node $valueAST
+     * @param \GraphQL\Language\AST\Node $valueNode
      * @return string
      * @throws Error
      */
-    public function parseLiteral($valueAST)
+    public function parseLiteral($valueNode)
     {
         // Note: throwing GraphQL\Error\Error vs \UnexpectedValueException to benefit from GraphQL
         // error location in query:
-        if (!$valueAST instanceof StringValue) {
-            throw new Error('Query error: Can only parse strings got: ' . $valueAST-&gt;kind, [$valueAST]);
+        if (!$valueNode instanceof StringValueNode) {
+            throw new Error('Query error: Can only parse strings got: ' . $valueNode-&gt;kind, [$valueNode]);
         }
-        if (!filter_var($valueAST-&gt;value, FILTER_VALIDATE_EMAIL)) {
-            throw new Error(&quot;Not a valid email&quot;, [$valueAST]);
+        if (!filter_var($valueNode-&gt;value, FILTER_VALIDATE_EMAIL)) {
+            throw new Error(&quot;Not a valid email&quot;, [$valueNode]);
         }
-        return $valueAST-&gt;value;
-    }
-}
-</code></pre>
-
-<p>Same example, using composition over inheritance:</p>
-<pre><code class="php">&lt;?php
-namespace MyApp;
-
-use GraphQL\Type\DefinitionContainer;
-use GraphQL\Type\Definition\CustomScalarType;
-
-class EmailType implements DefinitionContainer
-{
-    private $definition;
-
-    public function getDefinition()
-    {
-        return $this-&gt;definition ?: ($this-&gt;definition = new CustomScalarType([
-            'name' =&gt; 'Email',
-            'serialize' =&gt; function($value) {/* See function body above */},
-            'parseValue' =&gt; function($value) {/* See function body above */},
-            'parseLiteral' =&gt; function($valueAST) {/* See function body above */},
-        ]));
+        return $valueNode-&gt;value;
     }
 }
 </code></pre>
@@ -367,7 +330,7 @@ $emailType = new CustomScalarType([
     'name' =&gt; 'Email',
     'serialize' =&gt; function($value) {/* See function body above */},
     'parseValue' =&gt; function($value) {/* See function body above */},
-    'parseLiteral' =&gt; function($valueAST) {/* See function body above */},
+    'parseLiteral' =&gt; function($valueNode) {/* See function body above */},
 ]);
 </code></pre>
               

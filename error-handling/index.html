@@ -178,20 +178,6 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../data-fetching/">Fetching Data</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../best-practices/">Best Practices</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
         <a class="" href="../complementary-tools/">Complementary Tools</a>
         
     </li>
@@ -334,14 +320,17 @@ when it makes sense to return <code>500</code> error code for GraphQL endpoint:<
         // ...
     ]);
 
-    $result = GraphQL::execute($schema, $query);
+    $body = GraphQL::execute($schema, $query);
+    $status = 200;
 } catch(\Exception $e) {
-    header('Content-Type: application/json', true, 500);
-    echo json_encode([
+    $body = json_encode([
         'message' =&gt; 'Unexpected error'
     ]);
-    exit;
+    $status = 500;
 }
+
+header('Content-Type: application/json', true, $status);
+echo json_encode($body);
 </code></pre>
               
             </div>
@@ -350,7 +339,7 @@ when it makes sense to return <code>500</code> error code for GraphQL endpoint:<
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../data-fetching/" class="btn btn-neutral float-right" title="Fetching Data">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../complementary-tools/" class="btn btn-neutral float-right" title="Complementary Tools">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
         <a href="../executing-queries/" class="btn btn-neutral" title="Executing Queries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
@@ -382,7 +371,7 @@ when it makes sense to return <code>500</code> error code for GraphQL endpoint:<
         <span><a href="../executing-queries/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../data-fetching/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../complementary-tools/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>

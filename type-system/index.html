@@ -175,20 +175,6 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../data-fetching/">Fetching Data</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../best-practices/">Best Practices</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
         <a class="" href="../complementary-tools/">Complementary Tools</a>
         
     </li>
@@ -253,7 +239,7 @@ $myType = new ObjectType([
 ]);
 </code></pre>
 
-<p>Class per type, using inheritance:</p>
+<p>Class per type:</p>
 <pre><code class="php">&lt;?php
 namespace MyApp;
 
@@ -272,30 +258,6 @@ class MyType extends ObjectType
             ]
         ];
         parent::__construct($config);
-    }
-}
-</code></pre>
-
-<p>Class per type, using composition:</p>
-<pre><code class="php">&lt;?php
-namespace MyApp;
-
-use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
-use GraphQL\Type\DefinitionContainer;
-
-class MyType implements DefinitionContainer
-{
-    private $definition;
-
-    public function getDefinition()
-    {
-        return $this-&gt;definition ?: ($this-&gt;definition = new ObjectType([
-            'name' =&gt; 'MyType',
-            'fields' =&gt; [
-                'id' =&gt; Type::id()
-            ]
-        ]));
     }
 }
 </code></pre>
@@ -328,7 +290,7 @@ class BlogPostType extends ObjectType
 </code></pre>
 
 <h1 id="type-registry">Type Registry</h1>
-<p>Every type must be presented in Schema with single instance (<strong>graphql-php</strong> 
+<p>Every type must be presented in Schema by single instance (<strong>graphql-php</strong> 
 throws when it discovers several instances with the same <code>name</code> in schema).</p>
 <p>Therefore if you define your type as separate PHP class you must ensure that only one 
 instance of that class is added to schema.</p>

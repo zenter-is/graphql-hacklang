@@ -73,6 +73,9 @@
                 <li class="toctree-l3"><a href="#installation">Installation</a></li>
                 
             
+                <li class="toctree-l3"><a href="#upgrading">Upgrading</a></li>
+                
+            
                 <li class="toctree-l3"><a href="#install-tools-optional">Install Tools (optional)</a></li>
                 
             
@@ -181,20 +184,6 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../data-fetching/">Fetching Data</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../best-practices/">Best Practices</a>
-        
-    </li>
-<li>
-          
-            <li>
-    <li class="toctree-l1 ">
         <a class="" href="../complementary-tools/">Complementary Tools</a>
         
     </li>
@@ -240,14 +229,16 @@ first learn about  GraphQL on <a href="http://graphql.org/learn/">official websi
 add <code>composer.json</code> file to your project root folder with following contents:</p>
 <pre><code>{
     &quot;require&quot;: {
-        &quot;webonyx/graphql-php&quot;: &quot;^0.7&quot;
+        &quot;webonyx/graphql-php&quot;: &quot;^0.8&quot;
     }
 }
 </code></pre>
 
 <p>and run <code>composer install</code>. </p>
-<p>If you already have composer.json file - simply run: <code>composer require webonyx/graphql-php</code></p>
-<p>If you are upgrading, see <a href="https://github.com/webonyx/graphql-php/blob/master/UPGRADE.md">upgrade instructions</a></p>
+<p>If you already have composer.json file - simply run: <code>composer require webonyx/graphql-php="^0.8"</code></p>
+<h1 id="upgrading">Upgrading</h1>
+<p>We try to keep library releases backwards compatible. But when breaking changes are inevitable 
+they are explained in <a href="https://github.com/webonyx/graphql-php/blob/master/UPGRADE.md">upgrade instructions</a>.</p>
 <h1 id="install-tools-optional">Install Tools (optional)</h1>
 <p>While it is possible to communicate with GraphQL API using regular HTTP tools it is way 
 more convenient for humans to use <a href="https://github.com/graphql/graphiql">GraphiQL</a> - an in-browser 
@@ -263,7 +254,7 @@ GraphQL API.</p>
 page and install it locally.</p>
 <h1 id="hello-world">Hello World</h1>
 <p>Let's create type system that will be capable to process following simple query:</p>
-<pre><code>query { 
+<pre><code>query {
   echo(message: &quot;Hello World&quot;)
 }
 </code></pre>
@@ -290,7 +281,7 @@ $queryType = new ObjectType([
 </code></pre>
 
 <p>(Note: type definition can be expressed in <a href="../type-system/#type-definition-styles">different styles</a>, 
-including <strong>inheritance</strong>, <strong>composition</strong> and <strong>inline</strong>. This example uses <strong>inline</strong> style for simplicity)</p>
+but this example uses <strong>inline</strong> style for simplicity)</p>
 <p>The interesting piece here is <code>resolve</code> option of field definition. It is responsible for retuning 
 value of our field. Values of <strong>scalar</strong> fields will be directly included in response while values of 
 <strong>complex</strong> fields (objects, interfaces, unions) will be passed down to nested field resolvers 
