@@ -154,6 +154,13 @@
 <li>
           
             <li>
+    <li class="toctree-l1 ">
+        <a class="" href="../data-fetching/">Fetching Data</a>
+        
+    </li>
+<li>
+          
+            <li>
     <li class="toctree-l1 current">
         <a class="current" href="./">Handling Errors</a>
         
@@ -273,9 +280,9 @@ executed. In such scenarios response only contains <strong>errors</strong>, but 
 <p>GraphQL is forgiving to <strong>Execution</strong> errors which occur in resolvers of nullable fields. 
 If such field throws or returns unexpected value the value of the field in response will be simply 
 replaced with <code>null</code> and error entry will be added to response.</p>
-<p>If exception is thrown in non-null field - it will be bubbled up to first nullable field which will
-be replaced with <code>null</code> (and error entry added to response). If all fields up to the root are non-null - 
-<strong>data</strong> entry will be removed from n response and only <strong>errors</strong> key will be presented.</p>
+<p>If exception is thrown in non-null field - error bubbles up to first nullable field. This nullable field is<br />
+replaced with <code>null</code> and error entry is added to response. If all fields up to the root are non-null - 
+<strong>data</strong> entry will be removed from response and only <strong>errors</strong> key will be presented.</p>
 <h1 id="debugging-tools">Debugging tools</h1>
 <p>Each error entry contains pointer to line and column in original query string which caused 
 the error:</p>
@@ -342,7 +349,7 @@ echo json_encode($body);
         <a href="../complementary-tools/" class="btn btn-neutral float-right" title="Complementary Tools">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../executing-queries/" class="btn btn-neutral" title="Executing Queries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../data-fetching/" class="btn btn-neutral" title="Fetching Data"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -368,7 +375,7 @@ echo json_encode($body);
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../executing-queries/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../data-fetching/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
         <span style="margin-left: 15px"><a href="../complementary-tools/" style="color: #fcfcfc">Next &raquo;</a></span>

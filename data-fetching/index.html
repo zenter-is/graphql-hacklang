@@ -154,17 +154,25 @@
 <li>
           
             <li>
-    <li class="toctree-l1 ">
-        <a class="" href="../error-handling/">Handling Errors</a>
-        
-    </li>
-<li>
-          
-            <li>
     <li class="toctree-l1 current">
         <a class="current" href="./">Fetching Data</a>
         
             <ul>
+            
+                <li class="toctree-l3"><a href="#overview">Overview</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#default-field-resolver">Default Field Resolver</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#default-field-resolver-per-type">Default Field Resolver per Type</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#solving-n1-problem">Solving N+1 Problem</a></li>
+                
+            
+                <li class="toctree-l3"><a href="#async-php">Async PHP</a></li>
+                
             
             </ul>
         
@@ -173,7 +181,7 @@
           
             <li>
     <li class="toctree-l1 ">
-        <a class="" href="../best-practices/">Best Practices</a>
+        <a class="" href="../error-handling/">Handling Errors</a>
         
     </li>
 <li>
@@ -217,7 +225,213 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="overview">Overview</h1>
+<p>GraphQL is data-storage agnostic. You can use any underlying data storage engine, including SQL or NoSQL database, 
+plain files or in-memory data structures.</p>
+<p>In order to convert GraphQL query to PHP array <strong>graphql-php</strong> traverses query fields (using depth-first algorithm) and 
+runs special <code>resolve</code> function on each field. This <code>resolve</code> function is provided by you as a part of 
+<a href="../type-system/object-types/#field-configuration-options">field definition</a>.</p>
+<p>Result returned by <code>resolve</code> function is directly included in response (for scalars and enums)
+or passed down to nested fields (for objects).</p>
+<p>Let's walk through an example. Consider following GraphQL query:</p>
+<pre><code class="graphql">{
+  lastStory {
+    title
+    author {
+      name
+    }
+  }
+}
+</code></pre>
+
+<p>We need Schema that can fulfill it. On the very top level Schema contains Query type:</p>
+<pre><code class="php">$queryType = new ObjectType([
+  'name' =&gt; 'Query',
+  'fields' =&gt; [
+
+    'lastStory' =&gt; [
+      'type' =&gt; $blogStoryType,
+      'resolve' =&gt; function() {
+        return [
+          'id' =&gt; 1,
+          'title' =&gt; 'Example blog post',
+          'authorId' =&gt; 1
+        ];
+      }
+    ]
+
+  ]
+]);
+</code></pre>
+
+<p>As we see field <code>lastStory</code> has <code>resolve</code> function that is responsible for fetching data.</p>
+<p>In our example we simply return array value, but in real-world application you would query
+your database/cache/search index and return result.</p>
+<p>Since <code>lastStory</code> is of complex type <code>BlogStory</code> this result is passed down to fields of this type:</p>
+<pre><code class="php">$blogStoryType = new ObjectType([
+  'name' =&gt; 'BlogStory',
+  'fields' =&gt; [
+
+    'author' =&gt; [
+      'type' =&gt; $userType,
+      'resolve' =&gt; function($blogStory) {
+        $users = [
+          1 =&gt; [
+            'id' =&gt; 1,
+            'name' =&gt; 'Smith'
+          ],
+          2 =&gt; [
+            'id' =&gt; 2,
+            'name' =&gt; 'Anderson'
+          ]
+        ];
+        return $users[$blogStory['authorId']];
+      }
+    ],
+
+    'title' =&gt; [
+      'type' =&gt; Type::string()
+    ]
+
+  ]
+]);
+</code></pre>
+
+<p>Here <code>$blogStory</code> is the array returned by <code>lastStory</code> field above. </p>
+<p>Again: in real-world applications you would fetch user data from datastore by <code>authorId</code> and return it.
+Also note that you don't have to return arrays. You can return any value, <strong>graphql-php</strong> will pass it untouched
+to nested resolvers.</p>
+<p>But then the question appears - field <code>title</code> has no <code>resolve</code> option. How is it resolved?</p>
+<p>The answer is: there is default resolver for all fields. When you define your own <code>resolve</code> function
+for a field you simply override this default resolver.</p>
+<h1 id="default-field-resolver">Default Field Resolver</h1>
+<p><strong>graphql-php</strong> provides following default field resolver:</p>
+<pre><code class="php">function defaultFieldResolver($source, $args, $context, ResolveInfo $info)
+{
+    $fieldName = $info-&gt;fieldName;
+    $property = null;
+
+    if (is_array($source) || $source instanceof \ArrayAccess) {
+        if (isset($source[$fieldName])) {
+            $property = $source[$fieldName];
+        }
+    } else if (is_object($source)) {
+        if (isset($source-&gt;{$fieldName})) {
+            $property = $source-&gt;{$fieldName};
+        }
+    }
+
+    return $property instanceof \Closure ? $property($source, $args, $context) : $property;
+}
+</code></pre>
+
+<p>As you see it returns value by key (for arrays) or property (for objects). If value is not set - it returns <code>null</code>.</p>
+<p>To override default resolver - use:</p>
+<pre><code class="php">GraphQL\GraphQL::setDefaultFieldResolver($myResolverCallback);
+</code></pre>
+
+<h1 id="default-field-resolver-per-type">Default Field Resolver per Type</h1>
+<p>Sometimes it might be convenient to set default field resolver per type. You can do so by providing
+<a href="../type-system/object-types/#configuration-options">resolveField option in type config</a>. For example:</p>
+<pre><code class="php">$userType = new ObjectType([
+  'name' =&gt; 'User',
+  'fields' =&gt; [
+
+    'name' =&gt; Type::string(),
+    'email' =&gt; Type::string()
+
+  ],
+  'resolveField' =&gt; function(User $user, $args, $context, ResolveInfo $info) {
+    switch ($info-&gt;fieldName) {
+        case 'name':
+          return $user-&gt;getName();
+        case 'email':
+          return $user-&gt;getEmail();
+        default:
+          return null;
+    }
+  }
+]);
+</code></pre>
+
+<p>Keep in mind that <strong>field resolver</strong> has precedence over <strong>default field resolver per type</strong> which in turn
+ has precedence over <strong>default field resolver</strong>.</p>
+<h1 id="solving-n1-problem">Solving N+1 Problem</h1>
+<p>Since: 9.0</p>
+<p>One of the most annoying problems with data fetching is so-called <a href="https://secure.phabricator.com/book/phabcontrib/article/n_plus_one/">N+1 problem</a>.</p>
+<p>Consider following GraphQL query:</p>
+<pre><code>{
+  topStories(limit: 10) {
+    title
+    author {
+      name
+      email
+    }
+  }
+}
+</code></pre>
+
+<p>Naive field resolution process would require up to 10 calls to underlying data store to fetch authors for all 10 stories.</p>
+<p><strong>graphql-php</strong> provides tools to mitigate this problem: it allows you to defer actual field resolution to later stage 
+when one batched query could be executed instead of 10 distinct queries.</p>
+<p>Here is an example of <code>BlogStory</code> resolver for field <code>author</code> that uses deferring:</p>
+<pre><code class="php">'resolve' =&gt; function($blogStory) {
+    MyUserBuffer::add($blogStory['authorId']);
+
+    return new GraphQL\Deferred(function () use ($blogStory) {
+        MyUserBuffer::loadOnce();
+        return MyUserBuffer::get($blogStory['authorId']);
+    });
+}
+</code></pre>
+
+<p>In this example we fill up buffer with 10 author ids first. Then <strong>graphql-php</strong> continues 
+resolving other non-deferred fields until there are none of them left.</p>
+<p>After that it calls <code>Closures</code> wrapped by <code>GraphQL\Deferred</code> which in turn load all buffered 
+ids once (using SQL IN(?), Redis MGET or other similar tools) and return final field value.</p>
+<p>Originally this approach was advocated by Facebook in their <a href="https://github.com/facebook/dataloader">Dataloader</a>
+project.</p>
+<p>This solution enables very interesting optimizations at no cost. Consider following query:</p>
+<pre><code>{
+  topStories(limit: 10) {
+    author {
+      email
+    }
+  }
+  category {
+    stories(limit: 10) {
+      author {
+        email
+      }
+    }
+  }
+}
+</code></pre>
+
+<p>Even if <code>author</code> field is located on different levels of query - it can be buffered in the same buffer.
+In this example only one query will be executed for all story authors comparing to 20 queries
+in naive implementation.</p>
+<h1 id="async-php">Async PHP</h1>
+<p>Since: 9.0</p>
+<p>If your project runs in environment that supports async operations 
+(like <code>HHVM</code>, <code>ReactPHP</code>, <code>Icicle.io</code>, <code>appserver.io</code> <code>PHP threads</code>, etc) you can leverage
+the power of your platform to resolve fields asynchronously.</p>
+<p>The only requirement: your platform must support the concept of Promises compatible with
+<a href="https://promisesaplus.com/">Promises A+</a> specification.</p>
+<p>To enable async support - set adapter for promises:</p>
+<pre><code>GraphQL\GraphQL::setPromiseAdapter($adapter);
+</code></pre>
+
+<p>Where <code>$adapter</code> is an instance of class implementing <code>GraphQL\Executor\Promise\PromiseAdapter</code> interface.</p>
+<p>Then in your <code>resolve</code> functions you should return <code>Promises</code> of your platform instead of 
+<code>GraphQL\Deferred</code> instances.</p>
+<p>Platforms supported out of the box:</p>
+<ul>
+<li><a href="https://github.com/reactphp/react">ReactPHP</a> (requires <strong>react/promise</strong> as composer dependency):
+  <code>GraphQL\GraphQL::setPromiseAdapter(new GraphQL\Executor\Promise\Adapter\ReactPromiseAdapter());</code></li>
+<li>HHVM: TODO</li>
+</ul>
+<p>To integrate other platform - implement <code>GraphQL\Executor\Promise\PromiseAdapter</code> interface. </p>
               
             </div>
           </div>
@@ -225,10 +439,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../best-practices/" class="btn btn-neutral float-right" title="Best Practices">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../error-handling/" class="btn btn-neutral float-right" title="Handling Errors">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../error-handling/" class="btn btn-neutral" title="Handling Errors"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../executing-queries/" class="btn btn-neutral" title="Executing Queries"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -254,10 +468,10 @@
     <span class="rst-current-version" data-toggle="rst-current-version">
       
       
-        <span><a href="../error-handling/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+        <span><a href="../executing-queries/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../best-practices/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../error-handling/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
