@@ -357,7 +357,7 @@ for a field you simply override this default resolver.</p>
 <p>Keep in mind that <strong>field resolver</strong> has precedence over <strong>default field resolver per type</strong> which in turn
  has precedence over <strong>default field resolver</strong>.</p>
 <h1 id="solving-n1-problem">Solving N+1 Problem</h1>
-<p>Since: 9.0</p>
+<p>Since: 0.9.0</p>
 <p>One of the most annoying problems with data fetching is so-called <a href="https://secure.phabricator.com/book/phabcontrib/article/n_plus_one/">N+1 problem</a>.</p>
 <p>Consider following GraphQL query:</p>
 <pre><code>{
@@ -379,7 +379,7 @@ when one batched query could be executed instead of 10 distinct queries.</p>
     MyUserBuffer::add($blogStory['authorId']);
 
     return new GraphQL\Deferred(function () use ($blogStory) {
-        MyUserBuffer::loadOnce();
+        MyUserBuffer::loadBuffered();
         return MyUserBuffer::get($blogStory['authorId']);
     });
 }
@@ -412,7 +412,7 @@ project.</p>
 In this example only one query will be executed for all story authors comparing to 20 queries
 in naive implementation.</p>
 <h1 id="async-php">Async PHP</h1>
-<p>Since: 9.0</p>
+<p>Since: 0.9.0</p>
 <p>If your project runs in environment that supports async operations 
 (like <code>HHVM</code>, <code>ReactPHP</code>, <code>Icicle.io</code>, <code>appserver.io</code> <code>PHP threads</code>, etc) you can leverage
 the power of your platform to resolve fields asynchronously.</p>
@@ -429,7 +429,6 @@ the power of your platform to resolve fields asynchronously.</p>
 <ul>
 <li><a href="https://github.com/reactphp/react">ReactPHP</a> (requires <strong>react/promise</strong> as composer dependency):
   <code>GraphQL\GraphQL::setPromiseAdapter(new GraphQL\Executor\Promise\Adapter\ReactPromiseAdapter());</code></li>
-<li>HHVM: TODO</li>
 </ul>
 <p>To integrate other platform - implement <code>GraphQL\Executor\Promise\PromiseAdapter</code> interface. </p>
               
