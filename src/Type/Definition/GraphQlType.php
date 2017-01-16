@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Error\InvariantViolation;
@@ -15,7 +15,7 @@ GraphQLInputObjectType |
 GraphQLList |
 GraphQLNonNull;
 */
-abstract class Type implements \JsonSerializable
+abstract class GraphQlType implements \JsonSerializable
 {
     const STRING = 'String';
     const INT = 'Int';
@@ -198,7 +198,7 @@ abstract class Type implements \JsonSerializable
             $type = $type();
         }
 
-        if (!$type instanceof Type) {
+        if (!$type instanceof GraphQlType) {
             throw new InvariantViolation(sprintf(
                 'Expecting instance of ' . __CLASS__ . ', got "%s"',
                 Utils::getVariableType($type)
