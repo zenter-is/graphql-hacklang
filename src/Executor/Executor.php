@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor;
 
 use GraphQL\Error\Error;
@@ -21,7 +21,7 @@ use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Type\Introspection;
 use GraphQL\Utils;
 
@@ -58,7 +58,7 @@ class Executor
     /**
      * @param PromiseAdapter|null $promiseAdapter
      */
-    public static function setPromiseAdapter(PromiseAdapter $promiseAdapter = null)
+    public static function setPromiseAdapter(?PromiseAdapter $promiseAdapter = null)
     {
         self::$promiseAdapter = $promiseAdapter;
     }
@@ -257,7 +257,6 @@ class Executor
         if ($operation->operation === 'mutation') {
             return $this->executeFieldsSerially($type, $rootValue, $path, $fields);
         }
-
         return $this->executeFields($type, $rootValue, $path, $fields);
     }
 
@@ -687,7 +686,7 @@ class Executor
      * This is a small wrapper around completeValue which detects and logs errors
      * in the execution context.
      *
-     * @param Type $returnType
+     * @param GraphQlType $returnType
      * @param $fieldNodes
      * @param ResolveInfo $info
      * @param $path
@@ -695,7 +694,7 @@ class Executor
      * @return array|null|Promise
      */
     private function completeValueCatchingError(
-        Type $returnType,
+        GraphQlType $returnType,
         $fieldNodes,
         ResolveInfo $info,
         $path,
@@ -746,7 +745,7 @@ class Executor
      * This is a small wrapper around completeValue which annotates errors with
      * location information.
      *
-     * @param Type $returnType
+     * @param GraphQlType $returnType
      * @param $fieldNodes
      * @param ResolveInfo $info
      * @param $path
@@ -755,7 +754,7 @@ class Executor
      * @throws Error
      */
     public function completeValueWithLocatedError(
-        Type $returnType,
+        GraphQlType $returnType,
         $fieldNodes,
         ResolveInfo $info,
         $path,
@@ -802,7 +801,7 @@ class Executor
      * Otherwise, the field type expects a sub-selection set, and will complete the
      * value by evaluating all sub-selections.
      *
-     * @param Type $returnType
+     * @param GraphQlType $returnType
      * @param FieldNode[] $fieldNodes
      * @param ResolveInfo $info
      * @param array $path
@@ -812,7 +811,7 @@ class Executor
      * @throws \Exception
      */
     private function completeValue(
-        Type $returnType,
+        GraphQlType $returnType,
         $fieldNodes,
         ResolveInfo $info,
         $path,

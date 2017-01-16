@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Utils;
@@ -174,7 +174,7 @@ class FieldDefinition
     {
         if (null === $this->resolvedType) {
             // TODO: deprecate types as callbacks - instead just allow field definitions to be callbacks
-            $this->resolvedType = Type::resolve($this->type);
+            $this->resolvedType = GraphQlType::resolve($this->type);
         }
         return $this->resolvedType;
     }

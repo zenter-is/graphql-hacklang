@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Utils;
@@ -7,7 +7,7 @@ use GraphQL\Utils;
  * Class UnionType
  * @package GraphQL\Type\Definition
  */
-class UnionType extends Type implements AbstractType, OutputType, CompositeType
+class UnionType extends GraphQlType implements AbstractType, OutputType, CompositeType
 {
     /**
      * @var ObjectType[]
@@ -80,7 +80,7 @@ class UnionType extends Type implements AbstractType, OutputType, CompositeType
 
             $this->types = [];
             foreach ($types as $type) {
-                $this->types[] = Type::resolve($type);
+                $this->types[] = GraphQlType::resolve($type);
             }
         }
         return $this->types;
@@ -90,7 +90,7 @@ class UnionType extends Type implements AbstractType, OutputType, CompositeType
      * @param Type $type
      * @return mixed
      */
-    public function isPossibleType(Type $type)
+    public function isPossibleType(GraphQlType $type)
     {
         if (!$type instanceof ObjectType) {
             return false;

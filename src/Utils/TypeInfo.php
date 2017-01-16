@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Utils;
 
 use GraphQL\Language\AST\FieldNode;
@@ -19,7 +19,7 @@ use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Type\Introspection;
 use GraphQL\Utils;
 
@@ -32,7 +32,7 @@ class TypeInfo
     /**
      * Provided two types, return true if the types are equal (invariant).
      */
-    public static function isEqualType(Type $typeA, Type $typeB)
+    public static function isEqualType(GraphQlType $typeA, GraphQlType $typeB)
     {
         // Equivalent types are equal.
         if ($typeA === $typeB) {
@@ -57,7 +57,7 @@ class TypeInfo
      * Provided a type and a super type, return true if the first type is either
      * equal or a subset of the second super type (covariant).
      */
-    static function isTypeSubTypeOf(Schema $schema, Type $maybeSubType, Type $superType)
+    static function isTypeSubTypeOf(Schema $schema, GraphQlType $maybeSubType, GraphQlType $superType)
     {
         // Equivalent type is a valid subtype
         if ($maybeSubType === $superType) {
@@ -169,7 +169,7 @@ class TypeInfo
      *
      * @return FieldDefinition
      */
-    static private function getFieldDefinition(Schema $schema, Type $parentType, FieldNode $fieldNode)
+    static private function getFieldDefinition(Schema $schema, GraphQlType $parentType, FieldNode $fieldNode)
     {
         $name = $fieldNode->name->value;
         $schemaMeta = Introspection::schemaMetaFieldDef();
@@ -245,7 +245,7 @@ class TypeInfo
     /**
      * @return Type
      */
-    function getType()
+    public function getType()
     {
         if (!empty($this->typeStack)) {
             return $this->typeStack[count($this->typeStack) - 1];
@@ -256,7 +256,7 @@ class TypeInfo
     /**
      * @return Type
      */
-    function getParentType()
+    public function getParentType()
     {
         if (!empty($this->parentTypeStack)) {
             return $this->parentTypeStack[count($this->parentTypeStack) - 1];
@@ -267,7 +267,7 @@ class TypeInfo
     /**
      * @return InputType
      */
-    function getInputType()
+    public function getInputType()
     {
         if (!empty($this->inputTypeStack)) {
             return $this->inputTypeStack[count($this->inputTypeStack) - 1];
@@ -278,7 +278,7 @@ class TypeInfo
     /**
      * @return FieldDefinition
      */
-    function getFieldDef()
+    public function getFieldDef()
     {
         if (!empty($this->fieldDefStack)) {
             return $this->fieldDefStack[count($this->fieldDefStack) - 1];
@@ -289,7 +289,7 @@ class TypeInfo
     /**
      * @return Directive|null
      */
-    function getDirective()
+    public function getDirective()
     {
         return $this->directive;
     }
@@ -297,7 +297,7 @@ class TypeInfo
     /**
      * @return FieldArgument|null
      */
-    function getArgument()
+    public function getArgument()
     {
         return $this->argument;
     }
@@ -305,15 +305,15 @@ class TypeInfo
     /**
      * @param Node $node
      */
-    function enter(Node $node)
+    public function enter(Node $node)
     {
         $schema = $this->schema;
 
         switch ($node->kind) {
             case NodeKind::SELECTION_SET:
-                $namedType = Type::getNamedType($this->getType());
+                $namedType = GraphQlType::getNamedType($this->getType());
                 $compositeType = null;
-                if (Type::isCompositeType($namedType)) {
+                if (GraphQlType::isCompositeType($namedType)) {
                     // isCompositeType is a type refining predicate, so this is safe.
                     $compositeType = $namedType;
                 }
@@ -372,12 +372,12 @@ class TypeInfo
                 break;
 
             case NodeKind::LST:
-                $listType = Type::getNullableType($this->getInputType());
+                $listType = GraphQlType::getNullableType($this->getInputType());
                 $this->inputTypeStack[] = ($listType instanceof ListOfType ? $listType->getWrappedType() : null); // push
                 break;
 
             case NodeKind::OBJECT_FIELD:
-                $objectType = Type::getNamedType($this->getInputType());
+                $objectType = GraphQlType::getNamedType($this->getInputType());
                 $fieldType = null;
                 if ($objectType instanceof InputObjectType) {
                     $tmp = $objectType->getFields();
@@ -392,7 +392,7 @@ class TypeInfo
     /**
      * @param Node $node
      */
-    function leave(Node $node)
+    public function leave(Node $node)
     {
         switch ($node->kind) {
             case NodeKind::SELECTION_SET:

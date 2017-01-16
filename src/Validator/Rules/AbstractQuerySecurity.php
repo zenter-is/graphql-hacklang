@@ -9,7 +9,7 @@ use GraphQL\Language\AST\InlineFragmentNode;
 use GraphQL\Language\AST\Node;
 use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\SelectionSetNode;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Type\Introspection;
 use GraphQL\Utils\TypeInfo;
 use GraphQL\Validator\ValidationContext;

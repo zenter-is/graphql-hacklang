@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor\Promise\Adapter;
 
 use GraphQL\Utils;
@@ -99,7 +99,7 @@ class SyncPromise
         return $this;
     }
 
-    public function then(callable $onFulfilled = null, callable $onRejected = null)
+    public function then(?callable $onFulfilled = null, ?callable $onRejected = null)
     {
         if ($this->state === self::REJECTED && !$onRejected) {
             return $this;

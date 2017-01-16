@@ -1,9 +1,10 @@
-<?php
+<?hh //decl
 namespace GraphQL\Error;
 
 use GraphQL\Language\Source;
 use GraphQL\Language\SourceLocation;
 use GraphQL\Utils;
+use Exception;
 
 /**
  * Class Error
@@ -14,7 +15,7 @@ use GraphQL\Utils;
  *
  * @package GraphQL
  */
-class Error extends \Exception implements \JsonSerializable
+class Error extends Exception implements \JsonSerializable
 {
     /**
      * A message describing the Error for debugging purposes.
@@ -108,7 +109,7 @@ class Error extends \Exception implements \JsonSerializable
      * @param Error $error
      * @return array
      */
-    public static function formatError(Error $error)
+    public static function formatError(\GraphQL\Error\Error $error)
     {
         return $error->toSerializableArray();
     }
@@ -121,7 +122,7 @@ class Error extends \Exception implements \JsonSerializable
      * @param array|null $path
      * @param \Exception $previous
      */
-    public function __construct($message, $nodes = null, Source $source = null, $positions = null, $path = null, \Exception $previous = null)
+    public function __construct($message, $nodes = null, ?Source $source = null, $positions = null, $path = null, ?Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
 
@@ -138,7 +139,7 @@ class Error extends \Exception implements \JsonSerializable
     /**
      * @return Source|null
      */
-    public function getSource()
+    public function getSource():?Source
     {
         if (null === $this->source) {
             if (!empty($this->nodes[0]) && !empty($this->nodes[0]->loc)) {
@@ -219,7 +220,7 @@ class Error extends \Exception implements \JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    function jsonSerialize()
+    public function jsonSerialize()
     {
         return $this->toSerializableArray();
     }

@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL;
 
 use GraphQL\Error\Error;
@@ -92,7 +92,7 @@ class GraphQL
     /**
      * @param PromiseAdapter|null $promiseAdapter
      */
-    public static function setPromiseAdapter(PromiseAdapter $promiseAdapter = null)
+    public static function setPromiseAdapter(?PromiseAdapter $promiseAdapter = null)
     {
         Executor::setPromiseAdapter($promiseAdapter);
     }

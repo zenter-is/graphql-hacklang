@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor\Promise;
 
 interface PromiseAdapter
@@ -29,7 +29,7 @@ interface PromiseAdapter
      *
      * @return Promise
      */
-    public function then(Promise $promise, callable $onFulfilled = null, callable $onRejected = null);
+    public function then(Promise $promise, ?callable $onFulfilled = null, ?callable $onRejected = null);
 
     /**
      * Creates a Promise

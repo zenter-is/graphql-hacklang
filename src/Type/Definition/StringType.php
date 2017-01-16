@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Language\AST\StringValueNode;
@@ -12,7 +12,7 @@ class StringType extends ScalarType
     /**
      * @var string
      */
-    public $name = Type::STRING;
+    public $name = GraphQlType::STRING;
 
     /**
      * @var string

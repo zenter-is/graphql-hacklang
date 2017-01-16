@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor\Promise\Adapter;
 
 use GraphQL\Deferred;
@@ -39,7 +39,7 @@ class SyncPromiseAdapter implements PromiseAdapter
     /**
      * @inheritdoc
      */
-    public function then(Promise $promise, callable $onFulfilled = null, callable $onRejected = null)
+    public function then(Promise $promise, ?callable $onFulfilled = null, ?callable $onRejected = null)
     {
         /** @var SyncPromise $promise */
         $promise = $promise->adoptedPromise;

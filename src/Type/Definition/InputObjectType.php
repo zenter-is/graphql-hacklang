@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Utils;
@@ -7,7 +7,7 @@ use GraphQL\Utils;
  * Class InputObjectType
  * @package GraphQL\Type\Definition
  */
-class InputObjectType extends Type implements InputType
+class InputObjectType extends GraphQlType implements InputType
 {
     /**
      * @var InputObjectField[]

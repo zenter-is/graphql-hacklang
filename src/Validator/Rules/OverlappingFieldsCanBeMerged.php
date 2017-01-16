@@ -17,7 +17,7 @@ use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\OutputType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Utils;
 use GraphQL\Utils\PairSet;
 use GraphQL\Utils\TypeInfo;
@@ -219,13 +219,13 @@ class OverlappingFieldsCanBeMerged
             $visitedFragmentNames = new \ArrayObject();
             $subfieldMap = $this->collectFieldNodesAndDefs(
                 $context,
-                Type::getNamedType($type1),
+                GraphQlType::getNamedType($type1),
                 $selectionSet1,
                 $visitedFragmentNames
             );
             $subfieldMap = $this->collectFieldNodesAndDefs(
               $context,
-              Type::getNamedType($type2),
+              GraphQlType::getNamedType($type2),
               $selectionSet2,
               $visitedFragmentNames,
               $subfieldMap
@@ -288,7 +288,7 @@ class OverlappingFieldsCanBeMerged
                 $this->doTypesConflict($type1->getWrappedType(), $type2->getWrappedType()) :
                 true;
         }
-        if (Type::isLeafType($type1) || Type::isLeafType($type2)) {
+        if (GraphQlType::isLeafType($type1) || GraphQlType::isLeafType($type2)) {
             return $type1 !== $type2;
         }
         return false;

@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;

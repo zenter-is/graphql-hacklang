@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Language\AST\EnumValueNode;
@@ -8,7 +8,7 @@ use GraphQL\Utils;
  * Class EnumType
  * @package GraphQL\Type\Definition
  */
-class EnumType extends Type implements InputType, OutputType, LeafType
+class EnumType extends GraphQlType implements InputType, OutputType, LeafType
 {
     /**
      * @var EnumValueDefinition[]

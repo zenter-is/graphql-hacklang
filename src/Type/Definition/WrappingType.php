@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 /*
@@ -9,7 +9,7 @@ interface WrappingType
 {
     /**
      * @param bool $recurse
-     * @return Type
+     * @return GraphQlType
      */
     public function getWrappedType($recurse = false);
 }

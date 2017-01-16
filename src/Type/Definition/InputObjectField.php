@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 /**
@@ -59,7 +59,7 @@ class InputObjectField
      */
     public function getType()
     {
-        return Type::resolve($this->type);
+        return GraphQlType::resolve($this->type);
     }
 
     /**

@@ -1,8 +1,8 @@
-<?php
+<?hh //decl
 namespace GraphQL\Error;
 
 use GraphQL\Language\SourceLocation;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Type\Definition\WrappingType;
 use GraphQL\Utils;
 
@@ -102,7 +102,7 @@ class FormattedError
      */
     public static function printVar($var)
     {
-        if ($var instanceof Type) {
+        if ($var instanceof GraphQlType) {
             // FIXME: Replace with schema printer call
             if ($var instanceof WrappingType) {
                 $var = $var->getWrappedType(true);

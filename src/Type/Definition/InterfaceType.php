@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Utils;
@@ -7,7 +7,7 @@ use GraphQL\Utils;
  * Class InterfaceType
  * @package GraphQL\Type\Definition
  */
-class InterfaceType extends Type implements AbstractType, OutputType, CompositeType
+class InterfaceType extends GraphQlType implements AbstractType, OutputType, CompositeType
 {
     /**
      * @var FieldDefinition[]

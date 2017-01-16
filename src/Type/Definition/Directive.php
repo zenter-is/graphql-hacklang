@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 /**
@@ -90,7 +90,7 @@ class Directive
                     'args' => [
                         new FieldArgument([
                             'name' => 'if',
-                            'type' => Type::nonNull(Type::boolean()),
+                            'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                             'description' => 'Included when true.'
                         ])
                     ],
@@ -106,7 +106,7 @@ class Directive
                     'args' => [
                         new FieldArgument([
                             'name' => 'if',
-                            'type' => Type::nonNull(Type::boolean()),
+                            'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                             'description' => 'Skipped when true'
                         ])
                     ]
@@ -121,7 +121,7 @@ class Directive
                     'args' => [
                         new FieldArgument([
                             'name' => 'reason',
-                            'type' => Type::string(),
+                            'type' => GraphQlType::string(),
                             'description' =>
                                 'Explains why this element was deprecated, usually also including a ' .
                                 'suggestion for how to access supported similar data. Formatted ' .

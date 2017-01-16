@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type;
 
 
@@ -17,7 +17,7 @@ use GraphQL\Type\Definition\NonNull;
 use GraphQL\Type\Definition\ObjectType;
 use GraphQL\Type\Definition\ResolveInfo;
 use GraphQL\Type\Definition\ScalarType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Type\Definition\UnionType;
 use GraphQL\Type\Definition\WrappingType;
 use GraphQL\Utils;
@@ -270,7 +270,7 @@ EOD;
                     ],
                     'directives' => [
                         'description' => 'A list of all directives supported by this server.',
-                        'type' => Type::nonNull(Type::listOf(Type::nonNull(self::_directive()))),
+                        'type' => GraphQlType::nonNull(GraphQlType::listOf(GraphQlType::nonNull(self::_directive()))),
                         'resolve' => function(Schema $schema) {
                             return $schema->getDirectives();
                         }
@@ -293,15 +293,15 @@ EOD;
                     'conditionally including or skipping a field. Directives provide this by ' .
                     'describing additional information to the executor.',
                 'fields' => [
-                    'name' => ['type' => Type::nonNull(Type::string())],
-                    'description' => ['type' => Type::string()],
+                    'name' => ['type' => GraphQlType::nonNull(GraphQlType::string())],
+                    'description' => ['type' => GraphQlType::string()],
                     'locations' => [
-                        'type' => Type::nonNull(Type::listOf(Type::nonNull(
+                        'type' => GraphQlType::nonNull(GraphQlType::listOf(GraphQlType::nonNull(
                             self::_directiveLocation()
                         )))
                     ],
                     'args' => [
-                        'type' => Type::nonNull(Type::listOf(Type::nonNull(self::_inputValue()))),
+                        'type' => GraphQlType::nonNull(GraphQlType::listOf(GraphQlType::nonNull(self::_inputValue()))),
                         'resolve' => function (Directive $directive) {
                             return $directive->args ?: [];
                         }
@@ -311,7 +311,7 @@ EOD;
                     // of the GraphQL specification.
                     'onOperation' => [
                         'deprecationReason' => 'Use `locations`.',
-                        'type' => Type::nonNull(Type::boolean()),
+                        'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                         'resolve' => function($d) {
                             return in_array(DirectiveLocation::QUERY, $d->locations) ||
                                 in_array(DirectiveLocation::MUTATION, $d->locations) ||
@@ -320,7 +320,7 @@ EOD;
                     ],
                     'onFragment' => [
                         'deprecationReason' => 'Use `locations`.',
-                        'type' => Type::nonNull(Type::boolean()),
+                        'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                         'resolve' => function($d) {
                             return in_array(DirectiveLocation::FRAGMENT_SPREAD, $d->locations) ||
                             in_array(DirectiveLocation::INLINE_FRAGMENT, $d->locations) ||
@@ -329,7 +329,7 @@ EOD;
                     ],
                     'onField' => [
                         'deprecationReason' => 'Use `locations`.',
-                        'type' => Type::nonNull(Type::boolean()),
+                        'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                         'resolve' => function($d) {
                             return in_array(DirectiveLocation::FIELD, $d->locations);
                         }
@@ -446,8 +446,8 @@ EOD;
                 'fields' => function() {
                     return [
                         'kind' => [
-                            'type' => Type::nonNull(self::_typeKind()),
-                            'resolve' => function (Type $type) {
+                            'type' => GraphQlType::nonNull(self::_typeKind()),
+                            'resolve' => function (GraphQlType $type) {
                                 switch (true) {
                                     case $type instanceof ListOfType:
                                         return TypeKind::LIST_KIND;
@@ -470,14 +470,14 @@ EOD;
                                 }
                             }
                         ],
-                        'name' => ['type' => Type::string()],
-                        'description' => ['type' => Type::string()],
+                        'name' => ['type' => GraphQlType::string()],
+                        'description' => ['type' => GraphQlType::string()],
                         'fields' => [
-                            'type' => Type::listOf(Type::nonNull(self::_field())),
+                            'type' => GraphQlType::listOf(GraphQlType::nonNull(self::_field())),
                             'args' => [
-                                'includeDeprecated' => ['type' => Type::boolean(), 'defaultValue' => false]
+                                'includeDeprecated' => ['type' => GraphQlType::boolean(), 'defaultValue' => false]
                             ],
-                            'resolve' => function (Type $type, $args) {
+                            'resolve' => function (GraphQlType $type, $args) {
                                 if ($type instanceof ObjectType || $type instanceof InterfaceType) {
                                     $fields = $type->getFields();
 
@@ -492,7 +492,7 @@ EOD;
                             }
                         ],
                         'interfaces' => [
-                            'type' => Type::listOf(Type::nonNull(self::_type())),
+                            'type' => GraphQlType::listOf(GraphQlType::nonNull(self::_type())),
                             'resolve' => function ($type) {
                                 if ($type instanceof ObjectType) {
                                     return $type->getInterfaces();
@@ -501,7 +501,7 @@ EOD;
                             }
                         ],
                         'possibleTypes' => [
-                            'type' => Type::listOf(Type::nonNull(self::_type())),
+                            'type' => GraphQlType::listOf(GraphQlType::nonNull(self::_type())),
                             'resolve' => function ($type, $args, $context, ResolveInfo $info) {
                                 if ($type instanceof InterfaceType || $type instanceof UnionType) {
                                     return $info->schema->getPossibleTypes($type);
@@ -510,9 +510,9 @@ EOD;
                             }
                         ],
                         'enumValues' => [
-                            'type' => Type::listOf(Type::nonNull(self::_enumValue())),
+                            'type' => GraphQlType::listOf(GraphQlType::nonNull(self::_enumValue())),
                             'args' => [
-                                'includeDeprecated' => ['type' => Type::boolean(), 'defaultValue' => false]
+                                'includeDeprecated' => ['type' => GraphQlType::boolean(), 'defaultValue' => false]
                             ],
                             'resolve' => function ($type, $args) {
                                 if ($type instanceof EnumType) {
@@ -530,7 +530,7 @@ EOD;
                             }
                         ],
                         'inputFields' => [
-                            'type' => Type::listOf(Type::nonNull(self::_inputValue())),
+                            'type' => GraphQlType::listOf(GraphQlType::nonNull(self::_inputValue())),
                             'resolve' => function ($type) {
                                 if ($type instanceof InputObjectType) {
                                     return array_values($type->getFields());
@@ -565,28 +565,28 @@ EOD;
                     'which has a name, potentially a list of arguments, and a return type.',
                 'fields' => function() {
                     return [
-                        'name' => ['type' => Type::nonNull(Type::string())],
-                        'description' => ['type' => Type::string()],
+                        'name' => ['type' => GraphQlType::nonNull(GraphQlType::string())],
+                        'description' => ['type' => GraphQlType::string()],
                         'args' => [
-                            'type' => Type::nonNull(Type::listOf(Type::nonNull(self::_inputValue()))),
+                            'type' => GraphQlType::nonNull(GraphQlType::listOf(GraphQlType::nonNull(self::_inputValue()))),
                             'resolve' => function (FieldDefinition $field) {
                                 return empty($field->args) ? [] : $field->args;
                             }
                         ],
                         'type' => [
-                            'type' => Type::nonNull(self::_type()),
+                            'type' => GraphQlType::nonNull(self::_type()),
                             'resolve' => function ($field) {
                                 return $field->getType();
                             }
                         ],
                         'isDeprecated' => [
-                            'type' => Type::nonNull(Type::boolean()),
+                            'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                             'resolve' => function (FieldDefinition $field) {
                                 return !!$field->deprecationReason;
                             }
                         ],
                         'deprecationReason' => [
-                            'type' => Type::string()
+                            'type' => GraphQlType::string()
                         ]
                     ];
                 }
@@ -606,16 +606,16 @@ EOD;
                     'and optionally a default value.',
                 'fields' => function() {
                     return [
-                        'name' => ['type' => Type::nonNull(Type::string())],
-                        'description' => ['type' => Type::string()],
+                        'name' => ['type' => GraphQlType::nonNull(GraphQlType::string())],
+                        'description' => ['type' => GraphQlType::string()],
                         'type' => [
-                            'type' => Type::nonNull(self::_type()),
+                            'type' => GraphQlType::nonNull(self::_type()),
                             'resolve' => function ($value) {
                                 return method_exists($value, 'getType') ? $value->getType() : $value->type;
                             }
                         ],
                         'defaultValue' => [
-                            'type' => Type::string(),
+                            'type' => GraphQlType::string(),
                             'description' =>
                                 'A GraphQL-formatted string representing the default value for this input value.',
                             'resolve' => function ($inputValue) {
@@ -642,16 +642,16 @@ EOD;
                     'a placeholder for a string or numeric value. However an Enum value is ' .
                     'returned in a JSON response as a string.',
                 'fields' => [
-                    'name' => ['type' => Type::nonNull(Type::string())],
-                    'description' => ['type' => Type::string()],
+                    'name' => ['type' => GraphQlType::nonNull(GraphQlType::string())],
+                    'description' => ['type' => GraphQlType::string()],
                     'isDeprecated' => [
-                        'type' => Type::nonNull(Type::boolean()),
+                        'type' => GraphQlType::nonNull(GraphQlType::boolean()),
                         'resolve' => function ($enumValue) {
                             return !!$enumValue->deprecationReason;
                         }
                     ],
                     'deprecationReason' => [
-                        'type' => Type::string()
+                        'type' => GraphQlType::string()
                     ]
                 ]
             ]);
@@ -709,7 +709,7 @@ EOD;
         if (!isset(self::$map['__schema'])) {
             self::$map['__schema'] = FieldDefinition::create([
                 'name' => '__schema',
-                'type' => Type::nonNull(self::_schema()),
+                'type' => GraphQlType::nonNull(self::_schema()),
                 'description' => 'Access the current type schema of this server.',
                 'args' => [],
                 'resolve' => function (
@@ -733,7 +733,7 @@ EOD;
                 'type' => self::_type(),
                 'description' => 'Request the type information of a single type.',
                 'args' => [
-                    ['name' => 'name', 'type' => Type::nonNull(Type::string())]
+                    ['name' => 'name', 'type' => GraphQlType::nonNull(GraphQlType::string())]
                 ],
                 'resolve' => function ($source, $args, $context, ResolveInfo $info) {
                     return $info->schema->getType($args['name']);
@@ -748,7 +748,7 @@ EOD;
         if (!isset(self::$map['__typename'])) {
             self::$map['__typename'] = FieldDefinition::create([
                 'name' => '__typename',
-                'type' => Type::nonNull(Type::string()),
+                'type' => GraphQlType::nonNull(GraphQlType::string()),
                 'description' => 'The name of the current Object type at runtime.',
                 'args' => [],
                 'resolve' => function (

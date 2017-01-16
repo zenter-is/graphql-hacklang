@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Error\InvariantViolation;
@@ -15,7 +15,7 @@ class FloatType extends ScalarType
     /**
      * @var string
      */
-    public $name = Type::FLOAT;
+    public $name = GraphQlType::FLOAT;
 
     /**
      * @var string

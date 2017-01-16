@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Utils;
@@ -21,7 +21,7 @@ use GraphQL\Utils;
  *     }
  * }
  */
-abstract class ScalarType extends Type implements OutputType, InputType, LeafType
+abstract class ScalarType extends GraphQlType implements OutputType, InputType, LeafType
 {
     /**
      * ScalarType constructor.

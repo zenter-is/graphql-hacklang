@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Validator;
 
 use GraphQL\Error\Error;
@@ -20,7 +20,7 @@ use GraphQL\Type\Definition\InputType;
 use GraphQL\Type\Definition\LeafType;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Utils;
 use GraphQL\Utils\TypeInfo;
 use GraphQL\Validator\Rules\ArgumentsOfCorrectType;
@@ -120,7 +120,7 @@ class DocumentValidator
         self::$rules[$name] = $rule;
     }
 
-    public static function validate(Schema $schema, DocumentNode $ast, array $rules = null)
+    public static function validate(Schema $schema, DocumentNode $ast, ?array $rules = null)
     {
         $typeInfo = new TypeInfo($schema);
         $errors = static::visitUsingRules($schema, $typeInfo, $ast, $rules ?: static::allRules());
@@ -153,7 +153,7 @@ class DocumentValidator
      *
      * @return array
      */
-    public static function isValidLiteralValue(Type $type, $valueNode)
+    public static function isValidLiteralValue(GraphQlType $type, $valueNode)
     {
         // A value must be provided if the type is non-null.
         if ($type instanceof NonNull) {

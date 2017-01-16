@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Utils;
@@ -7,7 +7,7 @@ use GraphQL\Utils;
  * Class NonNull
  * @package GraphQL\Type\Definition
  */
-class NonNull extends Type implements WrappingType, OutputType, InputType
+class NonNull extends GraphQlType implements WrappingType, OutputType, InputType
 {
     /**
      * @var callable|Type
@@ -21,8 +21,8 @@ class NonNull extends Type implements WrappingType, OutputType, InputType
     public function __construct($type)
     {
         Utils::invariant(
-            $type instanceof Type || is_callable($type),
-            'Expecting instance of GraphQL\Type\Definition\Type or callable returning instance of that class'
+            $type instanceof GraphQlType || is_callable($type),
+            'Expecting instance of GraphQL\Type\Definition\GraphQlType or callable returning instance of that class'
         );
         Utils::invariant(
             !($type instanceof NonNull),
@@ -38,7 +38,7 @@ class NonNull extends Type implements WrappingType, OutputType, InputType
      */
     public function getWrappedType($recurse = false)
     {
-        $type = Type::resolve($this->ofType);
+        $type = GraphQlType::resolve($this->ofType);
 
         Utils::invariant(
             !($type instanceof NonNull),

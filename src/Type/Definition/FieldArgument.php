@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 
@@ -93,7 +93,7 @@ class FieldArgument
     public function getType()
     {
         if (null === $this->resolvedType) {
-            $this->resolvedType = Type::resolve($this->type);
+            $this->resolvedType = GraphQlType::resolve($this->type);
         }
         return $this->resolvedType;
     }

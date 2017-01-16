@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL;
 
 use GraphQL\Executor\Promise\Adapter\SyncPromise;

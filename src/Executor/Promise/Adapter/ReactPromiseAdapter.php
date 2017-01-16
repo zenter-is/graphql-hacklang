@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor\Promise\Adapter;
 
 use GraphQL\Executor\Promise\Promise;
@@ -28,7 +28,7 @@ class ReactPromiseAdapter implements PromiseAdapter
     /**
      * @inheritdoc
      */
-    public function then(Promise $promise, callable $onFulfilled = null, callable $onRejected = null)
+    public function then(Promise $promise, ?callable $onFulfilled = null, ?callable $onRejected = null)
     {
         /** @var $adoptedPromise ReactPromiseInterface */
         $adoptedPromise = $promise->adoptedPromise;

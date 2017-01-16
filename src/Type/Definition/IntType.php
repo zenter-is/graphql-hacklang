@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Error\InvariantViolation;
@@ -23,7 +23,7 @@ class IntType extends ScalarType
     /**
      * @var string
      */
-    public $name = Type::INT;
+    public $name = GraphQlType::INT;
 
     /**
      * @var string

@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Validator\Rules;
 
 
@@ -8,7 +8,7 @@ use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\VariableDefinitionNode;
 use GraphQL\Language\Printer;
 use GraphQL\Type\Definition\InputType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Utils;
 use GraphQL\Validator\ValidationContext;
 
@@ -26,7 +26,7 @@ class VariablesAreInputTypes
                 $type = Utils\TypeInfo::typeFromAST($context->getSchema(), $node->type);
 
                 // If the variable type is not an input type, return an error.
-                if ($type && !Type::isInputType($type)) {
+                if ($type && !GraphQlType::isInputType($type)) {
                     $variableName = $node->variable->name->value;
                     $context->reportError(new Error(
                         self::nonInputTypeOnVarMessage($variableName, Printer::doPrint($node->type)),

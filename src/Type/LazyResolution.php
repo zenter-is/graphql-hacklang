@@ -1,10 +1,10 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type;
 
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Type\Definition\AbstractType;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Utils;
 
 class LazyResolution implements Resolution
@@ -69,7 +69,7 @@ class LazyResolution implements Resolution
         }
         if (!isset($this->loadedTypes[$name])) {
             $type = call_user_func($this->typeLoader, $name);
-            if (!$type instanceof Type && null !== $type) {
+            if (!$type instanceof GraphQlType && null !== $type) {
                 throw new InvariantViolation(
                     "Lazy Type Resolution Error: Expecting GraphQL Type instance, but got " .
                     Utils::getVariableType($type)

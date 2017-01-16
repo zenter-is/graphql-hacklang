@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Utils;
@@ -44,7 +44,7 @@ use GraphQL\Utils;
  *     ]);
  *
  */
-class ObjectType extends Type implements OutputType, CompositeType
+class ObjectType extends GraphQlType implements OutputType, CompositeType
 {
     /**
      * @var FieldDefinition[]
@@ -143,7 +143,7 @@ class ObjectType extends Type implements OutputType, CompositeType
 
             $this->interfaces = [];
             foreach ($interfaces as $iface) {
-                $iface = Type::resolve($iface);
+                $iface = GraphQlType::resolve($iface);
                 if (!$iface instanceof InterfaceType) {
                     throw new InvariantViolation("Expecting interface type, got " . Utils::printSafe($iface));
                 }
@@ -159,7 +159,7 @@ class ObjectType extends Type implements OutputType, CompositeType
      */
     public function implementsInterface($iface)
     {
-        $iface = Type::resolve($iface);
+        $iface = GraphQlType::resolve($iface);
         return !!Utils::find($this->getInterfaces(), function($implemented) use ($iface) {return $iface === $implemented;});
     }
 

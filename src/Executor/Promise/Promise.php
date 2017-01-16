@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor\Promise;
 
 use GraphQL\Utils;
@@ -32,7 +32,7 @@ class Promise
      *
      * @return Promise
      */
-    public function then(callable $onFulfilled = null, callable $onRejected = null)
+    public function then(?callable $onFulfilled = null, ?callable $onRejected = null)
     {
         return $this->adapter->then($this, $onFulfilled, $onRejected);
     }

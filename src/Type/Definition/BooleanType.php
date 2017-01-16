@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Language\AST\BooleanValueNode;
@@ -12,7 +12,7 @@ class BooleanType extends ScalarType
     /**
      * @var string
      */
-    public $name = Type::BOOLEAN;
+    public $name = GraphQlType::BOOLEAN;
 
     /**
      * @var string

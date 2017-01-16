@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Executor;
 
 
@@ -20,7 +20,7 @@ use GraphQL\Type\Definition\InputType;
 use GraphQL\Type\Definition\LeafType;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Utils;
 use GraphQL\Validator\DocumentValidator;
 
@@ -261,7 +261,7 @@ class Values
     /**
      * Given a type and any value, return a runtime value coerced to match the type.
      */
-    private static function coerceValue(Type $type, $value)
+    private static function coerceValue(GraphQlType $type, $value)
     {
         $undefined = Utils::undefined();
         if ($value === $undefined) {

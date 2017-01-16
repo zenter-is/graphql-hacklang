@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Type;
 
 use GraphQL\Type\Definition\AbstractType;
@@ -6,7 +6,7 @@ use GraphQL\Type\Definition\FieldArgument;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 use GraphQL\Type\Definition\UnionType;
 use GraphQL\Type\Definition\WrappingType;
 use GraphQL\Utils;
@@ -32,7 +32,7 @@ class EagerResolution implements Resolution
         foreach ($initialTypes as $type) {
             $this->extractTypes($type);
         }
-        $this->typeMap += Type::getInternalTypes();
+        $this->typeMap += GraphQlType::getInternalTypes();
 
         // Keep track of all possible types for abstract types
         foreach ($this->typeMap as $typeName => $type) {
