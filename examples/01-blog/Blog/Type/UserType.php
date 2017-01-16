@@ -1,4 +1,4 @@
-<?php
+<?hh //partial
 namespace GraphQL\Examples\Blog\Type;
 
 use GraphQL\Examples\Blog\AppContext;
@@ -45,10 +45,16 @@ class UserType extends ObjectType
                 Types::node()
             ],
             'resolveField' => function($value, $args, $context, ResolveInfo $info) {
+                $method = null;
                 if (method_exists($this, $info->fieldName)) {
-                    return $this->{$info->fieldName}($value, $args, $context, $info);
+                    $method = new \ReflectionMethod($this,$info->fieldName);
+                }
+
+                if ($method !== null && !$method->isStatic())
+                {
+                    return $method->invoke($this,[$value,$args,$context,$info]);
                 } else {
-                    return $value->{$info->fieldName};
+                    return ((array)$value)[$info->fieldName];
                 }
             }
         ];

@@ -15,7 +15,7 @@ use GraphQL\Examples\Blog\Type\UserType;
 use GraphQL\Examples\Blog\Type\ImageType;
 use GraphQL\Type\Definition\ListOfType;
 use GraphQL\Type\Definition\NonNull;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType;
 
 /**
  * Class Types
@@ -154,7 +154,7 @@ class Types
 
     public static function boolean()
     {
-        return Type::boolean();
+        return GraphQlType::boolean();
     }
 
     /**
@@ -162,7 +162,7 @@ class Types
      */
     public static function float()
     {
-        return Type::float();
+        return GraphQlType::float();
     }
 
     /**
@@ -170,7 +170,7 @@ class Types
      */
     public static function id()
     {
-        return Type::id();
+        return GraphQlType::id();
     }
 
     /**
@@ -178,7 +178,7 @@ class Types
      */
     public static function int()
     {
-        return Type::int();
+        return GraphQlType::int();
     }
 
     /**
@@ -186,7 +186,7 @@ class Types
      */
     public static function string()
     {
-        return Type::string();
+        return GraphQlType::string();
     }
 
     /**

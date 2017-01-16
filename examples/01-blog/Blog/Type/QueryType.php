@@ -55,7 +55,7 @@ class QueryType extends ObjectType
                         throw new \Exception("Exception message thrown in field resolver");
                     }
                 ],
-                'hello' => Type::string()
+                'hello' => Types::string()
             ],
             'resolveField' => function($val, $args, $context, ResolveInfo $info) {
                 return $this->{$info->fieldName}($val, $args, $context, $info);
