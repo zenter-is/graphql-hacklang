@@ -1,4 +1,4 @@
-<?php
+<?hh //strict
 namespace GraphQL\Language;
 
 class Source
@@ -6,30 +6,30 @@ class Source
     /**
      * @var string
      */
-    public $body;
+    public string $body;
 
     /**
      * @var int
      */
-    public $length;
+    public int $length;
 
     /**
      * @var string
      */
-    public $name;
+    public string $name;
 
-    public function __construct($body, $name = null)
+    public function __construct(string $body, ?string $name = null):void
     {
         $this->body = $body;
         $this->length = mb_strlen($body, 'UTF-8');
-        $this->name = $name ?: 'GraphQL';
+        $this->name = $name !== null ?$name: 'GraphQL';
     }
 
     /**
      * @param $position
      * @return SourceLocation
      */
-    public function getLocation($position)
+    public function getLocation(int $position):SourceLocation
     {
         $line = 1;
         $column = $position + 1;
