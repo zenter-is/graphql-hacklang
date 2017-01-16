@@ -1,4 +1,4 @@
-<?php
+<?hh //decl
 namespace GraphQL\Language;
 
 /**
@@ -126,7 +126,7 @@ class Token
      * @param Token $previous
      * @param null $value
      */
-    public function __construct($kind, $start, $end, $line, $column, Token $previous = null, $value = null)
+    public function __construct($kind, $start, $end, $line, $column, ?Token $previous = null, $value = null)
     {
         $this->kind = $kind;
         $this->start = (int) $start;
