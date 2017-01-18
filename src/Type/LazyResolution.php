@@ -53,9 +53,9 @@ class LazyResolution implements Resolution
         );
 
         $this->typeLoader = $typeLoader;
-        $this->typeMap = $descriptor['typeMap'] + Type::getInternalTypes();
+        $this->typeMap = $descriptor['typeMap'] + GraphQlType::getInternalTypes();
         $this->possibleTypeMap = $descriptor['possibleTypeMap'];
-        $this->loadedTypes = Type::getInternalTypes();
+        $this->loadedTypes = GraphQlType::getInternalTypes();
         $this->loadedPossibleTypes = [];
     }
 

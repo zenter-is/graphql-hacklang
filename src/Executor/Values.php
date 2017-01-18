@@ -44,7 +44,7 @@ class Values
             $varName = $definitionNode->variable->name->value;
             $varType = Utils\TypeInfo::typeFromAST($schema, $definitionNode->type);
 
-            if (!Type::isInputType($varType)) {
+            if (!GraphQlType::isInputType($varType)) {
                 throw new Error(
                     'Variable "$'.$varName.'" expected value of type ' .
                     '"' . Printer::doPrint($definitionNode->type) . '" which cannot be used as an input type.',

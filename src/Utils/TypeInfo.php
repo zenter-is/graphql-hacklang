@@ -88,7 +88,7 @@ class TypeInfo
 
         // If superType type is an abstract type, maybeSubType type may be a currently
         // possible object type.
-        if (Type::isAbstractType($superType) && $maybeSubType instanceof ObjectType && $schema->isPossibleType($superType, $maybeSubType)) {
+        if (GraphQlType::isAbstractType($superType) && $maybeSubType instanceof ObjectType && $schema->isPossibleType($superType, $maybeSubType)) {
             return true;
         }
 

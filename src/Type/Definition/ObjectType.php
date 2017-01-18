@@ -15,10 +15,10 @@ use GraphQL\Utils;
  *     $AddressType = new ObjectType([
  *       'name' => 'Address',
  *       'fields' => [
- *         'street' => [ 'type' => GraphQL\Type\Definition\Type::string() ],
- *         'number' => [ 'type' => GraphQL\Type\Definition\Type::int() ],
+ *         'street' => [ 'type' => GraphQL\Type\Definition\GraphQlType::string() ],
+ *         'number' => [ 'type' => GraphQL\Type\Definition\GraphQlType::int() ],
  *         'formatted' => [
- *           'type' => GraphQL\Type\Definition\Type::string(),
+ *           'type' => GraphQL\Type\Definition\GraphQlType::string(),
  *           'resolve' => function($obj) {
  *             return $obj->number . ' ' . $obj->street;
  *           }
@@ -37,7 +37,7 @@ use GraphQL\Utils;
  *       'name' => 'Person',
  *       'fields' => function() use (&$PersonType) {
  *          return [
- *              'name' => ['type' => GraphQL\Type\Definition\Type::string() ],
+ *              'name' => ['type' => GraphQL\Type\Definition\GraphQlType::string() ],
  *              'bestFriend' => [ 'type' => $PersonType ],
  *          ];
  *        }
