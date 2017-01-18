@@ -3,7 +3,7 @@ namespace GraphQL\Language\AST;
 
 class DirectiveNode extends Node
 {
-    public $kind = NodeKind::DIRECTIVE;
+    public string $kind = NodeKind::DIRECTIVE;
 
     /**
      * @var NameNode

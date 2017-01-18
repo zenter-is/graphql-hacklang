@@ -41,7 +41,7 @@ class ListOfType extends GraphQlType implements WrappingType, OutputType, InputT
      * @param bool $recurse
      * @return mixed
      */
-    public function getWrappedType($recurse = false)
+    public function getWrappedType(@bool $recurse = false)
     {
         $type = GraphQlType::resolve($this->ofType);
         return ($recurse && $type instanceof WrappingType) ? $type->getWrappedType($recurse) : $type;

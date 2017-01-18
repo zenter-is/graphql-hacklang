@@ -15,17 +15,17 @@ use GraphQL\Validator\ValidationContext;
 class ProvidedNonNullArguments
 {
     public static function missingFieldArgMessage($fieldName, $argName, $type)
-    {
+   : @string {
         return "Field \"$fieldName\" argument \"$argName\" of type \"$type\" is required but not provided.";
     }
 
     public static function missingDirectiveArgMessage($directiveName, $argName, $type)
-    {
+   : @string {
         return "Directive \"@$directiveName\" argument \"$argName\" of type \"$type\" is required but not provided.";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array<string, array> {
         return [
             NodeKind::FIELD => [
                 'leave' => function(FieldNode $fieldNode) use ($context) {

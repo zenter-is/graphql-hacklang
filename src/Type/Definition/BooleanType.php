@@ -12,12 +12,12 @@ class BooleanType extends ScalarType
     /**
      * @var string
      */
-    public $name = GraphQlType::BOOLEAN;
+    public string $name = GraphQlType::BOOLEAN;
 
     /**
      * @var string
      */
-    public $description = 'The `Boolean` scalar type represents `true` or `false`.';
+    public string $description = 'The `Boolean` scalar type represents `true` or `false`.';
 
     /**
      * @param mixed $value

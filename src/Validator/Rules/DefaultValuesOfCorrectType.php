@@ -15,20 +15,20 @@ use GraphQL\Validator\ValidationContext;
 class DefaultValuesOfCorrectType
 {
     public static function badValueForDefaultArgMessage($varName, $type, $value, $verboseErrors = null)
-    {
+   : @string {
         $message = $verboseErrors ? ("\n" . implode("\n", $verboseErrors)) : '';
         return "Variable \$$varName has invalid default value: $value.$message";
     }
 
     public static function defaultForNonNullArgMessage($varName, $type, $guessType)
-    {
+   : @string {
         return "Variable \$$varName of type $type " .
         "is required and will never use the default value. " .
         "Perhaps you meant to use type $guessType.";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         return [
             NodeKind::VARIABLE_DEFINITION => function(VariableDefinitionNode $varDefNode) use ($context) {
                 $name = $varDefNode->variable->name->value;

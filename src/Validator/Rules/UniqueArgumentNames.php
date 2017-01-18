@@ -11,14 +11,14 @@ use GraphQL\Validator\ValidationContext;
 class UniqueArgumentNames
 {
     public static function duplicateArgMessage($argName)
-    {
+   : @string {
         return "There can be only one argument named \"$argName\".";
     }
 
     public $knownArgNames;
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         $this->knownArgNames = [];
 
         return [

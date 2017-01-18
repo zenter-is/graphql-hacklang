@@ -110,7 +110,7 @@ class ResolveInfo
      * @param int $depth How many levels to include in output
      * @return array
      */
-    public function getFieldSelection($depth = 0)
+    public function getFieldSelection(@int $depth = 0)
     {
         $fields = [];
 

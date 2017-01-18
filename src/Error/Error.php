@@ -122,7 +122,7 @@ class Error extends Exception implements \JsonSerializable
      * @param array|null $path
      * @param \Exception $previous
      */
-    public function __construct($message, $nodes = null, ?Source $source = null, $positions = null, $path = null, ?Exception $previous = null)
+    public function __construct(@string $message, @?array $nodes = null, ?Source $source = null, $positions = null, $path = null, ?Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
 

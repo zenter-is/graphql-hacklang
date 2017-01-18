@@ -202,7 +202,7 @@ class Utils
      * @param mixed $sprintfParam2 ...
      * @throws \Exception
      */
-    public static function invariant($test, $message = '')
+    public static function invariant($test, @string $message = '')
     {
         if (!$test) {
             if (func_num_args() > 2) {
@@ -261,7 +261,7 @@ class Utils
      * @param string $encoding
      * @return string
      */
-    public static function chr($ord, $encoding = 'UTF-8')
+    public static function chr($ord, @string $encoding = 'UTF-8')
     {
         if ($ord <= 255) {
             return chr($ord);
@@ -280,7 +280,7 @@ class Utils
      * @param string $encoding
      * @return mixed
      */
-    public static function ord($char, $encoding = 'UTF-8')
+    public static function ord($char, @string $encoding = 'UTF-8')
     {
         if (!isset($char[1])) {
             return ord($char);

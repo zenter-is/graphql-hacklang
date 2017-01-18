@@ -12,14 +12,14 @@ use GraphQL\Validator\ValidationContext;
 class UniqueFragmentNames
 {
     public static function duplicateFragmentNameMessage($fragName)
-    {
+   : @string {
         return "There can only be one fragment named \"$fragName\".";
     }
 
     public $knownFragmentNames;
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         $this->knownFragmentNames = [];
 
         return [

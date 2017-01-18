@@ -10,7 +10,7 @@ use GraphQL\Validator\ValidationContext;
 class NoUnusedFragments
 {
     public static function unusedFragMessage($fragName)
-    {
+   : @string {
         return "Fragment \"$fragName\" is never used.";
     }
 
@@ -19,7 +19,7 @@ class NoUnusedFragments
     public $fragmentDefs;
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         $this->operationDefs = [];
         $this->fragmentDefs = [];
 

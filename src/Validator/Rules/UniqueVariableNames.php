@@ -10,14 +10,14 @@ use GraphQL\Validator\ValidationContext;
 class UniqueVariableNames
 {
     public static function duplicateVariableMessage($variableName)
-    {
+   : @string {
         return "There can be only one variable named \"$variableName\".";
     }
 
     public $knownVariableNames;
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         $this->knownVariableNames = [];
 
         return [

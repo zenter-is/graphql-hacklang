@@ -14,17 +14,17 @@ use GraphQL\Utils\TypeInfo;
 class PossibleFragmentSpreads
 {
     public static function typeIncompatibleSpreadMessage($fragName, $parentType, $fragType)
-    {
+   : @string {
         return "Fragment \"$fragName\" cannot be spread here as objects of type \"$parentType\" can never be of type \"$fragType\".";
     }
 
     public static function typeIncompatibleAnonSpreadMessage($parentType, $fragType)
-    {
+   : @string {
         return "Fragment cannot be spread here as objects of type \"$parentType\" can never be of type \"$fragType\".";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         return [
             NodeKind::INLINE_FRAGMENT => function(InlineFragmentNode $node) use ($context) {
                 $fragType = $context->getType();

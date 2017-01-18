@@ -12,17 +12,17 @@ use GraphQL\Validator\ValidationContext;
 class FragmentsOnCompositeTypes
 {
     public static function inlineFragmentOnNonCompositeErrorMessage($type)
-    {
+   : @string {
         return "Fragment cannot condition on non composite type \"$type\".";
     }
 
     public static function fragmentOnNonCompositeErrorMessage($fragName, $type)
-    {
+   : @string {
         return "Fragment \"$fragName\" cannot condition on non composite type \"$type\".";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         return [
             NodeKind::INLINE_FRAGMENT => function(InlineFragmentNode $node) use ($context) {
                 $type = $context->getType();

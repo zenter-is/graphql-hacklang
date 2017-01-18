@@ -36,7 +36,7 @@ class NonNull extends GraphQlType implements WrappingType, OutputType, InputType
      * @return mixed
      * @throws \Exception
      */
-    public function getWrappedType($recurse = false)
+    public function getWrappedType(@bool $recurse = false)
     {
         $type = GraphQlType::resolve($this->ofType);
 

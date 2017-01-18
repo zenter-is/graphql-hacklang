@@ -34,12 +34,12 @@ class Config
     /**
      * @var bool
      */
-    private static $enableValidation = false;
+    private static bool $enableValidation = false;
 
     /**
      * @var bool
      */
-    private static $allowCustomOptions = true;
+    private static bool $allowCustomOptions = true;
 
     /**
      * Disables config validation
@@ -53,7 +53,7 @@ class Config
      * Enable deep config validation (disabled by default because it creates significant performance overhead).
      * Useful only at development to catch type definition errors quickly.
      */
-    public static function enableValidation($allowCustomOptions = true)
+    public static function enableValidation(@bool $allowCustomOptions = true)
     {
         self::$enableValidation = true;
         self::$allowCustomOptions = $allowCustomOptions;
@@ -103,7 +103,7 @@ class Config
      * @param int $flags
      * @return \stdClass
      */
-    public static function arrayOf($definition, $flags = 0)
+    public static function arrayOf($definition, @int $flags = 0)
     {
         $tmp = new \stdClass();
         $tmp->isArray = true;

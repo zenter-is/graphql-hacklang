@@ -29,21 +29,21 @@ class Location
      *
      * @var Token
      */
-    public $startToken;
+    public \GraphQL\Language\Token $startToken;
 
     /**
      * The Token at which this Node ends.
      *
      * @var Token
      */
-    public $endToken;
+    public \GraphQL\Language\Token $endToken;
 
     /**
      * The Source document the AST represents.
      *
      * @var Source|null
      */
-    public $source;
+    public ?\GraphQL\Language\Source $source;
 
     public function __construct(Token $startToken, Token $endToken, ?Source $source = null)
     {

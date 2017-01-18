@@ -6,7 +6,7 @@ class SourceLocation implements \JsonSerializable
     public $line;
     public $column;
 
-    public function __construct($line, $col)
+    public function __construct(@int $line, @int $col)
     {
         $this->line = $line;
         $this->column = $col;

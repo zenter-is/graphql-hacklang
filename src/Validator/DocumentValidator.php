@@ -57,7 +57,7 @@ class DocumentValidator
 
     private static $defaultRules;
 
-    private static $initRules = false;
+    private static bool $initRules = false;
 
     public static function allRules()
     {

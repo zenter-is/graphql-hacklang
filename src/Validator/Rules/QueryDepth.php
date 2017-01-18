@@ -70,7 +70,7 @@ class QueryDepth extends AbstractQuerySecurity
         return $this->getMaxQueryDepth() !== static::DISABLED;
     }
 
-    private function fieldDepth($node, $depth = 0, $maxDepth = 0)
+    private function fieldDepth($node, @int $depth = 0, @int $maxDepth = 0)
     {
         if (isset($node->selectionSet) && $node->selectionSet instanceof SelectionSetNode) {
             foreach ($node->selectionSet->selections as $childNode) {
@@ -81,7 +81,7 @@ class QueryDepth extends AbstractQuerySecurity
         return $maxDepth;
     }
 
-    private function nodeDepth(Node $node, $depth = 0, $maxDepth = 0)
+    private function nodeDepth(Node $node, @int $depth = 0, @int $maxDepth = 0)
     {
         switch ($node->kind) {
             case NodeKind::FIELD:

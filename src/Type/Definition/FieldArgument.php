@@ -43,7 +43,7 @@ class FieldArgument
     /**
      * @var bool
      */
-    private $defaultValueExists = false;
+    private bool $defaultValueExists = false;
 
     /**
      * @param array $config

@@ -106,7 +106,7 @@ class QueryComplexity extends AbstractQuerySecurity
         );
     }
 
-    private function fieldComplexity($node, $complexity = 0)
+    private function fieldComplexity($node, @int $complexity = 0)
     {
         if (isset($node->selectionSet) && $node->selectionSet instanceof SelectionSetNode) {
             foreach ($node->selectionSet->selections as $childNode) {
@@ -117,7 +117,7 @@ class QueryComplexity extends AbstractQuerySecurity
         return $complexity;
     }
 
-    private function nodeComplexity(Node $node, $complexity = 0)
+    private function nodeComplexity(Node $node, @int $complexity = 0)
     {
         switch ($node->kind) {
             case NodeKind::FIELD:

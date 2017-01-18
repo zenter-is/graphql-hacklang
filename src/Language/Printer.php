@@ -246,7 +246,7 @@ class Printer
      * If maybeString is not null or empty, then wrap with start and end, otherwise
      * print an empty string.
      */
-    public function wrap($start, $maybeString, $end = '')
+    public function wrap($start, $maybeString, @string $end = '')
     {
         return $maybeString ? ($start . $maybeString . $end) : '';
     }
@@ -275,7 +275,7 @@ class Printer
         return $maybeArray ? count($maybeArray) : 0;
     }
 
-    public function join($maybeArray, $separator = '')
+    public function join($maybeArray, @string $separator = '')
     {
         return $maybeArray
             ? implode(

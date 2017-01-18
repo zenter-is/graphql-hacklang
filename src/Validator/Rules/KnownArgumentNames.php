@@ -10,17 +10,17 @@ use GraphQL\Validator\ValidationContext;
 class KnownArgumentNames
 {
     public static function unknownArgMessage($argName, $fieldName, $type)
-    {
+   : @string {
         return "Unknown argument \"$argName\" on field \"$fieldName\" of type \"$type\".";
     }
 
     public static function unknownDirectiveArgMessage($argName, $directiveName)
-    {
+   : @string {
         return "Unknown argument \"$argName\" on directive \"@$directiveName\".";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         return [
             NodeKind::ARGUMENT => function(ArgumentNode $node, $key, $parent, $path, $ancestors) use ($context) {
                 $argumentOf = $ancestors[count($ancestors) - 1];

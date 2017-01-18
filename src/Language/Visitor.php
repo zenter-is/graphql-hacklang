@@ -48,7 +48,7 @@ class Visitor
         return $r;
     }
 
-    public static $visitorKeys = [
+    public static array $visitorKeys = [
         NodeKind::NAME => [],
         NodeKind::DOCUMENT => ['definitions'],
         NodeKind::OPERATION_DEFINITION => ['name', 'variableDefinitions', 'directives', 'selectionSet'],

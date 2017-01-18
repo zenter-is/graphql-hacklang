@@ -10,7 +10,7 @@ class CustomScalarType extends ScalarType
     /**
      * @var array
      */
-    public $config;
+    public array $config;
 
     /**
      * CustomScalarType constructor.

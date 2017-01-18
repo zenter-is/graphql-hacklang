@@ -48,7 +48,7 @@ class Executor
 {
     private static $UNDEFINED;
 
-    private static $defaultFieldResolver = [__CLASS__, 'defaultFieldResolver'];
+    private static array<string> $defaultFieldResolver = [__CLASS__, 'defaultFieldResolver'];
 
     /**
      * @var PromiseAdapter

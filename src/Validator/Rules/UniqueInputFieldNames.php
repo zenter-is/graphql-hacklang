@@ -11,7 +11,7 @@ use GraphQL\Validator\ValidationContext;
 class UniqueInputFieldNames
 {
     public static function duplicateInputFieldMessage($fieldName)
-    {
+   : @string {
       return "There can be only one input field named \"$fieldName\".";
     }
 
@@ -19,7 +19,7 @@ class UniqueInputFieldNames
     public $knownNameStack;
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         $this->knownNames = [];
         $this->knownNameStack = [];
 

@@ -21,7 +21,7 @@ class Directive
      * @var array
      * @deprecated as of 8.0 (use DirectiveLocation constants directly)
      */
-    public static $directiveLocations = [
+    public static array<string, string> $directiveLocations = [
         // Operations:
         DirectiveLocation::QUERY => DirectiveLocation::QUERY,
         DirectiveLocation::MUTATION => DirectiveLocation::MUTATION,

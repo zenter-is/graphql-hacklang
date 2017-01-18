@@ -11,5 +11,5 @@ interface WrappingType
      * @param bool $recurse
      * @return GraphQlType
      */
-    public function getWrappedType($recurse = false);
+    public function getWrappedType(@bool $recurse = false);
 }

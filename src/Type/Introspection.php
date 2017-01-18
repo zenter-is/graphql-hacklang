@@ -41,7 +41,7 @@ class Introspection
     /**
      * @return string
      */
-    public static function getIntrospectionQuery($includeDescription = true)
+    public static function getIntrospectionQuery(@bool $includeDescription = true)
     {
         $withDescription = <<<'EOD'
   query IntrospectionQuery {

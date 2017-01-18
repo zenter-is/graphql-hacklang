@@ -6,7 +6,7 @@ class FieldDefinitionNode extends Node
     /**
      * @var string
      */
-    public $kind = NodeKind::FIELD_DEFINITION;
+    public string $kind = NodeKind::FIELD_DEFINITION;
 
     /**
      * @var NameNode

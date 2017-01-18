@@ -11,12 +11,12 @@ use GraphQL\Validator\ValidationContext;
 class KnownFragmentNames
 {
     public static function unknownFragmentMessage($fragName)
-    {
+   : @string {
         return "Unknown fragment \"$fragName\".";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         return [
             NodeKind::FRAGMENT_SPREAD => function(FragmentSpreadNode $node) use ($context) {
                 $fragmentName = $node->name->value;

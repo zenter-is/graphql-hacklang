@@ -32,7 +32,7 @@ class InputObjectField
      *
      * @var bool
      */
-    private $defaultValueExists = false;
+    private bool $defaultValueExists = false;
 
     /**
      * InputObjectField constructor.

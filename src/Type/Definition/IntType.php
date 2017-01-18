@@ -23,12 +23,12 @@ class IntType extends ScalarType
     /**
      * @var string
      */
-    public $name = GraphQlType::INT;
+    public string $name = GraphQlType::INT;
 
     /**
      * @var string
      */
-    public $description =
+    public string $description =
 'The `Int` scalar type represents non-fractional signed whole numeric
 values. Int can represent values between -(2^31) and 2^31 - 1. ';
 

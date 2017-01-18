@@ -3,5 +3,5 @@ namespace GraphQL\Language\AST;
 
 class NullValueNode extends Node implements ValueNode
 {
-    public $kind = NodeKind::NULL;
+    public string $kind = NodeKind::NULL;
 }

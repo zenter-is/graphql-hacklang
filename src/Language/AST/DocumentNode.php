@@ -3,7 +3,7 @@ namespace GraphQL\Language\AST;
 
 class DocumentNode extends Node
 {
-    public $kind = NodeKind::DOCUMENT;
+    public string $kind = NodeKind::DOCUMENT;
 
     /**
      * @var DefinitionNode[]

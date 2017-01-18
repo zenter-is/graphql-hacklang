@@ -11,12 +11,12 @@ use GraphQL\Validator\ValidationContext;
 class KnownTypeNames
 {
     public static function unknownTypeMessage($type)
-    {
+   : @string {
         return "Unknown type \"$type\".";
     }
 
     public function __invoke(ValidationContext $context)
-    {
+   : @array {
         $skip = function() {return Visitor::skipNode();};
 
         return [

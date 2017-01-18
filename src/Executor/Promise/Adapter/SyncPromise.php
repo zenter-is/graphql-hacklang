@@ -36,7 +36,7 @@ class SyncPromise
         }
     }
 
-    public $state = self::PENDING;
+    public string $state = self::PENDING;
 
     public $result;
 

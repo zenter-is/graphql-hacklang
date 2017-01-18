@@ -15,12 +15,12 @@ class FloatType extends ScalarType
     /**
      * @var string
      */
-    public $name = GraphQlType::FLOAT;
+    public string $name = GraphQlType::FLOAT;
 
     /**
      * @var string
      */
-    public $description =
+    public string $description =
 'The `Float` scalar type represents signed double-precision fractional
 values as specified by
 [IEEE 754](http://en.wikipedia.org/wiki/IEEE_floating_point). ';
