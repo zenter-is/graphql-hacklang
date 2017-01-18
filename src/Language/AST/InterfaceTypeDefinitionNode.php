@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Language\AST;
 
 class InterfaceTypeDefinitionNode extends Node implements TypeDefinitionNode

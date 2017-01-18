@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Language\AST;
 
 use GraphQL\Language\Source;
@@ -45,7 +45,7 @@ class Location
      */
     public $source;
 
-    public function __construct(Token $startToken, Token $endToken, Source $source = null)
+    public function __construct(Token $startToken, Token $endToken, ?Source $source = null)
     {
         $this->startToken = $startToken;
         $this->endToken = $endToken;

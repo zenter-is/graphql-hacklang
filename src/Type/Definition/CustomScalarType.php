@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Type\Definition;
 
 /**
@@ -16,7 +16,7 @@ class CustomScalarType extends ScalarType
      * CustomScalarType constructor.
      * @param array $config
      */
-    function __construct(array $config)
+    public function __construct(array $config)
     {
         $this->name = $config['name'];
         $this->config = $config;

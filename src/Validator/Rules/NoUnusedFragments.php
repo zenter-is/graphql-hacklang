@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -9,7 +9,7 @@ use GraphQL\Validator\ValidationContext;
 
 class NoUnusedFragments
 {
-    static function unusedFragMessage($fragName)
+    public static function unusedFragMessage($fragName)
     {
         return "Fragment \"$fragName\" is never used.";
     }

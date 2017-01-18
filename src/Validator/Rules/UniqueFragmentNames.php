@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -11,7 +11,7 @@ use GraphQL\Validator\ValidationContext;
 
 class UniqueFragmentNames
 {
-    static function duplicateFragmentNameMessage($fragName)
+    public static function duplicateFragmentNameMessage($fragName)
     {
         return "There can only be one fragment named \"$fragName\".";
     }

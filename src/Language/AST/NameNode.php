@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Language\AST;
 
 class NameNode extends Node implements TypeNode

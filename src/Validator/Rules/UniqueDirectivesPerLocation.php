@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -8,7 +8,7 @@ use GraphQL\Validator\ValidationContext;
 
 class UniqueDirectivesPerLocation
 {
-    static function duplicateDirectiveMessage($directiveName)
+    public static function duplicateDirectiveMessage($directiveName)
     {
         return 'The directive "'.$directiveName.'" can only be used once at this location.';
     }

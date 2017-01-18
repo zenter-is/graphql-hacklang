@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -8,7 +8,7 @@ use GraphQL\Validator\ValidationContext;
 
 class NoUnusedVariables
 {
-    static function unusedVariableMessage($varName, $opName = null)
+    public static function unusedVariableMessage($varName, $opName = null)
     {
         return $opName
             ? "Variable \"$$varName\" is never used in operation \"$opName\"."

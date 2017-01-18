@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -17,7 +17,7 @@ use GraphQL\Validator\ValidationContext;
  */
 class NoUndefinedVariables
 {
-    static function undefinedVarMessage($varName, $opName = null)
+    public static function undefinedVarMessage($varName, $opName = null)
     {
         return $opName
             ? "Variable \"$$varName\" is not defined by operation \"$opName\"."

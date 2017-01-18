@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 
@@ -13,12 +13,12 @@ use GraphQL\Utils\TypeInfo;
 
 class PossibleFragmentSpreads
 {
-    static function typeIncompatibleSpreadMessage($fragName, $parentType, $fragType)
+    public static function typeIncompatibleSpreadMessage($fragName, $parentType, $fragType)
     {
         return "Fragment \"$fragName\" cannot be spread here as objects of type \"$parentType\" can never be of type \"$fragType\".";
     }
 
-    static function typeIncompatibleAnonSpreadMessage($parentType, $fragType)
+    public static function typeIncompatibleAnonSpreadMessage($parentType, $fragType)
     {
         return "Fragment cannot be spread here as objects of type \"$parentType\" can never be of type \"$fragType\".";
     }

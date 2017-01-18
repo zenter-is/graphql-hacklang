@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Language\AST;
 
 interface TypeDefinitionNode extends TypeSystemDefinitionNode

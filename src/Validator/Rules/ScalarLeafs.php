@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -9,12 +9,12 @@ use GraphQL\Validator\ValidationContext;
 
 class ScalarLeafs
 {
-    static function noSubselectionAllowedMessage($field, $type)
+    public static function noSubselectionAllowedMessage($field, $type)
     {
         return "Field \"$field\" of type \"$type\" must not have a sub selection.";
     }
 
-    static function requiredSubselectionMessage($field, $type)
+    public static function requiredSubselectionMessage($field, $type)
     {
         return "Field \"$field\" of type \"$type\" must have a sub selection.";
     }

@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Utils;
 
 use GraphQL\Error\InvariantViolation;
@@ -52,7 +52,7 @@ class AST
      * @param InputType $type
      * @return ObjectValueNode|ListValueNode|BooleanValueNode|IntValueNode|FloatValueNode|EnumValueNode|StringValueNode|NullValueNode
      */
-    static function astFromValue($value, InputType $type)
+    public static function astFromValue($value, InputType $type)
     {
         if ($type instanceof NonNull) {
             $astValue = self::astFromValue($value, $type->getWrappedType());

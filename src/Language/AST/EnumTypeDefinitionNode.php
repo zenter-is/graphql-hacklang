@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Language\AST;
 
 class EnumTypeDefinitionNode extends Node implements TypeDefinitionNode

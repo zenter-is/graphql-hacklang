@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 
@@ -11,12 +11,12 @@ use GraphQL\Type\Definition\DirectiveLocation;
 
 class KnownDirectives
 {
-    static function unknownDirectiveMessage($directiveName)
+    public static function unknownDirectiveMessage($directiveName)
     {
         return "Unknown directive \"$directiveName\".";
     }
 
-    static function misplacedDirectiveMessage($directiveName, $location)
+    public static function misplacedDirectiveMessage($directiveName, $location)
     {
         return "Directive \"$directiveName\" may not be used on \"$location\".";
     }

@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 
 namespace GraphQL\Validator\Rules;
 
@@ -57,7 +57,7 @@ class QueryComplexity extends AbstractQuerySecurity
         return $this->maxQueryComplexity;
     }
 
-    public function setRawVariableValues(array $rawVariableValues = null)
+    public function setRawVariableValues(?array $rawVariableValues = null)
     {
         $this->rawVariableValues = $rawVariableValues ?: [];
     }

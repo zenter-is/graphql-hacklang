@@ -1,4 +1,4 @@
-<?php
+<?hh // strict
 namespace GraphQL\Language\AST;
 
 interface SelectionNode

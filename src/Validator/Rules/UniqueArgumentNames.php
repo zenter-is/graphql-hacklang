@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -10,7 +10,7 @@ use GraphQL\Validator\ValidationContext;
 
 class UniqueArgumentNames
 {
-    static function duplicateArgMessage($argName)
+    public static function duplicateArgMessage($argName)
     {
         return "There can be only one argument named \"$argName\".";
     }

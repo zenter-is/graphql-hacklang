@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 
@@ -14,12 +14,12 @@ use GraphQL\Validator\ValidationContext;
 
 class ProvidedNonNullArguments
 {
-    static function missingFieldArgMessage($fieldName, $argName, $type)
+    public static function missingFieldArgMessage($fieldName, $argName, $type)
     {
         return "Field \"$fieldName\" argument \"$argName\" of type \"$type\" is required but not provided.";
     }
 
-    static function missingDirectiveArgMessage($directiveName, $argName, $type)
+    public static function missingDirectiveArgMessage($directiveName, $argName, $type)
     {
         return "Directive \"@$directiveName\" argument \"$argName\" of type \"$type\" is required but not provided.";
     }

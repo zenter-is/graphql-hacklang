@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 
@@ -25,13 +25,13 @@ use GraphQL\Validator\ValidationContext;
 
 class OverlappingFieldsCanBeMerged
 {
-    static function fieldsConflictMessage($responseName, $reason)
+    public static function fieldsConflictMessage($responseName, $reason)
     {
         $reasonMessage = self::reasonMessage($reason);
         return "Fields \"$responseName\" conflict because $reasonMessage.";
     }
 
-    static function reasonMessage($reason)
+    public static function reasonMessage($reason)
     {
         if (is_array($reason)) {
             $tmp = array_map(function ($tmp) {
@@ -309,7 +309,7 @@ class OverlappingFieldsCanBeMerged
      * @param \ArrayObject $astAndDefs
      * @return mixed
      */
-    private function collectFieldNodesAndDefs(ValidationContext $context, $parentType, SelectionSetNode $selectionSet, \ArrayObject $visitedFragmentNames = null, \ArrayObject $astAndDefs = null)
+    private function collectFieldNodesAndDefs(ValidationContext $context, $parentType, SelectionSetNode $selectionSet, ?\ArrayObject $visitedFragmentNames = null, ?\ArrayObject $astAndDefs = null)
     {
         $_visitedFragmentNames = $visitedFragmentNames ?: new \ArrayObject();
         $_astAndDefs = $astAndDefs ?: new \ArrayObject();
@@ -407,7 +407,7 @@ class OverlappingFieldsCanBeMerged
         return (!$value1 && !$value2) || (Printer::doPrint($value1) === Printer::doPrint($value2));
     }
 
-    function sameType($type1, $type2)
+    public function sameType($type1, $type2)
     {
         return (string) $type1 === (string) $type2;
     }

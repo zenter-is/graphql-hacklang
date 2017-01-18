@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -17,7 +17,7 @@ use GraphQL\Validator\ValidationContext;
  */
 class LoneAnonymousOperation
 {
-    static function anonOperationNotAloneMessage()
+    public static function anonOperationNotAloneMessage()
     {
         return 'This anonymous operation must be the only defined operation.';
     }

@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -10,7 +10,7 @@ use GraphQL\Validator\ValidationContext;
 
 class UniqueOperationNames
 {
-    static function duplicateOperationNameMessage($operationName)
+    public static function duplicateOperationNameMessage($operationName)
     {
       return "There can only be one operation named \"$operationName\".";
     }

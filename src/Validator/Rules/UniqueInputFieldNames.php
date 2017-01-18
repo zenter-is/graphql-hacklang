@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -10,7 +10,7 @@ use GraphQL\Validator\ValidationContext;
 
 class UniqueInputFieldNames
 {
-    static function duplicateInputFieldMessage($fieldName)
+    public static function duplicateInputFieldMessage($fieldName)
     {
       return "There can be only one input field named \"$fieldName\".";
     }

@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 
 namespace GraphQL\Validator\Rules;
 
@@ -93,7 +93,7 @@ abstract class AbstractQuerySecurity
      *
      * @return \ArrayObject
      */
-    protected function collectFieldASTsAndDefs(ValidationContext $context, $parentType, SelectionSetNode $selectionSet, \ArrayObject $visitedFragmentNames = null, \ArrayObject $astAndDefs = null)
+    protected function collectFieldASTsAndDefs(ValidationContext $context, $parentType, SelectionSetNode $selectionSet, ?\ArrayObject $visitedFragmentNames = null, ?\ArrayObject $astAndDefs = null)
     {
         $_visitedFragmentNames = $visitedFragmentNames ?: new \ArrayObject();
         $_astAndDefs = $astAndDefs ?: new \ArrayObject();

@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 /**
  * Created by PhpStorm.
  * User: Vladimir
@@ -20,7 +20,7 @@ use GraphQL\Validator\ValidationContext;
 
 class NoFragmentCycles
 {
-    static function cycleErrorMessage($fragName, array $spreadNames = [])
+    public static function cycleErrorMessage($fragName, array $spreadNames = [])
     {
         $via = !empty($spreadNames) ? ' via ' . implode(', ', $spreadNames) : '';
         return "Cannot spread fragment \"$fragName\" within itself$via.";

@@ -1,4 +1,4 @@
-<?php
+<?hh
 if (defined('GRAPHQL_WITH_DEPRECATED') && !GRAPHQL_WITH_DEPRECATED) {
     return ;
 }

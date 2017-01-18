@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Language\AST;
 
 use GraphQL\Utils;

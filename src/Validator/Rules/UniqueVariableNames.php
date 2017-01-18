@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -9,7 +9,7 @@ use GraphQL\Validator\ValidationContext;
 
 class UniqueVariableNames
 {
-    static function duplicateVariableMessage($variableName)
+    public static function duplicateVariableMessage($variableName)
     {
         return "There can be only one variable named \"$variableName\".";
     }

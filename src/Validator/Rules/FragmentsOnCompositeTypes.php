@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -11,12 +11,12 @@ use GraphQL\Validator\ValidationContext;
 
 class FragmentsOnCompositeTypes
 {
-    static function inlineFragmentOnNonCompositeErrorMessage($type)
+    public static function inlineFragmentOnNonCompositeErrorMessage($type)
     {
         return "Fragment cannot condition on non composite type \"$type\".";
     }
 
-    static function fragmentOnNonCompositeErrorMessage($fragName, $type)
+    public static function fragmentOnNonCompositeErrorMessage($fragName, $type)
     {
         return "Fragment \"$fragName\" cannot condition on non composite type \"$type\".";
     }

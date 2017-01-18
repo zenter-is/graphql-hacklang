@@ -1,4 +1,4 @@
-<?php
+<?hh // decl
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -11,7 +11,7 @@ use GraphQL\Validator\ValidationContext;
 
 class FieldsOnCorrectType
 {
-    static function undefinedFieldMessage($field, $type, array $suggestedTypes = [])
+    public static function undefinedFieldMessage($field, $type, array $suggestedTypes = [])
     {
         $message = 'Cannot query field "' . $field . '" on type "' . $type.'".';
 
@@ -70,7 +70,7 @@ class FieldsOnCorrectType
      * @param $fieldName
      * @return array
      */
-    static function getImplementationsIncludingField(Schema $schema, AbstractType $type, $fieldName)
+    public static function getImplementationsIncludingField(Schema $schema, AbstractType $type, $fieldName)
     {
         $types = $schema->getPossibleTypes($type);
         $types = Utils::filter($types, function($t) use ($fieldName) {return isset($t->getFields()[$fieldName]);});
@@ -85,7 +85,7 @@ class FieldsOnCorrectType
      * return them, sorted by how often the implementations include the other
      * interface.
      */
-    static function getSiblingInterfacesIncludingField(Schema $schema, AbstractType $type, $fieldName)
+    public static function getSiblingInterfacesIncludingField(Schema $schema, AbstractType $type, $fieldName)
     {
         $types = $schema->getPossibleTypes($type);
         $suggestedInterfaces = array_reduce($types, function ($acc, $t) use ($fieldName) {

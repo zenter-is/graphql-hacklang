@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 
@@ -10,7 +10,7 @@ use GraphQL\Validator\ValidationContext;
 
 class KnownFragmentNames
 {
-    static function unknownFragmentMessage($fragName)
+    public static function unknownFragmentMessage($fragName)
     {
         return "Unknown fragment \"$fragName\".";
     }

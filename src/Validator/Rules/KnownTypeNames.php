@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 
@@ -10,7 +10,7 @@ use GraphQL\Validator\ValidationContext;
 
 class KnownTypeNames
 {
-    static function unknownTypeMessage($type)
+    public static function unknownTypeMessage($type)
     {
         return "Unknown type \"$type\".";
     }

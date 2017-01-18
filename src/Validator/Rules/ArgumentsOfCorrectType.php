@@ -1,4 +1,4 @@
-<?php
+<?hh
 namespace GraphQL\Validator\Rules;
 
 use GraphQL\Error\Error;
@@ -11,7 +11,7 @@ use GraphQL\Validator\ValidationContext;
 
 class ArgumentsOfCorrectType
 {
-    static function badValueMessage($argName, $type, $value, $verboseErrors = [])
+    public static function badValueMessage($argName, $type, $value, $verboseErrors = [])
     {
         $message = $verboseErrors ? ("\n" . implode("\n", $verboseErrors)) : '';
         return "Argument \"$argName\" has invalid value $value.$message";
