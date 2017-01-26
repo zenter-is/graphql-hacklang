@@ -87,14 +87,14 @@ class Error extends Exception implements \JsonSerializable
             $nodes = $error->nodes ?: $nodes;
             $source = $error->source;
             $positions = $error->positions;
-        } else if ($error instanceof \Exception) {
+        } else if ($error instanceof Exception) {
             $message = $error->getMessage();
             $originalError = $error;
         } else {
             $message = (string) $error;
         }
 
-        return new static(
+        return new self(
             $message ?: 'An unknown error occurred.',
             $nodes,
             $source,
