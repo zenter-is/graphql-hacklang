@@ -19,7 +19,6 @@
     "bin-dir": "bin"
   },
   "autoload": {
-    "files": ["src/deprecated.php"],
     "psr-4": {
       "GraphQL\\": "src/"
     }

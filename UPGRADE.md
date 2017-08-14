@@ -43,19 +43,8 @@ GraphQL\Language\AST\OjbectValue -> GraphQL\Language\AST\OjbectValueNode
 ```
 etc. 
 
-Old names are still available via `class_alias` defined in `src/deprecated.php`. 
-This file is included automatically when using composer autoloading.
-
 ### Deprecations
 There are several deprecations which still work, but trigger `E_USER_DEPRECATED` when used.
-
-For example `GraphQL\Executor\Executor::setDefaultResolveFn()` is renamed to `setDefaultResolver()`
-but still works with old name.
-
-## Upgrade v0.6.x > v0.7.x
-
-There are a few new breaking changes in v0.7.0 that were added to the graphql-js reference implementation 
-with the spec of April2016
 
 ### 1. Context for resolver
 
