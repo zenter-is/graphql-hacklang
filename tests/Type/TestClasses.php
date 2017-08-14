@@ -2,7 +2,7 @@
 namespace GraphQL\Tests\Type;
 
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 class MyCustomType extends ObjectType
 {

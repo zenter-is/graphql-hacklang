@@ -8,7 +8,7 @@ use GraphQL\GraphQL;
 use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\InputObjectType;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Introspection;
 use GraphQL\Validator\Rules\ProvidedNonNullArguments;
 

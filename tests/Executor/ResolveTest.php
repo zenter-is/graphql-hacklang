@@ -4,7 +4,7 @@ namespace GraphQL\Tests\Executor;
 use GraphQL\GraphQL;
 use GraphQL\Schema;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 require_once __DIR__ . '/TestClasses.php';
 

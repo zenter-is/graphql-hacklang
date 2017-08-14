@@ -7,7 +7,7 @@ use GraphQL\Language\SourceLocation;
 use GraphQL\Schema;
 use GraphQL\Type\Definition\EnumType;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Introspection;
 
 class EnumTypeTest extends \PHPUnit_Framework_TestCase

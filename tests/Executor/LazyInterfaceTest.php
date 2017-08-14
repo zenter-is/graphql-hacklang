@@ -11,7 +11,7 @@ use GraphQL\Language\Parser;
 use GraphQL\Schema;
 use GraphQL\Type\Definition\InterfaceType;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 class LazyInterfaceTest extends \PHPUnit_Framework_TestCase
 {

@@ -6,7 +6,7 @@ use GraphQL\Language\Parser;
 use GraphQL\Schema;
 use GraphQL\Type\Definition\Config;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 class ExecutorSchemaTest extends \PHPUnit_Framework_TestCase
 {

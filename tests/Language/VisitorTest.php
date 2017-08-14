@@ -12,7 +12,7 @@ use GraphQL\Language\Parser;
 use GraphQL\Language\Printer;
 use GraphQL\Language\Visitor;
 use GraphQL\Tests\Validator\TestCase;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Utils\TypeInfo;
 
 class VisitorTest extends \PHPUnit_Framework_TestCase
