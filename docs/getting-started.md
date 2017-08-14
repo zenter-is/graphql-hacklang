@@ -51,7 +51,7 @@ To do so we need an object type with field `echo`:
 ```php
 <?php
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 $queryType = new ObjectType([
     'name' => 'Query',

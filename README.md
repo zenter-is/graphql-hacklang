@@ -114,7 +114,7 @@ As well as two internal modifier types: `ListOf` and `NonNull`.
 All internal types are exposed as static methods of `GraphQL\Type\Definition\Type` class:
 
 ```php
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 // Internal Scalar types:
 Type::string();  // String type
@@ -167,7 +167,7 @@ Next, let's define a `Character` interface, describing characters of original St
 
 ```php
 use GraphQL\Type\Definition\InterfaceType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 // Implementor types (will be defined in next examples):
 $humanType = null;
@@ -247,7 +247,7 @@ Now let's define `Human` type that implements `CharacterInterface` from example 
 
 ```php
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 /**
  * We define our human type, which implements the character interface.
@@ -341,7 +341,7 @@ After all of your types are defined, you must define schema. Schema consists of 
 Example schema:
 ```php
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Schema;
 
 /**

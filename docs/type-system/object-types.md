@@ -12,7 +12,7 @@ In **graphql-php** object type is an instance of `GraphQL\Type\Definition\Object
 namespace MyApp;
 
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Examples\Blog\Data\DataSource;
 use GraphQL\Examples\Blog\Data\Story;
 
@@ -150,7 +150,7 @@ Same example for [inheritance style of type definitions](#) using [TypeRegistry]
 <?php
 namespace MyApp;
 
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Definition\ObjectType;
 
 class UserType extends ObjectType

@@ -3,7 +3,7 @@ GraphQL specification describes several built-in scalar types. In **graphql-php*
 exposed as static methods of `GraphQL\Type\Definition\Type` class:
 
 ```php
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 // Built-in Scalar types:
 Type::string();  // String type

@@ -7,7 +7,7 @@ In **graphql-php** interface type is an instance of `GraphQL\Type\Definition\Int
 
 ```php
 use GraphQL\Type\Definition\InterfaceType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 $character = new InterfaceType([
     'name' => 'Character',

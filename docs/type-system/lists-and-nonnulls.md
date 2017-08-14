@@ -5,7 +5,7 @@ existing type with `GraphQL\Type\Definition\Type::listOf()` modifier:
 <?php
 namespace MyApp;
 
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Definition\ObjectType;
 
 $userType = new ObjectType([
@@ -32,7 +32,7 @@ By default in GraphQL every field can have `null` value. To indicate that some f
 returns `non-null` value - use `GraphQL\Type\Definition\Type::nonNull()` modifier:
 
 ```php
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Definition\ObjectType;
 
 $humanType = new ObjectType([

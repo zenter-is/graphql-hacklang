@@ -16,7 +16,7 @@ Inline definitions:
 namespace MyApp;
 
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 $myType = new ObjectType([
     'name' => 'MyType',
@@ -32,7 +32,7 @@ Class per type:
 namespace MyApp;
 
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 class MyType extends ObjectType
 {
@@ -56,7 +56,7 @@ You can also mix-and-match styles for convenience. For example:
 namespace MyApp;
 
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 
 class BlogPostType extends ObjectType
 {

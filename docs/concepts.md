@@ -111,7 +111,7 @@ It provides following tools and primitives to describe your App as hierarchy of 
 Same example expressed in **graphql-php**:
 ```php
 <?php
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Definition\ObjectType;
 
 $userType = new ObjectType([
