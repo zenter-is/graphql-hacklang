@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Error\InvariantViolation;
@@ -127,6 +127,7 @@ class Config
 
         if (!empty($unexpectedKeys)) {
             if (!self::$allowCustomOptions) {
+                /* HH_FIXME[4110] */
                 trigger_error(sprintf('Error in "%s" type definition: Non-standard keys "%s" ' . $suffix, $typeName, implode(', ', $unexpectedKeys)));
             }
             $map = array_intersect_key($map, $definitions);
@@ -211,68 +212,81 @@ class Config
                 return ; // Allow nulls for non-required fields
             }
 
-            switch (true) {
-                case $def & self::ANY:
-                    break;
-                case $def & self::BOOLEAN:
-                    Utils::invariant(is_bool($value), $err, 'boolean');
-                    break;
-                case $def & self::STRING:
-                    Utils::invariant(is_string($value), $err, 'string');
-                    break;
-                case $def & self::NUMERIC:
-                    Utils::invariant(is_numeric($value), $err, 'numeric');
-                    break;
-                case $def & self::FLOAT:
-                    Utils::invariant(is_float($value) || is_int($value), $err, 'float');
-                    break;
-                case $def & self::INT:
-                    Utils::invariant(is_int($value), $err, 'int');
-                    break;
-                case $def & self::CALLBACK:
-                    Utils::invariant(is_callable($value), $err, 'callable');
-                    break;
-                case $def & self::SCALAR:
-                    Utils::invariant(is_scalar($value), $err, 'scalar');
-                    break;
-                case $def & self::NAME:
-                    Utils::invariant(is_string($value), $err, 'name');
-                    Utils::invariant(
-                        preg_match('~^[_a-zA-Z][_a-zA-Z0-9]*$~', $value),
-                        'Names must match /^[_a-zA-Z][_a-zA-Z0-9]*$/ but "%s" does not.',
-                        $value
-                    );
-                    break;
-                case $def & self::INPUT_TYPE:
-                    Utils::invariant(
-                        is_callable($value) || $value instanceof InputType,
-                        $err,
-                        'InputType definition'
-                    );
-                    break;
-                case $def & self::OUTPUT_TYPE:
-                    Utils::invariant(
-                        is_callable($value) || $value instanceof OutputType,
-                        $err,
-                        'OutputType definition'
-                    );
-                    break;
-                case $def & self::INTERFACE_TYPE:
-                    Utils::invariant(
-                        is_callable($value) || $value instanceof InterfaceType,
-                        $err,
-                        'InterfaceType definition'
-                    );
-                    break;
-                case $def & self::OBJECT_TYPE:
-                    Utils::invariant(
-                        is_callable($value) || $value instanceof ObjectType,
-                        $err,
-                        'ObjectType definition'
-                    );
-                    break;
-                default:
-                    throw new InvariantViolation("Unexpected validation rule: " . $def);
+            if($def & self::ANY)
+            {
+            }
+            elseif($def & self::BOOLEAN)
+            {
+                Utils::invariant(is_bool($value), $err, 'boolean');
+            }
+            elseif($def & self::STRING)
+            {
+                Utils::invariant(is_string($value), $err, 'string');
+            }
+            elseif($def & self::NUMERIC)
+            {
+                Utils::invariant(is_numeric($value), $err, 'numeric');
+            }
+            elseif($def & self::FLOAT)
+            {
+                Utils::invariant(is_float($value) || is_int($value), $err, 'float');
+            }
+            elseif($def & self::INT)
+            {
+                Utils::invariant(is_int($value), $err, 'int');
+            }
+            elseif($def & self::CALLBACK)
+            {
+                Utils::invariant(is_callable($value), $err, 'callable');
+            }
+            elseif($def & self::SCALAR)
+            {
+                Utils::invariant(is_scalar($value), $err, 'scalar');
+            }
+            elseif($def & self::NAME)
+            {
+                Utils::invariant(is_string($value), $err, 'name');
+                Utils::invariant(
+                    preg_match('~^[_a-zA-Z][_a-zA-Z0-9]*$~', $value),
+                    'Names must match /^[_a-zA-Z][_a-zA-Z0-9]*$/ but "%s" does not.',
+                    $value
+                );
+            }
+            elseif($def & self::INPUT_TYPE)
+            {
+                Utils::invariant(
+                    is_callable($value) || $value instanceof InputType,
+                    $err,
+                    'InputType definition'
+                );
+            }
+            elseif($def & self::OUTPUT_TYPE)
+            {
+                Utils::invariant(
+                    is_callable($value) || $value instanceof OutputType,
+                    $err,
+                    'OutputType definition'
+                );
+            }
+            elseif($def & self::INTERFACE_TYPE)
+            {
+                Utils::invariant(
+                    is_callable($value) || $value instanceof InterfaceType,
+                    $err,
+                    'InterfaceType definition'
+                );
+            }
+            elseif($def & self::OBJECT_TYPE)
+            {
+                Utils::invariant(
+                    is_callable($value) || $value instanceof ObjectType,
+                    $err,
+                    'ObjectType definition'
+                );
+            }
+            else
+            {
+                throw new InvariantViolation("Unexpected validation rule: " . $def);
             }
         }
     }

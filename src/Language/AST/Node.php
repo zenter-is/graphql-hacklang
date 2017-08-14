@@ -1,4 +1,4 @@
-<?hh // decl
+<?hh // partial
 namespace GraphQL\Language\AST;
 
 use GraphQL\Utils;
@@ -30,7 +30,7 @@ abstract class Node
     | NonNullTypeNode
      */
 
-    public $kind;
+    public $kind = '';
 
     /**
      * @var Location
@@ -61,15 +61,25 @@ abstract class Node
     {
         if (is_array($value)) {
             $cloned = [];
-            foreach ($value as $key => $arrValue) {
+            foreach ($value as $key => $arrValue)
+            {
                 $cloned[$key] = $this->cloneValue($arrValue);
             }
-        } else if ($value instanceof Node) {
+        }
+        else if ($value instanceof Node)
+        {
             $cloned = clone $value;
-            foreach (get_object_vars($cloned) as $prop => $propValue) {
-                $cloned->{$prop} = $this->cloneValue($propValue);
+            $vars = get_object_vars($cloned);
+            if($vars !== null)
+            {
+                foreach ($vars as $prop => $propValue)
+                {
+                    Utils::setObjectValue($cloned, $prop, $this->cloneValue($propValue));
+                }
             }
-        } else {
+        }
+        else
+        {
             $cloned = $value;
         }
 

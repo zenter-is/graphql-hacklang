@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor\Promise\Adapter;
 
 use GraphQL\Deferred;
@@ -49,8 +49,13 @@ class SyncPromiseAdapter implements PromiseAdapter
     /**
      * @inheritdoc
      */
-    public function create(callable $resolver)
+    public function create($resolver)
     {
+        if(!is_callable($resolver))
+        {
+            throw new Exception('$resolver needs to be callable');
+        }
+
         $promise = new SyncPromise();
 
         try {

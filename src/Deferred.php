@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL;
 
 use GraphQL\Executor\Promise\Adapter\SyncPromise;

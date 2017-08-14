@@ -1,4 +1,4 @@
-<?hh //decl
+<?php
 namespace GraphQL\Executor\Promise\Adapter;
 
 use GraphQL\Executor\Promise\Promise;

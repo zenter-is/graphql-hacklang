@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor\Promise;
 
 use GraphQL\Utils;

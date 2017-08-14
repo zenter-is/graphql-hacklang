@@ -362,7 +362,7 @@ class TypeInfo
                 $fieldOrDirective = $this->getDirective() ?: $this->getFieldDef();
                 $argDef = $argType = null;
                 if ($fieldOrDirective) {
-                    $argDef = Utils::find($fieldOrDirective->args, function($arg) use ($node) {return $arg->name === $node->name->value;});
+                    $argDef = Utils::find($fieldOrDirective->args, function($arg, $index) use ($node) {return $arg->name === $node->name->value;});
                     if ($argDef) {
                         $argType = $argDef->getType();
                     }

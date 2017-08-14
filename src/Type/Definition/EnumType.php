@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Language\AST\EnumValueNode;
@@ -126,10 +126,10 @@ class EnumType extends GraphQlType implements InputType, OutputType, LeafType
     /**
      * @return \ArrayObject<string, EnumValueDefinition>
      */
-    private function getNameLookup()
+    private function getNameLookup():array<string,EnumValueDefinition>
     {
         if (!$this->nameLookup) {
-            $lookup = new \ArrayObject();
+            $lookup = [];
             foreach ($this->getValues() as $value) {
                 $lookup[$value->name] = $value;
             }

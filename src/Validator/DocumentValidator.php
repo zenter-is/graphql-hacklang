@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh //partial
 namespace GraphQL\Validator;
 
 use GraphQL\Error\Error;
@@ -182,7 +182,7 @@ class DocumentValidator
                     $tmp = static::isValidLiteralValue($itemType, $itemNode);
 
                     if ($tmp) {
-                        $errors = array_merge($errors, Utils::map($tmp, function($error) use ($index) {
+                        $errors = array_merge($errors, Utils::map($tmp, function($error, $indexKey) use ($index) {
                             return "In element #$index: $error";
                         }));
                     }
@@ -235,6 +235,12 @@ class DocumentValidator
 
             if (null === $parseResult) {
                 $printed = Printer::doPrint($valueNode);
+                if(!property_exists($type, 'name'))
+                {
+                    #TODO: Make better errror message
+                    throw new \Exception('"name" does not exist on type');
+                }
+                /* HH_FIXME[4053] */
                 return [ "Expected type \"{$type->name}\", found $printed." ];
             }
 
@@ -254,7 +260,7 @@ class DocumentValidator
      * @param array $rules
      * @return array
      */
-    public static function visitUsingRules(Schema $schema, TypeInfo $typeInfo, DocumentNode $documentNode, array $rules)
+    public static function visitUsingRules(Schema $schema, TypeInfo $typeInfo, $documentNode, array $rules)
     {
         $context = new ValidationContext($schema, $documentNode, $typeInfo);
         $visitors = [];

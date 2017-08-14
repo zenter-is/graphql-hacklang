@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Error;
 
 use GraphQL\Language\Source;
@@ -22,7 +22,7 @@ class Error extends Exception implements \JsonSerializable
      *
      * @var string
      */
-    public $message;
+    public string $message;
 
     /**
      * An array of [ line => x, column => y] locations within the source GraphQL document
@@ -34,7 +34,7 @@ class Error extends Exception implements \JsonSerializable
      *
      * @var SourceLocation[]
      */
-    private $locations;
+    private array<SourceLocation> $locations = [];
 
     /**
      * An array describing the JSON-path into the execution response which
@@ -42,26 +42,26 @@ class Error extends Exception implements \JsonSerializable
      *
      * @var array
      */
-    public $path;
+    public array $path;
 
     /**
      * An array of GraphQL AST Nodes corresponding to this error.
      *
      * @var array
      */
-    public $nodes;
+    public array $nodes;
 
     /**
      * The source GraphQL document corresponding to this error.
      *
      * @var Source|null
      */
-    private $source;
+    private ?Source $source;
 
     /**
      * @var array
      */
-    private $positions;
+    private array $positions = [];
 
     /**
      * Given an arbitrary Error, presumably thrown while attempting to execute a
@@ -73,7 +73,7 @@ class Error extends Exception implements \JsonSerializable
      * @param array|null $path
      * @return Error
      */
-    public static function createLocatedError($error, $nodes = null, $path = null)
+    public static function createLocatedError($error, ?array $nodes = null, ?array $path = null):Error
     {
         if ($error instanceof self && $error->path) {
             return $error;
@@ -109,7 +109,7 @@ class Error extends Exception implements \JsonSerializable
      * @param Error $error
      * @return array
      */
-    public static function formatError(\GraphQL\Error\Error $error)
+    public static function formatError(Error $error)
     {
         return $error->toSerializableArray();
     }
@@ -122,18 +122,19 @@ class Error extends Exception implements \JsonSerializable
      * @param array|null $path
      * @param \Exception $previous
      */
-    public function __construct(@string $message, mixed $nodes = null, ?Source $source = null, $positions = null, $path = null, ?Exception $previous = null)
+    public function __construct(string $message, ?array $nodes = null, ?Source $source = null, ?array $positions = null, ?array $path = null, ?Exception $previous = null)
     {
         parent::__construct($message, 0, $previous);
 
         if ($nodes instanceof \Traversable) {
             $nodes = iterator_to_array($nodes);
         }
+        $this->message = $message;
 
-        $this->nodes = $nodes;
+        $this->nodes = $nodes?:[];
         $this->source = $source;
-        $this->positions = $positions;
-        $this->path = $path;
+        $this->positions = $positions?:[];
+        $this->path = $path?:[];
     }
 
     /**
@@ -152,7 +153,7 @@ class Error extends Exception implements \JsonSerializable
     /**
      * @return array
      */
-    public function getPositions()
+    public function getPositions():array
     {
         if (null === $this->positions) {
             if (!empty($this->nodes)) {
@@ -170,7 +171,7 @@ class Error extends Exception implements \JsonSerializable
     /**
      * @return SourceLocation[]
      */
-    public function getLocations()
+    public function getLocations():array<SourceLocation>
     {
         if (null === $this->locations) {
             $positions = $this->getPositions();
@@ -193,13 +194,14 @@ class Error extends Exception implements \JsonSerializable
      *
      * @return array
      */
-    public function toSerializableArray()
+    public function toSerializableArray():array
     {
         $arr = [
             'message' => $this->getMessage(),
         ];
 
-        $locations = Utils::map($this->getLocations(), function(SourceLocation $loc) {
+        //function(SourceLocation $loc, $key)
+        $locations = Utils::map($this->getLocations(), function(SourceLocation $loc, $key) {
             return $loc->toSerializableArray();
         });
 
@@ -220,7 +222,7 @@ class Error extends Exception implements \JsonSerializable
      * which is a value of any type other than a resource.
      * @since 5.4.0
      */
-    public function jsonSerialize()
+    public function jsonSerialize():array
     {
         return $this->toSerializableArray();
     }

@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Language;
 
 use GraphQL\Error\SyntaxError;
@@ -42,14 +42,14 @@ class Lexer
      *
      * @var int
      */
-    public $line;
+    public int $line = 1;
 
     /**
      * The character offset at which the current line begins.
      *
      * @var int
      */
-    public $lineStart;
+    public int $lineStart = 0;
 
     public function __construct(Source $source, array $options = [])
     {
@@ -59,8 +59,6 @@ class Lexer
         $this->options = $options;
         $this->lastToken = $startOfFileToken;
         $this->token = $startOfFileToken;
-        $this->line = 1;
-        $this->lineStart = 0;
     }
 
     /**

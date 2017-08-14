@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Language;
 
 // language/parser.js

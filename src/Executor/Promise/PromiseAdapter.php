@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor\Promise;
 
 interface PromiseAdapter
@@ -9,7 +9,7 @@ interface PromiseAdapter
      * @param mixed $value
      * @return bool
      */
-    public function isThenable($value);
+    public function isThenable($value):bool;
 
     /**
      * Converts thenable of underlying system into Promise instance
@@ -17,7 +17,7 @@ interface PromiseAdapter
      * @param object $thenable
      * @return Promise
      */
-    public function convertThenable($thenable);
+    public function convertThenable($thenable):Promise;
 
     /**
      * Accepts our Promise wrapper, extracts adopted promise out of it and executes actual `then` logic described
@@ -29,7 +29,7 @@ interface PromiseAdapter
      *
      * @return Promise
      */
-    public function then(Promise $promise, ?callable $onFulfilled = null, ?callable $onRejected = null);
+    public function then(Promise $promise, $onFulfilled = null, $onRejected = null);
 
     /**
      * Creates a Promise
@@ -38,7 +38,7 @@ interface PromiseAdapter
 
      * @return Promise
      */
-    public function create(callable $resolver);
+    public function create($resolver);
 
     /**
      * Creates a fulfilled Promise for a value if the value is not a promise.

@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor;
 
 use GraphQL\Error\Error;
@@ -11,6 +11,7 @@ use GraphQL\Language\AST\FragmentDefinitionNode;
 use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\AST\SelectionSetNode;
+use GraphQL\Language\AST\DirectiveNode;
 use GraphQL\Executor\Promise\PromiseAdapter;
 use GraphQL\Schema;
 use GraphQL\Type\Definition\AbstractType;
@@ -74,12 +75,16 @@ class Executor
     /**
      * Custom default resolve function
      *
-     * @param $fn
+     * @param callable $function
      * @throws \Exception
      */
-    public static function setDefaultFieldResolver(callable $fn)
+    public static function setDefaultFieldResolver($function)
     {
-        self::$defaultFieldResolver = $fn;
+        if(!is_callable($function))
+        {
+            throw new Exception('$function has to be callable');
+        }
+        self::$defaultFieldResolver = $function;
     }
 
     /**
@@ -225,7 +230,7 @@ class Executor
         // field and its descendants will be omitted, and sibling fields will still
         // be executed. An execution which encounters errors will still result in a
         // resolved Promise.
-        $result = $this->promises->create(function (callable $resolve) {
+        $result = $this->promises->create(function ((function(mixed):mixed) $resolve) {
             return $resolve($this->executeOperation($this->exeContext->operation, $this->exeContext->rootValue));
         });
         return $result
@@ -447,10 +452,11 @@ class Executor
     {
         $exeContext = $this->exeContext;
         foreach ($selectionSet->selections as $selection) {
-            switch ($selection->kind) {
+            switch ($selection->kind)
+            {
                 case NodeKind::FIELD:
                     if (!$this->shouldIncludeNode($selection->directives)) {
-                        continue;
+                        break; //Continue
                     }
                     $name = self::getFieldEntryKey($selection);
                     if (!isset($fields[$name])) {
@@ -462,7 +468,7 @@ class Executor
                     if (!$this->shouldIncludeNode($selection->directives) ||
                         !$this->doesFragmentConditionMatch($selection, $runtimeType)
                     ) {
-                        continue;
+                        break; //Continue
                     }
                     $this->collectFields(
                         $runtimeType,
@@ -474,14 +480,14 @@ class Executor
                 case NodeKind::FRAGMENT_SPREAD:
                     $fragName = $selection->name->value;
                     if (!empty($visitedFragmentNames[$fragName]) || !$this->shouldIncludeNode($selection->directives)) {
-                        continue;
+                        break; //Continue
                     }
                     $visitedFragmentNames[$fragName] = true;
 
                     /** @var FragmentDefinitionNode|null $fragment */
                     $fragment = isset($exeContext->fragments[$fragName]) ? $exeContext->fragments[$fragName] : null;
                     if (!$fragment || !$this->doesFragmentConditionMatch($fragment, $runtimeType)) {
-                        continue;
+                        break; //Continue
                     }
                     $this->collectFields(
                         $runtimeType,
@@ -508,9 +514,9 @@ class Executor
         $skipDirective = Directive::skipDirective();
         $includeDirective = Directive::includeDirective();
 
-        /** @var \GraphQL\Language\AST\DirectiveNode $skipNode */
+        /** @var DirectiveNode $skipNode */
         $skipNode = $directives
-            ? Utils::find($directives, function(\GraphQL\Language\AST\DirectiveNode $directive) use ($skipDirective) {
+            ? Utils::find($directives, function($directive, $key) use ($skipDirective) {
                 return $directive->name->value === $skipDirective->name;
             })
             : null;
@@ -522,9 +528,10 @@ class Executor
             }
         }
 
-        /** @var \GraphQL\Language\AST\DirectiveNode $includeNode */
+        /** @var DirectiveNode $includeNode */
+        //function(DirectiveNode $directive, $key)
         $includeNode = $directives
-            ? Utils::find($directives, function(\GraphQL\Language\AST\DirectiveNode $directive) use ($includeDirective) {
+            ? Utils::find($directives, function($directive, $key) use ($includeDirective) {
                 return $directive->name->value === $includeDirective->name;
             })
             : null;
@@ -898,17 +905,24 @@ class Executor
         $fieldName = $info->fieldName;
         $property = null;
 
-        if (is_array($source) || $source instanceof \ArrayAccess) {
-            if (isset($source[$fieldName])) {
+        if (is_array($source) || $source instanceof \ArrayAccess)
+        {
+            if (isset($source[$fieldName]))
+            {
                 $property = $source[$fieldName];
             }
-        } else if (is_object($source)) {
-            if (isset($source->{$fieldName})) {
-                $property = $source->{$fieldName};
+        }
+        else if (is_object($source))
+        {
+            if (property_exists($source, $fieldName))
+            {
+                $reflectedObj = new \ReflectionClass($source);
+                $reflectedProperty = $reflectedObj->getProperty($fieldName);
+                $property = $reflectedProperty->getValue($source);
             }
         }
 
-        return $property instanceof \Closure ? $property($source, $args, $context) : $property;
+        return ($property &&is_callable($property))? $property($source, $args, $context) : $property;
     }
 
     /**
@@ -973,8 +987,9 @@ class Executor
         }
 
         if (!($runtimeType instanceof ObjectType)) {
+            $name = Utils::getObjectValue($returnType, 'name');
             throw new Error(
-                "Abstract type {$returnType} must resolve to an Object type at runtime " .
+                "Abstract type {$name} must resolve to an Object type at runtime " .
                 "for field {$info->parentType}.{$info->fieldName} with value \"" . print_r($result, true) . "\"," .
                 "received \"$runtimeType\".",
                 $fieldNodes
@@ -982,8 +997,10 @@ class Executor
         }
 
         if (!$exeContext->schema->isPossibleType($returnType, $runtimeType)) {
+            $returnName = Utils::getObjectValue($returnType, 'name');
+            $runtimeName = Utils::getObjectValue($runtimeType, 'name');
             throw new Error(
-                "Runtime Object type \"$runtimeType\" is not a possible type for \"$returnType\".",
+                "Runtime Object type \"$runtimeName\" is not a possible type for \"$returnName\".",
                 $fieldNodes
             );
         }
@@ -1108,31 +1125,5 @@ class Executor
             }
         }
         return null;
-    }
-
-    /**
-     * @deprecated as of v0.8.0 should use self::defaultFieldResolver method
-     *
-     * @param $source
-     * @param $args
-     * @param $context
-     * @param ResolveInfo $info
-     * @return mixed|null
-     */
-    public static function defaultResolveFn($source, $args, $context, ResolveInfo $info)
-    {
-        trigger_error(__METHOD__ . ' is renamed to ' . __CLASS__ . '::defaultFieldResolver', E_USER_DEPRECATED);
-        return self::defaultFieldResolver($source, $args, $context, $info);
-    }
-
-    /**
-     * @deprecated as of v0.8.0 should use self::setDefaultFieldResolver method
-     *
-     * @param callable $fn
-     */
-    public static function setDefaultResolveFn($fn)
-    {
-        trigger_error(__METHOD__ . ' is renamed to ' . __CLASS__ . '::setDefaultFieldResolver', E_USER_DEPRECATED);
-        self::setDefaultFieldResolver($fn);
     }
 }

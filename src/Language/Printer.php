@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Language;
 
 use GraphQL\Language\AST\ArgumentNode;
@@ -39,6 +39,7 @@ use GraphQL\Language\AST\TypeExtensionDefinitionNode;
 use GraphQL\Language\AST\UnionTypeDefinitionNode;
 use GraphQL\Language\AST\VariableDefinitionNode;
 
+<<__ConsistentConstruct>>
 class Printer
 {
     public static function doPrint($ast)
@@ -49,14 +50,16 @@ class Printer
     }
 
     protected function __construct()
-    {}
+    {
+
+    }
 
     public function printAST($ast)
     {
         return Visitor::visit($ast, [
             'leave' => [
                 NodeKind::NAME => function(Node $node) {
-                    return '' . $node->value;
+                    return (string)$node->value;
                 },
                 NodeKind::VARIABLE => function($node) {
                     return '$' . $node->name;

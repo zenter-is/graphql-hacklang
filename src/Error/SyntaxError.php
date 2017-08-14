@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Error;
 
 use GraphQL\Language\Source;

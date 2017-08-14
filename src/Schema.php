@@ -1,10 +1,10 @@
-<?hh //decl
+<?hh //partial
 namespace GraphQL;
 
 use GraphQL\Type\Definition\AbstractType;
 use GraphQL\Type\Definition\Directive;
 use GraphQL\Type\Definition\ObjectType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\EagerResolution;
 use GraphQL\Type\Introspection;
 use GraphQL\Type\Resolution;
@@ -81,14 +81,14 @@ class Schema
             ];
         }
 
-        $config += [
+        $config = array_merge($config, [
             'query' => null,
             'mutation' => null,
             'subscription' => null,
             'types' => [],
             'directives' => null,
             'typeResolution' => null
-        ];
+        ]);
 
         $this->init($config);
     }
@@ -119,7 +119,7 @@ class Schema
         );
 
         Utils::invariant(
-            !$config['directives'] || (is_array($config['directives']) && Utils::every($config['directives'], function($d) {return $d instanceof Directive;})),
+            !$config['directives'] || (is_array($config['directives']) && Utils::every($config['directives'], function($d, $index) {return $d instanceof Directive;})),
             "Schema directives must be Directive[] if provided but got " . Utils::getVariableType($config['directives'])
         );
 
@@ -201,8 +201,9 @@ class Schema
      * @param ObjectType $possibleType
      * @return bool
      */
-    public function isPossibleType(AbstractType $abstractType, ObjectType $possibleType)
+    public function isPossibleType(AbstractType $abstractType, ObjectType $possibleType):bool
     {
+        /* HH_FIXME[4053] */
         if (!isset($this->possibleTypeMap[$abstractType->name])) {
             $tmp = [];
             foreach ($this->getPossibleTypes($abstractType) as $type) {
@@ -214,6 +215,7 @@ class Schema
                 'Could not find possible implementing types for $%s ' .
                 'in schema. Check that schema.types is defined and is an array of ' .
                 'all possible types in the schema.',
+        /* HH_FIXME[4053] */
                 $abstractType->name
             );
 

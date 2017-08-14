@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh //partial
 namespace GraphQL\Validator;
 
 use GraphQL\Language\AST\FragmentSpreadNode;
@@ -7,7 +7,7 @@ use GraphQL\Language\AST\NodeKind;
 use GraphQL\Language\AST\OperationDefinitionNode;
 use GraphQL\Language\AST\VariableNode;
 use GraphQL\Language\Visitor;
-use \SplObjectStorage;
+use SplObjectStorage;
 use GraphQL\Error\Error;
 use GraphQL\Schema;
 use GraphQL\Language\AST\DocumentNode;
@@ -17,7 +17,7 @@ use GraphQL\Type\Definition\CompositeType;
 use GraphQL\Type\Definition\FieldDefinition;
 use GraphQL\Type\Definition\InputType;
 use GraphQL\Type\Definition\OutputType;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Utils\TypeInfo;
 
 /**
@@ -149,8 +149,9 @@ class ValidationContext
     public function getFragmentSpreads(HasSelectionSet $node)
     {
         $spreads = isset($this->fragmentSpreads[$node]) ? $this->fragmentSpreads[$node] : null;
-        if (!$spreads) {
+        if (!$spreads && property_exists($node, 'selectionSet')) {
             $spreads = [];
+            /* HH_FIXME[4053] */
             $setsToVisit = [$node->selectionSet];
             while (!empty($setsToVisit)) {
                 $set = array_pop($setsToVisit);
@@ -206,7 +207,7 @@ class ValidationContext
      * @param HasSelectionSet $node
      * @return array List of ['node' => VariableNode, 'type' => ?InputObjectType]
      */
-    private function getVariableUsages(HasSelectionSet $node)
+    private function getVariableUsages($node)
     {
         $usages = isset($this->variableUsages[$node]) ? $this->variableUsages[$node] : null;
 
@@ -214,7 +215,7 @@ class ValidationContext
             $newUsages = [];
             $typeInfo = new TypeInfo($this->schema);
             Visitor::visit($node, Visitor::visitWithTypeInfo($typeInfo, [
-                NodeKind::VARIABLE_DEFINITION => function () {
+                NodeKind::VARIABLE_DEFINITION => function (VariableNode $variable) {
                     return false;
                 },
                 NodeKind::VARIABLE => function (VariableNode $variable) use (&$newUsages, $typeInfo) {

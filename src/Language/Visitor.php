@@ -1,17 +1,19 @@
-<?hh //decl
+<?hh //partial
 namespace GraphQL\Language;
 
 use GraphQL\Language\AST\Node;
 use GraphQL\Language\AST\NodeKind;
 use GraphQL\Utils\TypeInfo;
 
+use GraphQL\Language\AST\DocumentNode;
+
 class VisitorOperation
 {
-    public $doBreak;
+    public bool $doBreak = false;
 
-    public $doContinue;
+    public bool $doContinue = false;
 
-    public $removeNode;
+    public bool $removeNode = false;
 }
 
 class Visitor
@@ -90,96 +92,12 @@ class Visitor
         NodeKind::DIRECTIVE_DEFINITION => [ 'name', 'arguments', 'locations' ]
     ];
 
-    /**
-     * visit() will walk through an AST using a depth first traversal, calling
-     * the visitor's enter function at each node in the traversal, and calling the
-     * leave function after visiting that node and all of it's child nodes.
-     *
-     * By returning different values from the enter and leave functions, the
-     * behavior of the visitor can be altered, including skipping over a sub-tree of
-     * the AST (by returning false), editing the AST by returning a value or null
-     * to remove the value, or to stop the whole traversal by returning BREAK.
-     *
-     * When using visit() to edit an AST, the original AST will not be modified, and
-     * a new version of the AST with the changes applied will be returned from the
-     * visit function.
-     *
-     *     var editedAST = visit(ast, {
-     *       enter(node, key, parent, path, ancestors) {
-     *         // @return
-     *         //   undefined: no action
-     *         //   false: skip visiting this node
-     *         //   visitor.BREAK: stop visiting altogether
-     *         //   null: delete this node
-     *         //   any value: replace this node with the returned value
-     *       },
-     *       leave(node, key, parent, path, ancestors) {
-     *         // @return
-     *         //   undefined: no action
-     *         //   visitor.BREAK: stop visiting altogether
-     *         //   null: delete this node
-     *         //   any value: replace this node with the returned value
-     *       }
-     *     });
-     *
-     * Alternatively to providing enter() and leave() functions, a visitor can
-     * instead provide functions named the same as the kinds of AST nodes, or
-     * enter/leave visitors at a named key, leading to four permutations of
-     * visitor API:
-     *
-     * 1) Named visitors triggered when entering a node a specific kind.
-     *
-     *     visit(ast, {
-     *       Kind(node) {
-     *         // enter the "Kind" node
-     *       }
-     *     })
-     *
-     * 2) Named visitors that trigger upon entering and leaving a node of
-     *    a specific kind.
-     *
-     *     visit(ast, {
-     *       Kind: {
-     *         enter(node) {
-     *           // enter the "Kind" node
-     *         }
-     *         leave(node) {
-     *           // leave the "Kind" node
-     *         }
-     *       }
-     *     })
-     *
-     * 3) Generic visitors that trigger upon entering and leaving any node.
-     *
-     *     visit(ast, {
-     *       enter(node) {
-     *         // enter any node
-     *       },
-     *       leave(node) {
-     *         // leave any node
-     *       }
-     *     })
-     *
-     * 4) Parallel visitors for entering and leaving nodes of a specific kind.
-     *
-     *     visit(ast, {
-     *       enter: {
-     *         Kind(node) {
-     *           // enter the "Kind" node
-     *         }
-     *       },
-     *       leave: {
-     *         Kind(node) {
-     *           // leave the "Kind" node
-     *         }
-     *       }
-     *     })
-     */
-    public static function visit($root, $visitor, $keyMap = null)
+
+    public static function visit(array<DocumentNode> $root, $visitor, $keyMap = null)
     {
         $visitorKeys = $keyMap ?: self::$visitorKeys;
 
-        $stack = null;
+        $stack = [];
         $inArray = is_array($root);
         $keys = [$root];
         $index = -1;
@@ -206,12 +124,23 @@ class Visitor
                 if ($isEdited) {
                     if ($inArray) {
                         // $node = $node; // arrays are value types in PHP
+                    } elseif(is_object($node)) {
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        #TODO: Fix the case where this is a class!!!
+                        $node = clone (object)$node;
                     } else {
-                        $node = clone $node;
+                        #TODO: Make better message
+                        throw new Exception('Node is null or not a object??');
                     }
                     $editOffset = 0;
                     for ($ii = 0; $ii < count($edits); $ii++) {
-                        $editKey = $edits[$ii][0];
+                        $editKey = (int)$edits[$ii][0];
                         $editValue = $edits[$ii][1];
 
                         if ($inArray) {
@@ -224,7 +153,7 @@ class Visitor
                             if (is_array($node)) {
                                 $node[$editKey] = $editValue;
                             } else {
-                                $node->{$editKey} = $editValue;
+                                $node->$editKey = $editValue;
                             }
                         }
                     }
@@ -235,8 +164,33 @@ class Visitor
                 $inArray = $stack['inArray'];
                 $stack = $stack['prev'];
             } else {
-                $key = $parent ? ($inArray ? $index : $keys[$index]) : $UNDEFINED;
-                $node = $parent ? (is_array($parent) ? $parent[$key] : $parent->{$key}) : $newRoot;
+
+                if($parent && $inArray)
+                {
+                    $key = $index;
+                }
+                elseif($parent)
+                {
+                    $key = $keys[$index];
+                }
+                else
+                {
+                    $key = $UNDEFINED;
+                }
+
+                if($parent && is_array($parent))
+                {
+                    $node = $parent[$key];
+                }
+                elseif($parent)
+                {
+                    $node = Utils::getObjectValue($parent, $key);
+                }
+                else
+                {
+                    $node = $newRoot;
+                }
+
                 if ($node === null || $node === $UNDEFINED) {
                     continue;
                 }
@@ -256,19 +210,23 @@ class Visitor
                 if ($visitFn) {
                     $result = call_user_func($visitFn, $node, $key, $parent, $path, $ancestors);
 
-                    if ($result !== null) {
-                        if ($result instanceof VisitorOperation) {
-                            if ($result->doBreak) {
+                    if ($result !== null)
+                    {
+                        if ($result instanceof VisitorOperation)
+                        {
+                            if ($result->doBreak)
+                            {
                                 break;
                             }
-                            if (!$isLeaving && $result->doContinue) {
+                            if (!$isLeaving && $result->doContinue)
+                            {
                                 array_pop($path);
                                 continue;
                             }
-                            if ($result->removeNode) {
-                                $editValue = null;
-                            }
-                        } else {
+                            $editValue = null;
+                        }
+                        else
+                        {
                             $editValue = $result;
                         }
 
@@ -289,7 +247,7 @@ class Visitor
                 $edits[] = [$key, $node];
             }
 
-            if (!$isLeaving) {
+            if (!$isLeaving && $node !== null) {
                 $stack = [
                     'inArray' => $inArray,
                     'index' => $index,
@@ -299,7 +257,19 @@ class Visitor
                 ];
                 $inArray = is_array($node);
 
-                $keys = ($inArray ? $node : $visitorKeys[$node->kind]) ?: [];
+                if($inArray && $node)
+                {
+                    $keys = $node;
+                }
+                elseif(!$inArray && $node && $visitorKeys[$node['kind']])
+                {
+                    $keys = $visitorKeys[$node['kind']];
+                }
+                else
+                {
+                    $keys = [];
+                }
+
                 $index = -1;
                 $edits = [];
                 if ($parent) {
@@ -324,12 +294,12 @@ class Visitor
     static function visitInParallel($visitors)
     {
         $visitorsCount = count($visitors);
-        $skipping = new \SplFixedArray($visitorsCount);
+        $skipping = [];
 
         return [
             'enter' => function ($node) use ($visitors, $skipping, $visitorsCount) {
                 for ($i = 0; $i < $visitorsCount; $i++) {
-                    if (empty($skipping[$i])) {
+                    if (!array_key_exists($i, $skipping) || empty($skipping[$i])) {
                         $fn = self::getVisitFn($visitors[$i], $node->kind, /* isLeaving */ false);
 
                         if ($fn) {
@@ -352,7 +322,7 @@ class Visitor
             },
             'leave' => function ($node) use ($visitors, $skipping, $visitorsCount) {
                 for ($i = 0; $i < $visitorsCount; $i++) {
-                    if (empty($skipping[$i])) {
+                    if (!array_key_exists($i, $skipping) || empty($skipping[$i])) {
                         $fn = self::getVisitFn($visitors[$i], $node->kind, /* isLeaving */ true);
 
                         if ($fn) {
@@ -379,7 +349,7 @@ class Visitor
      * Creates a new visitor instance which maintains a provided TypeInfo instance
      * along with visiting visitor.
      */
-    static function visitWithTypeInfo(TypeInfo $typeInfo, $visitor)
+    public static function visitWithTypeInfo(TypeInfo $typeInfo, $visitor)
     {
         return [
             'enter' => function ($node) use ($typeInfo, $visitor) {

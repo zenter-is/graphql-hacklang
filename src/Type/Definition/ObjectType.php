@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Utils;
@@ -160,7 +160,7 @@ class ObjectType extends GraphQlType implements OutputType, CompositeType
     public function implementsInterface($iface)
     {
         $iface = GraphQlType::resolve($iface);
-        return !!Utils::find($this->getInterfaces(), function($implemented) use ($iface) {return $iface === $implemented;});
+        return !!Utils::find($this->getInterfaces(), function($implemented, $indexKey) use ($iface) {return $iface === $implemented;});
     }
 
     /**

@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Language;
 
 /**
@@ -8,26 +8,26 @@ namespace GraphQL\Language;
 class Token
 {
     // Each kind of token.
-    const SOF = '<SOF>';
-    const EOF = '<EOF>';
-    const BANG = '!';
-    const DOLLAR = '$';
-    const PAREN_L = '(';
-    const PAREN_R = ')';
-    const SPREAD = '...';
-    const COLON = ':';
-    const EQUALS = '=';
-    const AT = '@';
-    const BRACKET_L = '[';
-    const BRACKET_R = ']';
-    const BRACE_L = '{';
-    const PIPE = '|';
-    const BRACE_R = '}';
-    const NAME = 'Name';
-    const INT = 'Int';
-    const FLOAT = 'Float';
-    const STRING = 'String';
-    const COMMENT = 'Comment';
+    const string SOF = '<SOF>';
+    const string EOF = '<EOF>';
+    const string BANG = '!';
+    const string DOLLAR = '$';
+    const string PAREN_L = '(';
+    const string PAREN_R = ')';
+    const string SPREAD = '...';
+    const string COLON = ':';
+    const string EQUALS = '=';
+    const string AT = '@';
+    const string BRACKET_L = '[';
+    const string BRACKET_R = ']';
+    const string BRACE_L = '{';
+    const string PIPE = '|';
+    const string BRACE_R = '}';
+    const string NAME = 'Name';
+    const string INT = 'Int';
+    const string FLOAT = 'Float';
+    const string STRING = 'String';
+    const string COMMENT = 'Comment';
 
     /**
      * @param $kind
@@ -67,35 +67,35 @@ class Token
      *
      * @var string
      */
-    public $kind;
+    public string $kind;
 
     /**
      * The character offset at which this Node begins.
      *
      * @var int
      */
-    public $start;
+    public int $start;
 
     /**
      * The character offset at which this Node ends.
      *
      * @var int
      */
-    public $end;
+    public int $end;
 
     /**
      * The 1-indexed line number on which this Token appears.
      *
      * @var int
      */
-    public $line;
+    public int $line;
 
     /**
      * The 1-indexed column number at which this Token begins.
      *
      * @var int
      */
-    public $column;
+    public int $column;
 
     /**
      * @var string|null
@@ -126,13 +126,13 @@ class Token
      * @param Token $previous
      * @param null $value
      */
-    public function __construct($kind, $start, $end, $line, $column, ?Token $previous = null, $value = null)
+    public function __construct(string $kind, int $start, int $end, int $line, int $column, ?Token $previous = null, ?string $value = null)
     {
         $this->kind = $kind;
-        $this->start = (int) $start;
-        $this->end = (int) $end;
-        $this->line = (int) $line;
-        $this->column = (int) $column;
+        $this->start = $start;
+        $this->end = $end;
+        $this->line = $line;
+        $this->column = $column;
         $this->prev = $previous;
         $this->next = null;
         $this->value = $value;

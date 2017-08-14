@@ -1,8 +1,8 @@
-<?hh //decl
+<?hh //partial
 namespace GraphQL;
 
 use GraphQL\Error\InvariantViolation;
-use GraphQL\Type\Definition\Type;
+use GraphQL\Type\Definition\GraphQlType as Type;
 use GraphQL\Type\Definition\WrappingType;
 use GraphQL\Utils\SchemaUtils;
 use \Traversable, \InvalidArgumentException;
@@ -36,7 +36,10 @@ class Utils
                 $cls = get_class($obj);
                 trigger_error("Trying to set non-existing property '$key' on class '$cls'");
             }
-            $obj->{$key} = $value;
+            $objReflected = new \ReflectionClass($obj);
+            $objProperty = $objReflected->getProperty($key);
+            $objProperty->setValue($obj, $value);
+            //$obj->{$key} = $value;
         }
         return $obj;
     }
@@ -46,7 +49,7 @@ class Utils
      * @param callable $predicate
      * @return null
      */
-    public static function find($traversable, callable $predicate)
+    public static function find($traversable, (function(any, string):bool) $predicate)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -64,7 +67,7 @@ class Utils
      * @return array
      * @throws \Exception
      */
-    public static function filter($traversable, callable $predicate)
+    public static function filter($traversable, (function(any, string):bool) $predicate)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -84,11 +87,11 @@ class Utils
 
     /**
      * @param array|\Traversable $traversable
-     * @param callable $fn function($value, $key) => $newValue
+     * @param callable $fn function(mixed $value, string $key) => $newValue
      * @return array
      * @throws \Exception
      */
-    public static function map($traversable, callable $fn)
+    public static function map($traversable, (function(any, string):mixed) $fn)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -105,7 +108,7 @@ class Utils
      * @return array
      * @throws \Exception
      */
-    public static function mapKeyValue($traversable, callable $fn)
+    public static function mapKeyValue($traversable, (function(any, string):array) $fn)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -119,11 +122,11 @@ class Utils
 
     /**
      * @param $traversable
-     * @param callable $keyFn function($value, $key) => $newKey
+     * @param callable $keyFn function(mixed $value, string $key) => $newKey
      * @return array
      * @throws \Exception
      */
-    public static function keyMap($traversable, callable $keyFn)
+    public static function keyMap($traversable, (function(any, string):mixed) $keyFn)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -141,7 +144,7 @@ class Utils
      * @param $traversable
      * @param callable $fn
      */
-    public static function each($traversable, callable $fn)
+    public static function each($traversable, (function(any, string):void) $fn)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -163,10 +166,10 @@ class Utils
      * $keyFn is also allowed to return array of keys. Then value will be added to all arrays with given keys
      *
      * @param $traversable
-     * @param callable $keyFn function($value, $key) => $newKey(s)
+     * @param callable $keyFn function(mixed $value, string $key) => $newKey(s)
      * @return array
      */
-    public static function groupBy($traversable, callable $keyFn)
+    public static function groupBy($traversable, (function(any, string):array) $keyFn)
     {
         self::invariant(is_array($traversable) || $traversable instanceof \Traversable, __METHOD__ . ' expects array or Traversable');
 
@@ -186,7 +189,7 @@ class Utils
      * @param callable $predicate
      * @return bool
      */
-    public static function every($traversable, callable $predicate)
+    public static function every($traversable, (function(any, string):bool) $predicate)
     {
         foreach ($traversable as $key => $value) {
             if (!$predicate($value, $key)) {
@@ -203,14 +206,10 @@ class Utils
      * @param mixed $sprintfParam2 ...
      * @throws \Exception
      */
-    public static function invariant($test, @string $message = '')
+    public static function invariant($test, string ...$messages)
     {
         if (!$test) {
-            if (func_num_args() > 2) {
-                $args = func_get_args();
-                array_shift($args);
-                $message = call_user_func_array('sprintf', $args);
-            }
+            $message = call_user_func_array('sprintf', $messages);
             throw new InvariantViolation($message);
         }
     }
@@ -287,7 +286,7 @@ class Utils
             return ord($char);
         }
         if ($encoding === 'UCS-4BE') {
-            list(, $ord) = (strlen($char) === 4) ? unpack('N', $char) : unpack('n', $char);
+            list($temp, $ord) = (strlen($char) === 4) ? unpack('N', $char) : unpack('n', $char);
             return $ord;
         } else {
             return self::ord(mb_convert_encoding($char, 'UCS-4BE', $encoding), 'UCS-4BE');
@@ -321,5 +320,26 @@ class Utils
              ? json_encode(Utils::chr($code))
             // Otherwise print the escaped form.
             : '"\\u' . dechex($code) . '"';
+    }
+
+    public static function getObjectValue($object, $fieldName):any
+    {
+        $class = new \ReflectionClass($object);
+        if($class->hasProperty($fieldName))
+        {
+            $property = $class->getProperty($fieldName);
+            return $property->getValue($object);
+        }
+        throw new \Exception("Trying to access non-existing property ($fieldName) of object (" . get_class($object) . ")");
+    }
+
+    public static function setObjectValue($object, $fieldName, $value):void
+    {
+        $class = new \ReflectionClass($object);
+        if($class->hasProperty($fieldName))
+        {
+            $property = $class->getProperty($fieldName);
+            $property->setValue($object, $value);
+        }
     }
 }

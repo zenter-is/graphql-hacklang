@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Error;
 
 use GraphQL\Language\SourceLocation;
@@ -82,7 +82,7 @@ class FormattedError
 
             if (isset($err['function'])) {
                 $func = $err['function'];
-                $args = !empty($err['args']) ? array_map([__CLASS__, 'printVar'], $err['args']) : [];
+                $args = !empty($err['args']) ? array_map(($item) ==> self::printVar($item), $err['args']) : [];
                 $funcStr = $func . '(' . implode(", ", $args) . ')';
 
                 if (isset($err['class'])) {

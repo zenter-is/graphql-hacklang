@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor;
 
 use GraphQL\Error\Error;
@@ -13,7 +13,7 @@ class ExecutionResult
     /**
      * @var Error[]
      */
-    public $errors;
+    public array<Error> $errors;
 
     /**
      * @var array[]
@@ -44,7 +44,8 @@ class ExecutionResult
         }
 
         if (!empty($this->errors)) {
-            $result['errors'] = array_map(['GraphQL\Error\Error', 'formatError'], $this->errors);
+            //['GraphQL\Error\Error', 'formatError']
+            $result['errors'] = array_map((Error $error) ==> Error::formatError($error), $this->errors);
         }
 
         if (!empty($this->extensions)) {

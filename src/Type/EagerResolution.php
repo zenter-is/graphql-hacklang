@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type;
 
 use GraphQL\Type\Definition\AbstractType;
@@ -35,9 +35,12 @@ class EagerResolution implements Resolution
         $this->typeMap += GraphQlType::getInternalTypes();
 
         // Keep track of all possible types for abstract types
-        foreach ($this->typeMap as $typeName => $type) {
-            if ($type instanceof ObjectType) {
-                foreach ($type->getInterfaces() as $iface) {
+        foreach ($this->typeMap as $typeName => $type)
+        {
+            if ($type instanceof ObjectType)
+            {
+                foreach ($type->getInterfaces() as $iface)
+                {
                     $this->implementations[$iface->name][] = $type;
                 }
             }
@@ -57,17 +60,25 @@ class EagerResolution implements Resolution
      */
     public function resolvePossibleTypes(AbstractType $abstractType)
     {
-        if (!isset($this->typeMap[$abstractType->name])) {
+        $name = Utils::getObjectValue($abstractType, $name);
+        if(!$name)
+        {
             return [];
         }
 
-        if ($abstractType instanceof UnionType) {
+        if (!array_key_exists($name, $this->typeMap))
+        {
+            return [];
+        }
+
+        if ($abstractType instanceof UnionType)
+        {
             return $abstractType->getTypes();
         }
 
         /** @var InterfaceType $abstractType */
         Utils::invariant($abstractType instanceof InterfaceType);
-        return isset($this->implementations[$abstractType->name]) ? $this->implementations[$abstractType->name] : [];
+        return ($this->implementations[$name]) ? $this->implementations[$name] : [];
     }
 
     /**
@@ -112,15 +123,18 @@ class EagerResolution implements Resolution
      */
     private function extractTypes($type)
     {
-        if (!$type) {
+        if (!$type)
+        {
             return $this->typeMap;
         }
 
-        if ($type instanceof WrappingType) {
+        if ($type instanceof WrappingType)
+        {
             return $this->extractTypes($type->getWrappedType(true));
         }
 
-        if (!empty($this->typeMap[$type->name])) {
+        if (!empty($this->typeMap[$type->name]))
+        {
             Utils::invariant(
                 $this->typeMap[$type->name] === $type,
                 "Schema must contain unique named types but contains multiple types named \"$type\"."
@@ -131,22 +145,28 @@ class EagerResolution implements Resolution
 
         $nestedTypes = [];
 
-        if ($type instanceof UnionType) {
+        if ($type instanceof UnionType)
+        {
             $nestedTypes = $type->getTypes();
         }
-        if ($type instanceof ObjectType) {
+        if ($type instanceof ObjectType)
+        {
             $nestedTypes = array_merge($nestedTypes, $type->getInterfaces());
         }
-        if ($type instanceof ObjectType || $type instanceof InterfaceType || $type instanceof InputObjectType) {
-            foreach ((array) $type->getFields() as $fieldName => $field) {
-                if (isset($field->args)) {
+        if ($type instanceof ObjectType || $type instanceof InterfaceType || $type instanceof InputObjectType)
+        {
+            foreach ((array) $type->getFields() as $fieldName => $field)
+            {
+                if (isset($field->args))
+                {
                     $fieldArgTypes = array_map(function(FieldArgument $arg) { return $arg->getType(); }, $field->args);
                     $nestedTypes = array_merge($nestedTypes, $fieldArgTypes);
                 }
                 $nestedTypes[] = $field->getType();
             }
         }
-        foreach ($nestedTypes as $type) {
+        foreach ($nestedTypes as $type)
+        {
             $this->extractTypes($type);
         }
         return $this->typeMap;

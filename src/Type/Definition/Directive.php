@@ -1,5 +1,7 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
+
+use GraphQL\Utils;
 
 /**
  * Class Directive
@@ -163,8 +165,9 @@ class Directive
      */
     public function __construct(array $config)
     {
-        foreach ($config as $key => $value) {
-            $this->{$key} = $value;
+        foreach ($config as $key => $value)
+        {
+            Utils::setObjectValue($this,$key, $value);
         }
     }
 }

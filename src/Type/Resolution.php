@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type;
 
 use GraphQL\Type\Definition\AbstractType;
@@ -13,7 +13,7 @@ interface Resolution
      * @param string $name
      * @return Type
      */
-    public function resolveType($name);
+    public function resolveType(string $name);
 
     /**
      * Returns instances of possible ObjectTypes for given InterfaceType or UnionType

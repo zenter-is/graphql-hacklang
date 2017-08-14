@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor;
 
 use GraphQL\Error\Error;
@@ -27,12 +27,12 @@ class ExecutionContext
     /**
      * @var mixed
      */
-    public $rootValue;
+    public mixed $rootValue;
 
     /**
      * @var mixed
      */
-    public $contextValue;
+    public mixed $contextValue;
 
     /**
      * @var OperationDefinitionNode
@@ -47,7 +47,7 @@ class ExecutionContext
     /**
      * @var array
      */
-    public $errors;
+    public array<Error> $errors;
 
     public function __construct($schema, $fragments, $root, $contextValue, $operation, $variables, $errors)
     {

@@ -1,5 +1,7 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
+
+use GraphQL\Utils;
 
 /**
  * Class InputObjectField
@@ -49,7 +51,8 @@ class InputObjectField
                 case 'defaultValueExists':
                     break;
                 default:
-                    $this->{$k} = $v;
+                    Utils::setObjectValue($this,$k, $v);
+                    break;
             }
         }
     }

@@ -1,12 +1,12 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Language;
 
 class SourceLocation implements \JsonSerializable
 {
-    public $line;
-    public $column;
+    public int $line;
+    public int $column;
 
-    public function __construct(@int $line, @int $col)
+    public function __construct(int $line, int $col)
     {
         $this->line = $line;
         $this->column = $col;

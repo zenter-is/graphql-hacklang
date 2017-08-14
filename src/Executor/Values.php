@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Executor;
 
 
@@ -107,7 +107,7 @@ class Values
         $undefined = Utils::undefined();
 
         /** @var ArgumentNode[] $argNodeMap */
-        $argNodeMap = $argNodes ? Utils::keyMap($argNodes, function (ArgumentNode $arg) {
+        $argNodeMap = $argNodes ? Utils::keyMap($argNodes, function (ArgumentNode $arg, $index) {
             return $arg->name->value;
         }) : [];
 
@@ -204,7 +204,7 @@ class Values
                 $tmp = [];
                 foreach ($value as $index => $item) {
                     $errors = self::isValidPHPValue($item, $itemType);
-                    $tmp = array_merge($tmp, Utils::map($errors, function ($error) use ($index) {
+                    $tmp = array_merge($tmp, Utils::map($errors, function ($error, $indexKey) use ($index) {
                         return "In element #$index: $error";
                     }));
                 }
@@ -223,9 +223,14 @@ class Values
 
             // Ensure every provided field is defined.
             $props = is_object($value) ? get_object_vars($value) : $value;
-            foreach ($props as $providedField => $tmp) {
-                if (!isset($fields[$providedField])) {
-                    $errors[] = "In field \"{$providedField}\": Unknown field.";
+            if($props !== null)
+            {
+                foreach ($props as $providedField => $tmp)
+                {
+                    if (!isset($fields[$providedField]))
+                    {
+                        $errors[] = "In field \"{$providedField}\": Unknown field.";
+                    }
                 }
             }
 
@@ -234,7 +239,7 @@ class Values
                 $newErrors = self::isValidPHPValue(isset($value[$fieldName]) ? $value[$fieldName] : null, $fields[$fieldName]->getType());
                 $errors = array_merge(
                     $errors,
-                    Utils::map($newErrors, function ($error) use ($fieldName) {
+                    Utils::map($newErrors, function ($error, $indexKey) use ($fieldName) {
                         return "In field \"{$fieldName}\": {$error}";
                     })
                 );

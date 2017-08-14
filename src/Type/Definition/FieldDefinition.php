@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
 use GraphQL\Error\InvariantViolation;
 use GraphQL\Utils;
@@ -15,12 +15,12 @@ class FieldDefinition
     /**
      * @var string
      */
-    public $name;
+    public string $name;
 
     /**
      * @var FieldArgument[]
      */
-    public $args;
+    public array<FieldArgument> $args;
 
     /**
      * Callback for resolving field value given parent value.
@@ -41,19 +41,19 @@ class FieldDefinition
     /**
      * @var string|null
      */
-    public $description;
+    public ?string $description;
 
     /**
      * @var string|null
      */
-    public $deprecationReason;
+    public ?string $deprecationReason;
 
     /**
      * Original field definition config
      *
      * @var array
      */
-    public $config;
+    public array $config;
 
     /**
      * @var OutputType|callable
@@ -63,7 +63,9 @@ class FieldDefinition
     /**
      * @var OutputType
      */
-    private $resolvedType;
+    private OutputType $resolvedType;
+
+    public $complexityFn;
 
     private static $def;
 
@@ -138,13 +140,13 @@ class FieldDefinition
      */
     protected function __construct(array $config)
     {
-        $this->name = $config['name'];
-        $this->type = $config['type'];
+        $this->name      = $config['name'];
+        $this->type      = $config['type'];
         $this->resolveFn = isset($config['resolve']) ? $config['resolve'] : null;
-        $this->mapFn = isset($config['map']) ? $config['map'] : null;
-        $this->args = isset($config['args']) ? FieldArgument::createMap($config['args']) : [];
+        $this->mapFn     = isset($config['map']) ? $config['map'] : null;
+        $this->args      = isset($config['args']) ? FieldArgument::createMap($config['args']) : [];
 
-        $this->description = isset($config['description']) ? $config['description'] : null;
+        $this->description       = isset($config['description']) ? $config['description'] : null;
         $this->deprecationReason = isset($config['deprecationReason']) ? $config['deprecationReason'] : null;
 
         $this->config = $config;

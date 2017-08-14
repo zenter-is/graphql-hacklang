@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type;
 
 use GraphQL\Error\InvariantViolation;
@@ -49,7 +49,7 @@ class LazyResolution implements Resolution
             isset($descriptor['typeMap'], $descriptor['possibleTypeMap'], $descriptor['version'])
         );
         Utils::invariant(
-            $descriptor['version'] === '1.0'
+            $descriptor['version'] === '1.0' 
         );
 
         $this->typeLoader = $typeLoader;
@@ -86,23 +86,24 @@ class LazyResolution implements Resolution
      */
     public function resolvePossibleTypes(AbstractType $type)
     {
-        if (!isset($this->possibleTypeMap[$type->name])) {
+        $name = Utils::getObjectValue($type, 'name');
+        if (!isset($this->possibleTypeMap[$name])) {
             return [];
         }
-        if (!isset($this->loadedPossibleTypes[$type->name])) {
+        if (!isset($this->loadedPossibleTypes[$name])) {
             $tmp = [];
-            foreach ($this->possibleTypeMap[$type->name] as $typeName => $true) {
+            foreach ($this->possibleTypeMap[$name] as $typeName => $true) {
                 $obj = $this->resolveType($typeName);
                 if (!$obj instanceof ObjectType) {
                     throw new InvariantViolation(
-                        "Lazy Type Resolution Error: Implementation {$typeName} of interface {$type->name} " .
+                        "Lazy Type Resolution Error: Implementation {$typeName} of interface {$name} " .
                         "is expected to be instance of ObjectType, but got " . Utils::getVariableType($obj)
                     );
                 }
                 $tmp[] = $obj;
             }
-            $this->loadedPossibleTypes[$type->name] = $tmp;
+            $this->loadedPossibleTypes[$name] = $tmp;
         }
-        return $this->loadedPossibleTypes[$type->name];
+        return $this->loadedPossibleTypes[$name];
     }
 }

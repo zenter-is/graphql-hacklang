@@ -1,4 +1,4 @@
-<?hh //decl
+<?hh
 namespace GraphQL\Type\Definition;
 
 use GraphQL\Error\InvariantViolation;
@@ -198,11 +198,9 @@ abstract class GraphQlType implements \JsonSerializable
             $type = $type();
         }
 
-        if (!$type instanceof GraphQlType) {
-            throw new InvariantViolation(sprintf(
-                'Expecting instance of ' . __CLASS__ . ', got "%s"',
-                Utils::getVariableType($type)
-            ));
+        if (!$type instanceof GraphQlType)
+        {
+            throw new InvariantViolation('Expecting instance of ' . static::class . ', got "' . Utils::getVariableType($type) . '"');
         }
         return $type;
     }
