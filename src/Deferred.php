@@ -11,6 +11,9 @@ class Deferred
 
     public SyncPromise $promise;
 
+    private bool $async = false;
+    private ?(function():Awaitable<mixed>) $asyncCallback = null;
+
     public static function getQueue()
     {
         return self::$queue ?? self::$queue = new \SplQueue();
@@ -30,39 +33,13 @@ class Deferred
             $deferreds[] = $q->dequeue();
         }
 
-        $hasAsync = false;
-        foreach ($deferreds as $dfd)
-        {
-            if ($dfd->async)
-            {
-                $hasAsync = true;
-                break;
-            }
-        }
-
-        if ($hasAsync)
-        {
-            self::runQueueAsync($deferreds);
-        }
-        else
-        {
-            foreach ($deferreds as $dfd)
-            {
-                $dfd->run();
-            }
-        }
-    }
-
-    private static function runQueueAsync(array<Deferred> $deferreds):void
-    {
-        $awaitables = [];
+        $asyncDeferreds = [];
         $syncDeferreds = [];
-
         foreach ($deferreds as $dfd)
         {
             if ($dfd->async)
             {
-                $awaitables[] = \Pair {$dfd, $dfd->runAsync()};
+                $asyncDeferreds[] = $dfd;
             }
             else
             {
@@ -75,31 +52,34 @@ class Deferred
             $dfd->run();
         }
 
-        if (\count($awaitables) > 0)
+        if (\count($asyncDeferreds) > 0)
         {
-            $asyncAwaitables = [];
-            foreach ($awaitables as $pair)
-            {
-                $asyncAwaitables[] = $pair[1];
-            }
-            $results = \HH\Asio\join(\HH\Asio\v($asyncAwaitables));
-            foreach ($awaitables as $i => $pair)
-            {
-                $dfd = $pair[0];
-                try
-                {
-                    $dfd->promise->resolve($results[$i]);
-                }
-                catch (\Exception $e)
-                {
-                    $dfd->promise->reject($e);
-                }
-            }
+            self::runAsyncDeferreds($asyncDeferreds);
         }
     }
 
-    private bool $async = false;
-    private ?(function():Awaitable<mixed>) $asyncCallback = null;
+    private static function runAsyncDeferreds(array $deferreds):void
+    {
+        $awaitables = [];
+        foreach ($deferreds as $dfd)
+        {
+            $awaitables[] = $dfd->runAsync();
+        }
+
+        $results = \HH\Asio\join(\HH\Asio\v($awaitables));
+
+        foreach ($deferreds as $i => $dfd)
+        {
+            try
+            {
+                $dfd->promise->resolve($results[$i]);
+            }
+            catch (\Exception $e)
+            {
+                $dfd->promise->reject($e);
+            }
+        }
+    }
 
     public function __construct((function():mixed) $callback)
     {
